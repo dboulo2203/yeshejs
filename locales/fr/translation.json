@@ -13,5 +13,6 @@
     "Materialtype": "Type materiel ",
     "Materialdescription": "Description materielle",
     "Materialcharacteristic": "Caractéristiques materielles",
-    "Format": "Format"
+    "Format": "Format",
+    "person": "Personne"
 }

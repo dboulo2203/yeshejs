@@ -1,11 +1,8 @@
 // *** shared services
-import { getTranslation } from '../../services/translationService.js'
-
-// *** Shared variables
 import { currentApplicationPath } from '../../shared/assets/constants.js'
 
 // **** ???
-import { headerViewDisplay } from '../headerViewCont.js'
+import { headerViewDisplay } from '../components/headerViewCont.js'
 
 // *** Menu string
 const mainStringPage = ` 

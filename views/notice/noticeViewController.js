@@ -1,9 +1,13 @@
-import { getNotice } from '../../services/noticeService.js'
-import { getArrayFromjson } from '../../services/commonFunctions.js'
-import { currentApplicationPath, imagePath, questionIcon, questionIcon18 } from '../../shared/assets/constants.js'
+// *** Component ressources
+import { getNotice } from './noticeService.js'
 import { displayModaleAndFunctions } from './abstractModalViewController.js'
-import { getTranslation } from '../../services/translationService.js'
-import { headerViewDisplay } from '../headerViewCont.js'
+
+// ** Shared ressoucres
+import { getArrayFromjson } from '../../shared/functions/commonFunctions.js'
+import { currentApplicationPath, imagePath, questionIcon, questionIcon18 } from '../../shared/assets/constants.js'
+import { getTranslation } from '../../shared/services/translationService.js'
+
+import { headerViewDisplay } from '../components/headerViewCont.js'
 
 
 /**

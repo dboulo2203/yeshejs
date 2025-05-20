@@ -1,4 +1,5 @@
-import { getPerson, updatePerson, getCurrentPerson } from '../../services/personService.js'
+// Component ressources
+import { getPerson, updatePerson, getCurrentPerson } from './personService.js'
 import { displayPersonContent } from './personViewController.js'
 const editModaleString = `
 <div class="container">

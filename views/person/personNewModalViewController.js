@@ -1,6 +1,6 @@
-import { getPerson, createPerson, getCurrentPerson } from '../../services/personService.js'
-import { displayPersonContent } from './personViewController.js'
-import { getLanguagesList } from '../../services/languageService.js'
+import { getPerson, createPerson, getCurrentPerson } from './personService.js'
+import { getLanguagesList } from '../../shared/services/languageService.js'
+
 const newModaleString = `
 <div class="container">
     <div class="modal" id="myModalDom" role="dialog">

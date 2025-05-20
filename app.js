@@ -3,8 +3,8 @@
  *  and open the main view
  * 
  */
-import { loadTranslations, getCurrentLanguage } from './services/translationService.js'
-import { getLanguages } from './services/languageService.js'
+import { loadTranslations, getCurrentLanguage } from './shared/services/translationService.js'
+import { getLanguages } from './shared/services/languageService.js'
 
 
 import { launchApp } from './views/mainpage/mainpageViewController.js';

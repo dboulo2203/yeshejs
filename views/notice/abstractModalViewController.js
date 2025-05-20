@@ -1,4 +1,5 @@
-import { getNoticeExtract } from '../../services/noticeService.js'
+// *** Component ressources
+import { getNoticeExtract } from './noticeService.js'
 const modaleString = `
 <div class="container" >
 <div class="modal" id="myModalDom" role="dialog">

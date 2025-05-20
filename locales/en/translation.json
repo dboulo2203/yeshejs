@@ -13,5 +13,6 @@
     "Materialtype": "Material type",
     "Materialdescription": "Material description",
     "Materialcharacteristic": "Material characteristic",
-    "Format": "Format"
+    "Format": "Format",
+    "person": "Person"
 }

@@ -1,6 +1,7 @@
 #
-- 20-05-2025
-    - Passage des fonctions de personSerice en async await, reprise du controler pour fonctionnement avec async/await
+- 20-05-2025 : - Passage des fonctions de personSerice en async await, reprise du controler pour fonctionnement avec async/await
+- 21-05 : organisation en composants et shared.
+- 21-05 : Amélioration du "jsx like".
 
 
 

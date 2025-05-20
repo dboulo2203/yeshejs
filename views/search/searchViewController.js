@@ -1,15 +1,12 @@
-// *** the component service
-import { getSearch } from '../../services/searchService.js';
+// *** Component ressources
+import { getSearch } from './searchService.js';
 
-//***  shared variables
+//***  shared ressources
 import { currentApplicationPath, imagePath } from '../../shared/assets/constants.js'
 import { bookIcon, personIcon, keyIcon, printerIcon, publisherIcon, questionIcon } from '../../shared/assets/constants.js'
-//***  shared services
-import { getTranslation } from '../../services/translationService.js'
+import { getTranslation } from '../../shared/services/translationService.js'
 
-import { headerViewDisplay } from '../headerViewCont.js'
-
-
+import { headerViewDisplay } from '../components/headerViewCont.js'
 
 export const searchPart = `
               <div class="col-md-12 main" style="padding:10px" id="resultDisplay">

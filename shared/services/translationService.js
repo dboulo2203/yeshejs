@@ -98,7 +98,7 @@ export function getTranslation(wordToTranslate) {
     return valeur;
 
     // *** Search for the word    
-    console.log(frBase);
+    // console.log(frBase);
     // console.log(Object.entries(base));
 
     // try {

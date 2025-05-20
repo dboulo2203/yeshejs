@@ -1,7 +1,7 @@
 
-import { getTranslation } from '../services/translationService.js'
-import { currentApplicationPath } from '../shared/assets/constants.js'
-import { personNewModalDisplay } from './person/personNewModalViewController.js'
+// import { getTranslation } from '../services/translationService.js'
+import { currentApplicationPath } from '../../shared/assets/constants.js'
+import { personNewModalDisplay } from '../../views/person/personNewModalViewController.js'
 
 //***
 // catalog

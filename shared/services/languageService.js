@@ -1,4 +1,4 @@
-import { wsUrlformel } from '../shared/assets/constants.js';
+import { wsUrlformel } from '../assets/constants.js';
 
 /**
  * Load the language list from the database

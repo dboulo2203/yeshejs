@@ -1,10 +1,7 @@
 
-// *** Shared services
-import { getTranslation } from '../services/translationService.js'
-
-//*** Shared variables 
-import { currentApplicationPath } from '../shared/assets/constants.js'
-
+// *** Shared ressources
+import { getTranslation } from '../../shared/services/translationService.js'
+import { currentApplicationPath } from '../../shared/assets/constants.js'
 import { leftMenuViewDisplay } from './leftMenuViewCont.js'
 
 // TODO : Manage callback
