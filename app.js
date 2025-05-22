@@ -35,7 +35,8 @@ launchApp("#mainActiveSection", function (response, status, xhr) {
     //  console.log("Done load");
     if (status == "error") {
         var msg = "Sorry but there was an error: ";
-        $("#error").html(msg + xhr.status + " " + xhr.statusText);
+        document.querySelector("#").innerHTML = msg + xhr.status + " " + xhr.statusText;
+
         console.log(msg);
     }
 });
