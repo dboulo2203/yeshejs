@@ -2,38 +2,13 @@
 import { getPerson, getPersonAliases, getlinkedNotices, getPersonFromAliasID } from './personService.js'
 import { personEditModalDisplay } from './personEditModalViewController.js'
 import { personNewModalDisplay } from './personNewModalViewController.js'
-import { getTranslation } from '../../shared/services/translationService.js'
 // *** Shared ressources
+import { getTranslation } from '../../shared/services/translationService.js'
 import { getArrayFromjson } from '../../shared/functions/commonFunctions.js'
 import { currentApplicationPath, imagePath, pencilsquare, plussquare } from '../../shared/assets/constants.js'
+import { getCurrentUSerRightLevel } from '../../shared/components/login/loginService.js'
 
 import { headerViewDisplay } from '../components/headerViewCont.js'
-
-// const personScreenMAsk = `<div class="d-flex  justify-content-between" style="padding-top:20px">
-//                     <span class="fs-5" style="color:#8B2331"> ${getTranslation("person")} Person : <span
-//                     id="concname"></span></span>
-//             <div>
-//                 <span id="extractButton" style="cursor: pointer"> ${pencilsquare}</span>
-//                 <span id="addnewButton" style="cursor: pointer; margin-left:5px"> ${plussquare}</span>
-//             </div>
-
-//         </div >
-//         <hr />
-
-//         <div id="concimage"></div>
-//         <hr />
-
-//         <div style=""> <spanclass="fs-6" style="color:#8B2331"> Person Aliases</span></div >
-//         <div id="concaliases"></div>
-//         <hr />
-
-//         <div><span class="fs-6" style="color:#8B2331">Note</span></div>
-//         <div id="concnote"></div>
-//         <hr />
-
-//         <div><span class="fs-6" style="color:#8B2331">Notices linked</span></div>
-//         <div id="conclinkednotices" style="margin-top:20px"></div>
-// `;
 
 
 /**
@@ -52,11 +27,10 @@ export function startPersonController() {
     if (searchParams.has('personID'))
         displayPersonContent('mainActiveSection', searchParams.get('personID'));
     else if (searchParams.has('personAliasID'))
-        launchPersonControllerFromAlias('mainActiveSection', searchParams.get('personAliasID'));
+        displayPersonContentFromAlias('mainActiveSection', searchParams.get('personAliasID'));
     else
         // console.log("noticeViewCOntrolleur : Erreur pas de noticeID");
-        $('#messageSection').html(`<div class="alert alert-danger" style="margin-top:30px" role="alert">Erreur, pas d'ID</div>`);
-
+        document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style="margin-top:30px" role="alert">Erreur, pas d'ID</div>`;
 }
 
 /**
@@ -67,13 +41,10 @@ export function startPersonController() {
 export async function displayPersonContentFromAlias(htlmPartId, personAliaID) {
 
     // *** Display main fixed part of the screen 
-
-
     let person = await getPersonFromAliasID(personAliaID,);
 
     // *** Display person component
     displayPersonContent(htlmPartId, person.conc_id);
-
 
 }
 /**
@@ -85,25 +56,25 @@ export async function displayPersonContent(mainDisplay, personID) {
 
     let output = '';
     // let person = null;
+    let testBoolean = false;
     try {
 
-
-        // *** Display person
+        // *** Load data from API
         let person = await getPerson(personID);
 
-        // let personAliasesJson = await getPersonAliases(personID);
         let personAliases = getArrayFromjson(await getPersonAliases(personID));
         let linkedNotices = await getlinkedNotices(personID);
 
+        // ** Main template
         let personScreen = `<div class="d-flex  justify-content-between" style="padding-top:20px">
                     <span class="fs-5" style="color:#8B2331"> ${getTranslation("person")} Person : <span
                     id="concname">${person.conc_name}</span></span>
-            <div>
-                <span id="extractButton" style="cursor: pointer"> ${pencilsquare}</span>
+                   <div>
+                <span ${getCurrentUSerRightLevel(20)} id="editButton" style="cursor: pointer"> ${pencilsquare}</span>
                 <span id="addnewButton" style="cursor: pointer; margin-left:5px"> ${plussquare}</span>
             </div>
    
-        </div >
+        </div>
         <hr />
         
         <!-- Display name and image -->
@@ -123,6 +94,7 @@ export async function displayPersonContent(mainDisplay, personID) {
         </div>    
 
          <hr /> 
+         ${testBoolean ? 'Display bolean' : ''}
 
             <! Display aliases -->
         <div style=""> <spanclass="fs-6" style="color:#8B2331"> Person Aliases</span></div >
@@ -142,39 +114,42 @@ export async function displayPersonContent(mainDisplay, personID) {
                ${getLinkedNoticesHtml(linkedNotices)}
         </div>
         `;
-        $("#" + mainDisplay).html(personScreen);
-
+        personScreen += `<div id="modalPlace"></div>`;
+        // *** Display template with variables
+        document.querySelector("#" + mainDisplay).innerHTML = personScreen;
 
         //***  Actions
-        jQuery("#extractButton").on("click", function (event) {
+        document.querySelector("#editButton").onclick = function () {
             console.log("extractButton : ");
             personEditModalDisplay(mainDisplay, person, function (status) {
             });
-
-        });
-        jQuery("#addnewButton").on("click", function (event) {
+        };
+        document.querySelector("#addnewButton").onclick = function (event) {
             console.log("addnewButton : ");
             personNewModalDisplay(mainDisplay, person, function (status) {
             });
 
-        });
+        };
 
-
-        /*** Actions */
-        $(".noticeButtons").on("click", function (event) {
-            console.log("click notice");
-            window.location.href = `${currentApplicationPath} /views/notice / notice.html ? noticeID = ` + $(this).attr('searid');
-        });
-
+        // *** Add action to each notice linked - Action = open notice component and load the notice. 
+        const cbox = document.querySelectorAll(".noticeButtons");
+        for (let i = 0; i < cbox.length; i++) {
+            cbox[i].addEventListener("click", function () {
+                console.log(cbox[i]);
+                // console.log("click span" + cbox[i].attributes.getNamedItem('sera_id').value);
+                window.location.href = `${currentApplicationPath} /views/notice/notice.html?noticeID=` + cbox[i].attributes.getNamedItem('searid').value;
+            });
+        }
 
     } catch (error) {
-        $('#messageSection').html(`< div class="alert alert-danger" style = "margin-top:30px" role = "alert" > ${error}</div > `);
-
+        document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style = "margin-top:30px" role = "alert" > ${error}</div > `;
     }
-
-
 }
-
+/**
+ * Returns the list of the notices linked with the person
+ * @param {*} linkedNotices 
+ * @returns 
+ */
 function getLinkedNoticesHtml(linkedNotices) {
     let outputln = '';
     linkedNotices.map((linkedNotice, index) => {
@@ -182,7 +157,7 @@ function getLinkedNoticesHtml(linkedNotices) {
         outputln += `<div class="row row-cols-1 row-cols-xs-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 " > `;
 
         if (linkedNotice.noti_main_image && linkedNotice.noti_main_image.length > 0) {
-            outputln += `<div class="col-md-10 col-lg-10 col-xl-10" > <span style="cursor: pointer" class="noticeButtons"
+            outputln += `<div class="col-md-10 col-lg-10 col-xl-10" > <span style="cursor: pointer"  class="noticeButtons"
         searid="${linkedNotice.noti_id}" > ${linkedNotice.noti_main_title} </span > `;
             outputln += `</div > `
             outputln += ` <div class="col-md-2 col-lg-2 col-xl-2" align = "center" > `;

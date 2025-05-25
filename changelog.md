@@ -1,55 +1,76 @@
-#
+# Avancement
+25-05 : --remplacer le append de la modale : jQuery("#" + htlmPartId)
+24-05 : Création du login component
+23-05 : remplacement jquery dans modal 
+23-05 revent from clicking outside the modal data-bs-backdrop="static" data-bs-keyboard="false"
+21-05 : remplacement des selectors jquery par querySelector == 
 - 20-05-2025 : - Passage des fonctions de personSerice en async await, reprise du controler pour fonctionnement avec async/await
 - 21-05 : organisation en composants et shared.
 - 21-05 : Amélioration du "jsx like".
+- 20-05 Gestion des erreurs ddans les fetchs
+- 20-05 PPassage des webs services en async/await
+- 19-05 :  Stopper exécution tant que les initialisations ne sont pas faites
 
 
+-------------------------------------------------------------------------
+# Components
+## Composant person
+- Finaliser la gestion du state.
+- Service supprimer les callbacks.
+(newModaleString);
+- géer les érreurs de fetch
 
-# Développement des fonctions de l'application
-- Notice : note list to be displayed
-- Comment angular fait-il pour gérer des url open data
-## TODO
+##  Login component
+- TODO : faire le logout
+- Tester le login et le niveau de droits
+- placer le bouton dans le composant, afficher le nom de l'utilisateur loggé
+- TODO : controller/view  de login,service de login, sauvegarde de l'utilisateur courant 
+- TODO : crypter les mots de passe.
+
+## Search component
 - Finaliser la gestion des résultats de recherche avec les autres types de recherche
-
 - Bug affichage des images sur mobile
 
+## Notice compnent
+- Notice : note list to be displayed
 
-## Call fetch
-- Voir comment gérer les erreurs dans les fetch.
-
-## Bug 
-- TODO Gestion du cache des modules javascripts
-- TODO Stopper exécution tant que les initialisations ne sont pas faites
-
-## update d'un enregistrement
-- NEW : Fonction opérationnelle
-- TODO Réinitailiser les objets à l'initailisation de l'appliication
-- TODO ajouter le nom du user de modif et la date 
-
-
-## Sauvegarde d'un enregistrement
-- NEW : Fonction opérationnelle
-- TODO Réinitailiser les objets à l'initailisation de l'appliication
-- TODO ajouter le nom du user de modif et la date 
-
-## Gestion des traductions
+## Translation component
 - NEW : Version 1 opérationnelle,
 - TODO : ajouter capacité à découvrir les langues en fonction des fichiers présents
 
+## 
+----------------------------------------------------------------------------
+# Développement du modèle d'application
+
+- Comment angular fait-il pour gérer des url open data
+
+## Suppression de Jquery
+TODO : remplacement document.ready 
+
+
+## Bug 
+- TODO Gestion du cache des modules javascripts
+- TODo : Le seul cas d'appel entre customcomponets est le menu gauche : il doit faire appel à la fonction de création de person
+- BUG : quand on appelle directement une page, les données d'initailisation ne sont pas chargées.
+
+## update et création d'un enregistrement
+- TODO Réinitailiser les objets à l'initailisation de l'appliication
+- TODO ajouter le nom du user de modif et la date à finaliseer
+
+
 ## Permaliens et back/forward
 - NEW : Fait : Ajouté appel de pages html pour gestion des url et navigation browser 
-- TODO : Autre solution à explorer: ajouter un router dde facon à pouvoir gérer les permaliens.
+- TODO : Autre solution à explorer: ajouter un router de facon à pouvoir gérer les permaliens.
+
+## Call fetch
+- DONE : Gérer les erreurs dans les fetch,
+- TODO : tester tous les types d'erreur.
 
 ## Conservation des données avec localstorage (state)
 - NEW : Save person et disctionnaires: ok
 - TODO : Voir la conservation des données entre les pages de navigation, par exemple person
 - TODO : Faut-il vider le localstorage
 - TODO : mofication personcontroller pour prise en compte du state
-
-## Gestion des utilisateurs
-- TODO : controller/view  de login,service de login, sauvegarde de l'utilisateur courant 
-- TODO : crypter les mots de passe.
-
 
 - App.js
     - initalise les données communes

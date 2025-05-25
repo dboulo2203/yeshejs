@@ -76,29 +76,11 @@ export function getCurrentPerson() {
         return null;
 }
 
-// /**
-//  * Returns person aliases
-//  * @param {*} personId 
-//  * @param {*} callback 
-//  * @returns Aliases list(Json)
-//  */
-// export async function getPersonAliases(personId, callback) {
-
-//     console.log("getPersonAliases Service start");
-//     var wsUrl = wsUrlformel + `person/${personId}/getAliases`;
-//     var jqxhr = $.ajax(`${wsUrl}`)
-//         .done(function (data) {
-//             console.log("getPersonAliases Service ok");
-//             callback(data.content);
-//         })
-//         .fail(function (xhr, err) {
-//             console.log(("getPersonAliases Service  error" + error))
-//             console.log(JSON.stringify(xhr));
-//         })
-//         .always(function () {
-//         });
-// }
-
+/**
+ * 
+ * @param {*} personId 
+ * @returns 
+ */
 export async function getPersonAliases(personId) {
 
     console.log("getPersonAliases Service start");
@@ -122,6 +104,11 @@ export async function getPersonAliases(personId) {
 
 }
 
+/**
+ * 
+ * @param {*} personId 
+ * @returns 
+ */
 export async function getlinkedNotices(personId) {
 
     console.log("getlinkedNotices Service start");
@@ -200,65 +187,3 @@ export async function createPerson(person, callback) {
     }
 
 }
-
-// /**
-//  * Update the person
-//  * @param {*} person
-//  * @param {*} callback
-//  */
-// export async function updatePerson(person, callback) {
-
-//     let wsUrl = wsUrlformel + `person/${person.conc_id}`;
-
-//     console.log("updatePersonService start :2 " + wsUrl + " " + JSON.stringify(person));
-//     const myHeaders = new Headers();
-//     myHeaders.append("Content-Type", "application/json");
-//     myHeaders.append("Access-Control-Allow-Origin", "*");
-
-//     const response = await fetch(wsUrl, {
-//         method: "PUT",
-//         headers: myHeaders,
-//         body: JSON.stringify(person),
-//         redirect: "follow"
-//     })
-//         .then((response) => response.text())
-//         .then((result) => {
-//             console.log("updatePersonService ok:" + result);
-//             callback(result);
-//         })
-//         .catch((error) => {
-//             console.log(("updatePersonService error" + error))
-//             return false;
-//         });
-// }
-
-// /**
-//  *
-//  * @param {*} person
-//  * @param {*} callback
-//  */
-// export async function createPerson(person, callback) {
-
-//     let wsUrl = wsUrlformel + `person/0`;
-
-//     console.log("createPersonService start : " + wsUrl + JSON.stringify(person));
-//     const myHeaders = new Headers();
-//     myHeaders.append("Content-Type", "application/json");
-//     myHeaders.append("Access-Control-Allow-Origin", "*");
-
-//     const response = await fetch(wsUrl, {
-//         method: "POST",
-//         headers: myHeaders,
-//         body: JSON.stringify(person),
-//         redirect: "follow"
-//     })
-//         .then((response) => response.text())
-//         .then((result) => {
-//             console.log("createPersonService OK : Résultat du POST :" + result);
-//             callback(result);
-//         })
-//         .catch((error) => {
-//             console.log(("createPersonService Error : " + error))
-//             return false;
-//         });
-// }

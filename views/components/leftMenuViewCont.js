@@ -25,8 +25,7 @@ const menuString = `
                 </div>
             <hr/>
             <div id="newNoticeButton">New Notice</div>
-            <div id="newPersonButton">New Person</div>
-            
+            <div id="newPersonButton">New Person</div>            
             <div id="newKeywordButton">New Keyword</div>
             <div id="newPublisherButton">New Publisher</div>
             <div id="newPrinterButton">New Printer</div>

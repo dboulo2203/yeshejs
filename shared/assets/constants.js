@@ -10,7 +10,7 @@ let yesheReal = "https://" + window.location.hostname;
 console.log(" SIte calculé :" + yesheReal);
 export const wsUrlformel = yesheReal + "/yeshe/api/";
 
-export const imagePath = "https://kusala.fr/yeshejs/";
+export const imagePath = "https://kusala.fr/yeshe/";
 export const currentApplicationPath = window.location.protocol + "//" + window.location.hostname + '/yeshejs';
 
 
