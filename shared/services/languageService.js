@@ -4,20 +4,21 @@ import { wsUrlformel } from '../assets/constants.js';
  * Load the language list from the database
  * the languages list is saved in the localStorage 
  */
-export function getLanguages() {
+export async function getLanguages() {
 
-    console.log("getLanguages Service start");
     var wsUrl = wsUrlformel + `list/bdd_language`;
-    var jqxhr = $.ajax(`${wsUrl}`)
-        .done(function (data) {
-            console.log("get languages ok");
-            localStorage.setItem("languages", JSON.stringify(data.content));
-        })
-        .fail(function (xhr, err) {
-            console.log(JSON.stringify(xhr));
-        })
-        .always(function () {
-        });
+
+    let responseWS = await fetch(wsUrl);
+
+    if (responseWS.ok) {
+        // *** Get the data and save in the localstorage
+        const data = await responseWS.json();
+        localStorage.setItem("languages", JSON.stringify(data.content));
+        return true;
+    } else {
+        console.log(`getLanguages Error : }`);
+        throw new Error("getLanguages Error : " + JSON.stringify(responseWS));
+    }
 }
 
 /**

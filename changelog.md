@@ -11,7 +11,6 @@
 - 20-05 PPassage des webs services en async/await
 - 19-05 :  Stopper exécution tant que les initialisations ne sont pas faites
 
-
 -------------------------------------------------------------------------
 # Components
 ## Composant person
@@ -26,6 +25,9 @@
 - placer le bouton dans le composant, afficher le nom de l'utilisateur loggé
 - TODO : controller/view  de login,service de login, sauvegarde de l'utilisateur courant 
 - TODO : crypter les mots de passe.
+- TODO : se protéger contre les modifications manuelles des données du localstore
+        https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API
+- TODO : le component fournit même le bouton de login
 
 ## Search component
 - Finaliser la gestion des résultats de recherche avec les autres types de recherche
@@ -102,6 +104,13 @@ TODO : remplacement document.ready
 - Améliorer l'API en retrournant coorectement des éléments créés lors d'un POST
 
 ## Principes
+###
+- un customcomponent  peut être appelé :
+    - seul, par un appel à une URL
+    - dans le cadre d'une application (mais toujours par une Url)
+- un component a une version
+- un component affiche clairement ses dépendances
+
 ### un "customcomponent" par entité
 - entité = noticce, person, keyword, publisher etc
 - rendre chaque écran le plus autonome possible afin de ne pas avoir à re-tester l'ensemble de l'application à chaque modification.
@@ -110,15 +119,25 @@ TODO : remplacement document.ready
 - pas de partage de variables communes
 - Une customcomponent peut utiliser des services externes (liste pour liste de choix)
 - Dans un customcomponent, l'utillisation de ressources communes est clairement identifié dans le controller principal du customcomponent  
+
 ### Parties communes sont composées de : 
 - les variables communes sont dans un fichier clairement identifié.
 - - Nom de la div dans laquelle le customcomponent doit s'installer
 - Les services communs : translation, 
 - Les fonctions communes
+
 ### Enveloppe
 - Les parties communes sont : navbar et menu canvas, le mainpage component
+### partie commune
 
 ### Cas des écrans multi customcomponent
 - Exemple Zopa : écran commande affiche une partie facture. 
+
+### pu logiciel
+- utilisation maximale du jsx like 
+
+### Date picker
+<label for="startDate">Start</label>
+<input id="startDate" class="form-control" type="date" />
 
     

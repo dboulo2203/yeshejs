@@ -5,20 +5,24 @@ import { wsUrlformel } from '../../shared/assets/constants.js';
  * @param {*} noticeId 
  * @param {*} callback 
  */
-export function getNotice(noticeId, callback) {
+export async function getNotice(noticeId) {
 
     console.log("getNotice Service start");
+
     var wsUrl = wsUrlformel + `notice/${noticeId}`;
-    var jqxhr = $.ajax(`${wsUrl}`)
-        .done(function (data) {
-            console.log("get notice ok");
-            callback(data.content);
-        })
-        .fail(function (xhr, err) {
-            console.log("getNotice error :" + JSON.stringify(xhr));
-        })
-        .always(function () {
-        });
+    let responsefr = await fetch(wsUrl);
+    if (responsefr.ok) {
+        // *** Get the data and save in the localstorage
+        const data = await responsefr.json();
+        localStorage.setItem("notice", JSON.stringify(data.content));
+
+        console.log("getNotice   ok ");
+        return (data.content);
+
+    } else {
+        console.log(`getNotice Error : ${JSON.stringify(responsefr)}`);
+        throw new Error("getNotice Error message : " + responsefr.status + " " + responsefr.statusText);
+    }
 }
 
 /**
@@ -26,21 +30,20 @@ export function getNotice(noticeId, callback) {
  * @param {*} noticeId 
  * @param {*} callback 
  */
-export function getNoticeExtract(noticeId, callback) {
+export async function getNoticeExtract(noticeId) {
 
-    console.log("getNotice noticeextract Service");
-    var wsUrl = wsUrlformel + `noticeextract/${noticeId}`;
-    var jqxhr = $.ajax(`${wsUrl}`)
-        .done(function (data) {
-            console.log("get notice noticeextract ok");
-            callback(data.content);
-        })
-        .fail(function (xhr, err) {
-            console.log("get notice noticeextract error : " + JSON.stringify(xhr));
-        })
-        .always(function () {
+    console.log("getNoticeExtract Service start");
+    var wsUrl = wsUrlformel + `noticeextract/${noticeId}`; let responsefr = await fetch(wsUrl);
+    if (responsefr.ok) {
+        // *** Get the data and save in the localstorage
+        console.log("getNoticeExtract ok");
+        const data = await responsefr.json();
+        return (data.content);
 
-        });
+    } else {
+        console.log(`getNoticeExtract Error : ${JSON.stringify(responsefr)}`);
+        throw new Error("getNoticeExtract Error message : " + responsefr.status + " " + responsefr.statusText);
+    }
 
 }
 

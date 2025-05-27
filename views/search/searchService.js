@@ -7,21 +7,19 @@ import { wsUrlformel } from '../../shared/assets/constants.js';
  * @param {*} callback 
  * @returns search list 
  */
-export function getSearch(searchString, mode, callback) {
+export async function getSearch(searchString, mode) {
 
-    // console.log("get Search start");
-    console.log(wsUrlformel + "searchAdvanced/3/" + searchString);
-    var wsUrl = wsUrlformel + "searchAdvanced/3/" + searchString;
-    var jqxhr = $.ajax(`${wsUrl}`)
-        .done(function (data) {
-            console.log(("getSearch Service  ok"))
-            callback(data.content);
-        })
-        .fail(function (xhr, err) {
-            console.log(("getSearch Service  error" + err))
-            console.log(JSON.stringify(xhr));
-        })
-        .always(function () {
-        });
+    var wsUrl = wsUrlformel + `searchAdvanced/${mode}/${searchString}`;
+    let responseWS = await fetch(wsUrl);
+
+    if (responseWS.ok) {
+        // *** Get the data and save in the localstorage
+        const data = await responseWS.json();
+        console.log(("getSearch Service  ok"))
+        return data.content;
+    } else {
+        console.log(`getSearch nothing to return`);
+        return (null);
+    }
 
 }

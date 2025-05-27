@@ -8,28 +8,32 @@ import { getArrayFromjson } from '../../shared/functions/commonFunctions.js'
 import { currentApplicationPath, imagePath, pencilsquare, plussquare } from '../../shared/assets/constants.js'
 import { getCurrentUSerRightLevel } from '../../shared/components/login/loginService.js'
 
-import { headerViewDisplay } from '../components/headerViewCont.js'
-
+import { launchInitialisation } from '../../shared/services/initialisationService.js';
+import { headerViewDisplay } from '../../shared/components/global/headerViewCont.js'
 
 /**
  * Start script 
  */
-// const searchParams = new URLSearchParams(window.location.search);
-// launchNoticeController('mainPart', searchParams.get('noticeId'));
-export function startPersonController() {
+export async function startPersonController() {
 
-    console.log("personViewController Start ");
+    try {
+        // *** Initialisations
+        await launchInitialisation();
+        headerViewDisplay("#menuSection");
+
+    } catch (error) {
+        document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style = "margin-top:30px" role = "alert" > ${error}</div > `;
+    }
+
+    // *** Get params
     const searchParams = new URLSearchParams(window.location.search);
-    // console.log(searchParams);
 
-    headerViewDisplay("#menuSection");
-
+    // *** Get URL params and launch display
     if (searchParams.has('personID'))
         displayPersonContent('mainActiveSection', searchParams.get('personID'));
     else if (searchParams.has('personAliasID'))
         displayPersonContentFromAlias('mainActiveSection', searchParams.get('personAliasID'));
     else
-        // console.log("noticeViewCOntrolleur : Erreur pas de noticeID");
         document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style="margin-top:30px" role="alert">Erreur, pas d'ID</div>`;
 }
 
@@ -71,7 +75,7 @@ export async function displayPersonContent(mainDisplay, personID) {
                     id="concname">${person.conc_name}</span></span>
                    <div>
                 <span ${getCurrentUSerRightLevel(20)} id="editButton" style="cursor: pointer"> ${pencilsquare}</span>
-                <span id="addnewButton" style="cursor: pointer; margin-left:5px"> ${plussquare}</span>
+                <span ${getCurrentUSerRightLevel(20)} id="addnewButton" style="cursor: pointer; margin-left:5px"> ${plussquare}</span>
             </div>
    
         </div>
@@ -153,7 +157,6 @@ export async function displayPersonContent(mainDisplay, personID) {
 function getLinkedNoticesHtml(linkedNotices) {
     let outputln = '';
     linkedNotices.map((linkedNotice, index) => {
-        // outputln += `< span class="fw-light" > ${ linkedNotice.noti_main_title }</span >  </br > `;
         outputln += `<div class="row row-cols-1 row-cols-xs-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 " > `;
 
         if (linkedNotice.noti_main_image && linkedNotice.noti_main_image.length > 0) {

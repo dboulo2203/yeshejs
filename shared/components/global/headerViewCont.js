@@ -1,10 +1,10 @@
-
 // *** Shared ressources
-import { getTranslation } from '../../shared/services/translationService.js'
-import { currentApplicationPath } from '../../shared/assets/constants.js'
+import { getTranslation } from '../../services/translationService.js'
+import { currentApplicationPath } from '../../assets/constants.js'
+import { loginViewDisplay } from '../../components/login/loginViewCont.js'
+
 import { leftMenuViewDisplay } from './leftMenuViewCont.js'
-import { loginViewDisplay } from '../../shared/components/login/loginViewCont.js'
-import { getLoggedUserPseudo, logout } from '../../shared/components/login/loginService.js'
+import { getLoggedUserPseudo, logout } from '../../components/login/loginService.js'
 
 // TODO : Manage callback
 export function headerViewDisplay(htlmPartId, callbackFunction) {
@@ -29,33 +29,30 @@ export function headerViewDisplay(htlmPartId, callbackFunction) {
             </nav>
       </div>
             <div id="leftMenu">
-        </div>
-
-`;
+        </div>`;
 
     // *** Display the navbar
-    $(htlmPartId).html(menuString);
+    document.querySelector(htlmPartId).innerHTML = menuString;
 
     // *** Add the off canvas menu
     leftMenuViewDisplay("leftMenu");
 
-    $("#LoginBtn").on("click", function (event) {
-        console.log("searcBtn : " + $("#searchInputString").val());
-        loginViewDisplay("mainActiveSection")
-
-    });
-
-    $('#searchInputString').on('keydown', function (event) {
+    document.querySelector("#searchInputString").addEventListener("keypress", function (event) {
         if (event.keyCode === 13) {
             window.location.href = `${currentApplicationPath}/views/search/search.html?searchStr=` + $("#searchInputString").val();
         }
     });
 
-    // *** Reload the start page
-    jQuery("#mainNav").on("click", function (event) {
+    document.querySelector("#searchBtn").onclick = function () {
+        window.location.href = `${currentApplicationPath}/views/search/search.html?searchStr=` + $("#searchInputString").val();
+    };
+
+    document.querySelector("#mainNav").onclick = function () {
         window.location.href = `${currentApplicationPath}/index.html`;
-    });
+    };
 
-
+    document.querySelector("#LoginBtn").onclick = function () {
+        loginViewDisplay("mainActiveSection")
+    };
 
 }

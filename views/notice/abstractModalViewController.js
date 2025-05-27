@@ -1,5 +1,6 @@
 // *** Component ressources
 import { getNoticeExtract } from './noticeService.js'
+
 const modaleString = `
 <div class="container" >
 <div class="modal" id="myModalDom" role="dialog">
@@ -28,70 +29,24 @@ const modaleString = `
  * 
  * @param {*} htlmPartId 
  */
-export function displayModaleAndFunctions(htlmPartId, noticeID, callback) {
+export async function displayModaleAndFunctions(htlmPartId, noticeID) {
 
     // *** Display main part of the page
-    // document.getElementById(htlmPartId).innerHTML = ;
-    console.log("Display extract : ");
-    jQuery("#" + htlmPartId).append(modaleString);
+    document.querySelector(htlmPartId).innerHTML = modaleString;
 
+    // ** Get data
+    let noticeExtractSTr = await getNoticeExtract(noticeID);
 
-    getNoticeExtract(noticeID, function (noticeExtractSTr) {
+    // *** display data
+    document.querySelector("#modalbody").innerHTML = noticeExtractSTr;
 
-        console.log(JSON.stringify(noticeExtractSTr));
-        document.getElementById("modalbody").innerHTML = noticeExtractSTr;
+    // ** Actions
+    document.querySelector("#myBtnCancel").onclick = function () {
+        editModal.hide();
+    };
 
-    });
-
-    $("#myBtnCancel").on("click", function (event) {
-        console.log("annule clicked");
-        $("#myModalDom").modal("hide");
-        callback(false);
-    });
-
-    console.log("displayModaleAndFunctions");
-    // *** Define actions on the page
-    // $("#myBtnDom").on("load", function (event) {
-    $(document).ready(function () {
-        // console.log("#myBtnDom).on(load)");
-        $("#myModalDom").modal("show");
-    });
+    // *** inital Load modal  action
+    let editModal = new bootstrap.Modal(document.querySelector("#myModalDom"))
+    editModal.show({ backdrop: 'static', keyboard: false });
 
 }
-
-
-// (function ($) {
-
-//     $(document).ready(function () {
-//         console.log("ready modale!");
-
-//         // Load orders from the dolibarr server
-//         // var jqxhr = $.ajax("http://localhost/dolibarr_prodchoco/api/index.php/orders?sortfield=t.rowid&sortorder=ASC&limit=100&DOLAPIKEY=2OgKx8pIcDrF58S00d4ldW451JfeTTwX")
-//         //     .done(function (data) {
-//         console.log("order call ok");
-//         //  document.getElementById('apiResponseMoale').innerHTML = displayOrderList(data);
-
-//         // })
-//         //     .fail(function () {
-//         //         alert("error");
-//         //     })
-//         //     .always(function () {
-//         //         console.log("API call complete");
-//         //     });
-
-//     });
-
-//     $("#myBtnDom").on("click", function (event) {
-//         console.log("open modale");
-//         const myModalEl = document.getElementById('myModalDom');
-//         myModalEl.modal("show");
-//         //  $("#myModalDom").modal("show");
-//     });
-//     $("#myBtnCLose").on("click", function (event) {
-//         console.log("open modale");
-//         $("#myModalDom").modal("hide");
-//     });
-
-
-
-// })(jQuery);

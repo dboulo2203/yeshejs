@@ -1,52 +1,41 @@
 
+import { currentApplicationPath } from '../assets/constants.js'
 /**
  * Load the translation files in the localstorage
  * 
  * TODO : the function can load translations from languages
  */
 export async function loadTranslations() {
-    console.log("LoadTranslations start");
 
-    try {
-        const responsefr = await fetch('locales/fr/translation.json');
-        const datafr = await responsefr.json();
+    // *** Load french language
+    const responsefr = await fetch(`${currentApplicationPath}/shared/assets/locales/fr/translation.json`);
+    const datafr = await responsefr.json();
+    if (responsefr.ok) {
         localStorage.setItem("frTranslation", JSON.stringify(datafr));
-        console.log("LoadTranslations fr await ok ");
-
-        const responseen = await fetch('locales/en/translation.json');
-        const dataen = await responseen.json();
-        localStorage.setItem("enTranslation", JSON.stringify(dataen));
-        console.log("LoadTranslations en await  ok ");
-
-    } catch (error) {
-        console.log('There was an error', error);
+        console.log("LoadTranslations fr  ok ");
+    } else {
+        console.log(`loadTranslations fr Error : ${JSON.stringify(responsefr)}`);
+        throw new Error("loadTranslations fr Error message : " + responsefr.status + " " + responsefr.statusText);
     }
+
+    // *** Load english language 
+    const responseen = await fetch(`${currentApplicationPath}/shared/assets/locales/en/translation.json`);
+    const dataen = await responseen.json();
+
+    if (responsefr.ok) {
+        // *** Get the data and save in the localstorage
+        localStorage.setItem("enTranslation", JSON.stringify(dataen));
+        console.log("LoadTranslations en  ok ");
+    } else {
+        console.log(`LoadTranslations en Error : ${JSON.stringify(responsefr)}`);
+        throw new Error("LoadTranslations en Error message : " + responsefr.status + " " + responsefr.statusText);
+    }
+
+    // } catch (error) {
+    //  console.log('There was an error', error);
+
+    // }
 }
-
-/**
- * Load the translation files in the localstorage
- * 
- * TODO : the function can load translations from languages
- */
-// export function loadTranslationsv1() {
-//     console.log("LoadTranslations start");
-//     $.getJSON('locales/fr/translation.json', function (data) {
-//         localStorage.setItem("frTranslation", JSON.stringify(data));
-//         console.log("LoadTranslations fr ok ");
-
-//     }).fail(function (xhr, err) {
-//         console.log(" Error loading translation fr : " + JSON.stringify(xhr));
-//     });
-
-//     $.getJSON('locales/en/translation.json', function (data) {
-//         localStorage.setItem("enTranslation", JSON.stringify(data));
-//         console.log("LoadTranslations en ok ");
-
-//     }).fail(function (xhr, err) {
-//         console.log(" Error loading translation en : " + JSON.stringify(xhr));
-//     });
-
-// }
 
 /**
  * Get the main language set in the browser
@@ -70,25 +59,8 @@ export function getTranslation(wordToTranslate) {
     // let listresult = null;
     // *** Get the database according to the current language in the browser
     let frBase = localStorage.getItem(getCurrentLanguage() + "Translation");
-
-    //  frBase.map((language, index) => {
-    //      console.log(language);
-    //  });
-
-    // *** Load the translation database
-
-    //    const testAr = [10, 67, 12];
-    //    let ret = testAr.find((element) => element > 10);
     let base = JSON.parse(frBase);
 
-    let listentries = Object.entries(base);
-    let listkeys = Object.keys(base);
-    let listvalues = Object.values(base);
-    // base.map((language, index) => {
-    //     console.log(language);
-    // });
-
-    // const foundIndex = Object.keys(base).find((element) => `${element}` == wordToTranslate);
     let foundIndex = Object.keys(base).indexOf(wordToTranslate);
 
     let valeur = '';
@@ -96,35 +68,6 @@ export function getTranslation(wordToTranslate) {
         valeur = (Object.values(base)[foundIndex]);
 
     return valeur;
-
-    // *** Search for the word    
-    // console.log(frBase);
-    // console.log(Object.entries(base));
-
-    // try {
-    //     if (base) {
-    //         let listresult = Object.entries(base)
-    //             .filter(([key, value]) => `${key}` == wordToTranslate) //has options
-    //     } else {
-    //         return ("Translation base not found");
-    //     }
-
-    //     if (listresult) {
-    //         if (listresult[0])
-    //             return (listresult[0][1])
-    //         else {
-    //             console.log("Translation not found : " + wordToTranslate);
-    //             // console.log(" Translation base : " + JSON.stringify(base));
-    //             return ("not found");
-    //         }
-    //     } else {
-    //         console.log("Translation not found : " + wordToTranslate);
-    //         // console.log(" Translation base : " + JSON.stringify(base));
-    //         return ("not found");
-    //     }
-    // } catch (except) {
-    //   return wordToTranslate + "E";
-    // }
 
 }
 

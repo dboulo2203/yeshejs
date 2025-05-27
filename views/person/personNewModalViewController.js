@@ -1,6 +1,7 @@
 // Component ressources
 import { getPerson, createPerson, getCurrentPerson } from './personService.js'
 import { getLanguagesList } from '../../shared/services/languageService.js'
+import { displayPersonContent } from './personViewController.js'
 
 const newModaleString = `
 <div class="container">
@@ -14,6 +15,7 @@ const newModaleString = `
                     <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
                     <h4 class="modal-title">New Person</h4>
                 </div>
+                <div id="modalmessage"></div>
                 <div class="row modal-body" id="modalbodyPerson">
                     <p>Some text in the modal.</p>
 
@@ -34,16 +36,16 @@ const newModaleString = `
  */
 export async function personNewModalDisplay(htlmPartId, person) {
 
+    window.onload = (event) => {
+        console.log("page is fully loaded");
+    };
+
     // *** Variable that keeps the modal object
     let editModal = null;
 
     // *** Display main part of the page
-
-    // jQuery("#" + htlmPartId).append(newModaleString);
-    // document.getElementById("modalPlace").innerHTML = newModaleString;
     document.querySelector("#modalPlace").innerHTML = newModaleString;
 
-    // console.log(JSON.stringify(noticeExtractSTr));
     console.log(JSON.stringify(person));
     let outpuStr = '';
     outpuStr = `
@@ -77,7 +79,6 @@ export async function personNewModalDisplay(htlmPartId, person) {
     // *** Display string
     document.querySelector("#modalbodyPerson").innerHTML = outpuStr;
 
-
     // *** Actions
     document.querySelector("#myBtnCancel").onclick = function () {
         console.log("annule clicked");
@@ -86,12 +87,15 @@ export async function personNewModalDisplay(htlmPartId, person) {
 
     document.querySelector("#myBtnSave").onclick = async function (event) {
         console.log("Save clicked");
+
+        // *** Check inputs
         let conc_nameInput = document.querySelector("#conc_nameInput").value
         if (!conc_nameInput || conc_nameInput.length <= 0) {
             document.querySelector("#modalmessage").innerHTML = `<div class="alert alert-danger" style = "margin-top:30px" role = "alert" > name vide</div> `;
             return;
         }
 
+        // *** Get Data
         let person = {
             conc_name: '',
             conc_note: '',
@@ -104,19 +108,19 @@ export async function personNewModalDisplay(htlmPartId, person) {
         let select = document.getElementById('conc_lanInput');
         person.conc_def_lang = select.options[select.selectedIndex].value;
 
+        // *** Save data
+        try {
+            let retour = await createPerson(person);
+            editModal.hide();
 
-
-        // try {
-        let retour = await createPerson(person, function (reponse) {
-            console.log("Retour du POST : " + reponse);
-            document.querySelector("#modalmessage").innerHTML = `<div class="alert alert-success" style="margin-top:30px" role="alert">Person successfully saved</div> `;
-
-        });
+        } catch (except) {
+            document.querySelector("#modalmessage").innerHTML = `<div class="alert alert-danger" style="margin-top:30px" role="alert">${except}</div>`;
+        }
     };
 
-    $(document).ready(function () {
-        editModal = new bootstrap.Modal(document.querySelector("#myModalDom")) // document.getElementById('myModalDom'));
-        editModal.show({ backdrop: 'static', keyboard: false });
-    });
-
+    // *** inital Load modal  action
+    //  $(document).ready(function () {
+    editModal = new bootstrap.Modal(document.querySelector("#myModalDom")) // document.getElementById('myModalDom'));
+    editModal.show({ backdrop: 'static', keyboard: false });
+    // });
 }

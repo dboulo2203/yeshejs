@@ -16,38 +16,21 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
         </script>
-
-    <style>
-        canvas {
-            border: 1px solid black;
-        }
-    </style>
-    <!-- <script type="module" src="./app.js"></script> -->
-    <!-- <script type="module" src="notice.js"></script> -->
-    <!-- <script type="module" src="../views/noticeViewController.js"></script> -->
 </head>
 
 <body>
-
-    <body>
-        <div class="container" id="mainPart">
-            <div class="col-md-12 " id="menuSection" style="margin-top:50px">
-            </div>
-            <div class="col-md-12 " id="messageSection" style="margin-top:50px"></div>
-            <div class="col-md-12 " id="mainActiveSection" style="margin-top:50px">
-            </div>
-            <div id="error"></div>
-
+    <div class="container" id="mainPart">
+        <div class="col-md-12 " id="menuSection" style="margin-top:50px">
         </div>
-
-    </body>
-    <script type="module">
-
-        import { startSearchController } from "./searchViewController.js"
-        // const searchParams = new URLSearchParams(window.location.search);
-        // console.log(searchParams.has('noticeId')); // true
-        //         launchNoticeController('mainPart', searchParams.get('noticeId'));
-        startSearchController();
-    </script>
+        <div class="col-md-12 " id="messageSection" style="margin-top:50px"></div>
+        <div class="col-md-12 " id="mainActiveSection" style="margin-top:50px">
+        </div>
+        <div id="error"></div>
+    </div>
+</body>
+<script type="module">
+    import { startSearchController } from "./searchViewController.js"
+    startSearchController();
+</script>
 
 </html>

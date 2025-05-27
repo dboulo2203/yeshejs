@@ -68,10 +68,12 @@ export function getCurrentUSerRightLevel(requiredLevel) {
     let loggedUser = localStorage.getItem("loggedUSer");
 
     if (loggedUser)
-        if (loggedUser.urlt_level <= requiredLevel)
+        if (loggedUser.urlt_level > requiredLevel)
             return "hidden";
         else
             return "";
+    else
+        return "hidden";
 
 }
 

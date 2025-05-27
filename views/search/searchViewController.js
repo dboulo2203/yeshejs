@@ -4,28 +4,34 @@ import { getSearch } from './searchService.js';
 //***  shared ressources
 import { currentApplicationPath, imagePath } from '../../shared/assets/constants.js'
 import { bookIcon, personIcon, keyIcon, printerIcon, publisherIcon, questionIcon } from '../../shared/assets/constants.js'
+import { addMultipleEnventListener } from '../../shared/functions/commonFunctions.js'
 import { getTranslation } from '../../shared/services/translationService.js'
-
-import { headerViewDisplay } from '../components/headerViewCont.js'
+import { headerViewDisplay } from '../../shared/components/global/headerViewCont.js'
+import { launchInitialisation } from '../../shared/services/initialisationService.js'
 
 export const searchPart = `
               <div class="col-md-12 main" style="padding:10px" id="resultDisplay">
      </div >
     `;
 
+export async function startSearchController() {
 
-export function startSearchController() {
+    try {
+        // *** Initialisations
+        await launchInitialisation();
+        headerViewDisplay("#menuSection");
 
+    } catch (error) {
+        document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style = "margin-top:30px" role = "alert" > ${error}</div > `;
+    }
+
+    // *** Get URL params
     const searchParams = new URLSearchParams(window.location.search);
     console.log(searchParams);
 
-    headerViewDisplay("#menuSection");
-
+    // *** launch render
     if (searchParams.has('searchStr'))
         displaySearchContent("mainActiveSection", searchParams.get('searchStr'));
-    //  launchNoticeController('mainSection', searchParams.get('noticeId'));
-    //  else
-    //      document.getElementById('messageSection').innerHTML = `<div class="alert alert-danger" style="margin-top:20px" role="alert">Erreur, pas de searchStr</div>`;
 }
 
 /**
@@ -33,24 +39,20 @@ export function startSearchController() {
  * @param {*} htlmPartId 
  * @param {*} searchString : the string to searched in the database 
  */
-export function displaySearchContent(htlmPartId, searchString) {
+export async function displaySearchContent(htlmPartId, searchString) {
 
     // *** Build the html string 
     let output = '';
 
+    try {
+        output += `<div style="padding-top:20px"><p class="fs-5" style="color:#8B2331">${getTranslation("searchname")}</p></div><hr/>`;
 
+        // *** Get data from API
+        let searchLines = await getSearch(searchString, "3");
 
-    output += `<div style="padding-top:20px"><p class="fs-5" style="color:#8B2331">${getTranslation("searchname")}</p></div><hr/>`;
-    console.log("displaySearchContent : " + searchString);
-    getSearch(searchString, null, function (searchLines) {
-
-        // console.log("</br>display search lines");
-
+        // ** Display data
         if (searchLines && searchLines.length > 0) {
-            // output += `<div class="col-md-12 main" style = "padding:10px" id = "${htlmPartId}" > `;
-
             searchLines.map((searchLine, index) => {
-                // console.log("Type : " + searchLine.sear_type + "</br>");
                 output += `
                  <div class="row row-cols-1 row-cols-xs-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 " id = "search-row" > `;
 
@@ -75,7 +77,6 @@ export function displaySearchContent(htlmPartId, searchString) {
                         ${bookIcon} -  <span class="bookButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span> - <span style="color:#eff2f2"> (${searchLine.sear_type})</span> </br >
                             ${searchLine.sear_moreinfo}...
                                             </div > `;
-
                         break
                     case 10:
                         output += ` <div class="col-md-2 col-lg-2 col-xl-2" align = "center" > `;
@@ -87,7 +88,6 @@ export function displaySearchContent(htlmPartId, searchString) {
                             ${personIcon} - <span class="personButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span> - <span style="color:#eff2f2"> (${searchLine.sear_type})</span>  </br >
                                 ${searchLine.sear_moreinfo}...
                                             </div > `;
-
                         break
                     case 11:
                         output += ` <div class="col-md-2 col-lg-2 col-xl-2" align = "center" > `;
@@ -124,8 +124,8 @@ export function displaySearchContent(htlmPartId, searchString) {
                         output += `</div > `;
 
                         output += `<div class="col col-md-10 col-lg-10 col-xl-10" >
-    ${questionIcon} -  <span>${searchLine.sear_label}</span> - (${searchLine.sear_type}) </br >
-        ${searchLine.sear_moreinfo ? searchLine.sear_moreinfo : ''} 
+                            ${questionIcon} -  <span>${searchLine.sear_label}</span> - (${searchLine.sear_type}) </br >
+                            ${searchLine.sear_moreinfo ? searchLine.sear_moreinfo : ''} 
                         </div > `;
 
                 }
@@ -133,31 +133,20 @@ export function displaySearchContent(htlmPartId, searchString) {
             });
             output += '</div>';
         }
+        // *** Display search content
+        document.querySelector("#" + htlmPartId).innerHTML = output;
 
-        // *** Display the HTML string
-        $("#mainActiveSection").html(output);
 
-
-        // *** Add event listener
-        jQuery(".bookButtons").on("click", function (event) {
-            console.log("click notice details");
+        // *** Add actions 
+        addMultipleEnventListener(".bookButtons", function () {
             window.location.href = `${currentApplicationPath}/views/notice/notice.html?noticeID=` + $(this).attr('searid');
-            // launchNoticeController(mainDisplay, $(this).attr('searid'));
         });
 
-        // *** Add event listener
-        jQuery(".personButtons").on("click", function (event) {
-            console.log("click notice details");
-            window.location.href = `${currentApplicationPath}/views/person/person.html?personID=` + $(this).attr('searid');
-            // launchNoticeController(mainDisplay, $(this).attr('searid'));
+        addMultipleEnventListener(".personButtons", function () {
+            window.location.href = `${currentApplicationPath}/views/person/person.html?personID=` + $(this).attr('searid') + `&indep=false`;
         });
 
-    });
-
-
-    // console.log("displaySearchContent end");
+    } catch (error) {
+        document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style = "margin-top:30px" role = "alert" > ${error}</div > `;
+    }
 }
-
-/**
- ********   USER EVENTS MANAGEMENT  
- */

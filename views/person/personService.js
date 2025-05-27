@@ -11,11 +11,8 @@ export async function getPerson(personId) {
 
     console.log("getPerson Service start");
 
-
     var wsUrl = wsUrlformel + `person/${personId}`;
-
     let responsefr = await fetch(wsUrl);
-
     if (responsefr.ok) {
         // *** Get the data and save in the localstorage
         const data = await responsefr.json();
@@ -28,9 +25,7 @@ export async function getPerson(personId) {
         console.log(`getPerson Error : ${JSON.stringify(responsefr)}`);
         throw new Error("getPerson Error message : " + responsefr.status + " " + responsefr.statusText);
     }
-
 }
-
 
 /**
  * Load a person from the database, 
@@ -42,11 +37,8 @@ export async function getPerson(personId) {
 export async function getPersonFromAliasID(personAliasId, callback) {
 
     console.log("getPersonFromAliasID Service start");
-
     var wsUrl = wsUrlformel + `person/${personAliasId}/getByAlias`;
-
     let responsefr = await fetch(wsUrl);
-
     if (responsefr.ok) {
         // *** Get the data and save in the localstorage
         const data = await responsefr.json();
@@ -136,7 +128,7 @@ export async function getlinkedNotices(personId) {
  * @param {*} person 
  * @param {*} callback 
  */
-export async function updatePerson(person, callback) {
+export async function updatePerson(person) {
 
     let wsUrl = wsUrlformel + `person/${person.conc_id}`;
 
@@ -149,8 +141,7 @@ export async function updatePerson(person, callback) {
         redirect: "follow"
     });
     if (response.ok) {
-        console.log("updatePersonService ok:" + response);
-        callback(response.text());
+        console.log("updatePersonService ok:");
     } else {
         console.log(`updatePersonService Error : ${JSON.stringify(response)}`);
         throw new Error("updatePersonService Error message : " + response.status + " " + response.statusText);
@@ -163,7 +154,7 @@ export async function updatePerson(person, callback) {
  * @param {*} person 
  * @param {*} callback 
  */
-export async function createPerson(person, callback) {
+export async function createPerson(person) {
 
     let wsUrl = wsUrlformel + `person/0`;
 
@@ -179,8 +170,7 @@ export async function createPerson(person, callback) {
         redirect: "follow"
     });
     if (response.ok) {
-        console.log("createPerson ok:" + response);
-        callback(response.text());
+        console.log("createPerson ok:");
     } else {
         console.log(`createPerson Service Error : ${JSON.stringify(response)}`);
         throw new Error("createPerson Service Error message : " + response.status + " " + response.statusText);

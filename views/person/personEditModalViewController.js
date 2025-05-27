@@ -37,11 +37,8 @@ export async function personEditModalDisplay(htlmPartId, person) {
     // *** Variable that keeps the modal object
     let editModal = null;
 
-    // *** Display main part of the page
-    // document.getElementById(htlmPartId).innerHTML = ;
-    // jQuery("#" + htlmPartId).append(editModaleString);
+    // *** Display main part of the modal
     document.querySelector("#modalPlace").innerHTML = editModaleString;
-    // document.querySelector("#" + htlmPartId).innerHTML = editModaleString;
 
     let outpuStr = '';
     outpuStr = `
@@ -64,14 +61,13 @@ export async function personEditModalDisplay(htlmPartId, person) {
     // *** Display string
     document.querySelector("#modalbodyPerson").innerHTML = outpuStr;
 
-
     // *** Actions
     document.querySelector("#myBtnCancel").onclick = function () {
         console.log("annule clicked");
         editModal.hide();
-
     };
 
+    // *** Save action
     document.querySelector("#myBtnSave").onclick = async function (event) {
         console.log("Save clicked");
         let conc_nameInput = document.querySelector("#conc_nameInput").value
@@ -85,22 +81,23 @@ export async function personEditModalDisplay(htlmPartId, person) {
         person.conc_note = document.querySelector("#conc_noteInput").value;  // $("#conc_noteInput").val();
 
         try {
-            let retour = await updatePerson(person, function (reponse) {
-                console.log("Retour du PUT : " + reponse);
-                getPerson(person.conc_id);
-                displayPersonContent("mainActiveSection", person.conc_id);
-                editModal.hide();
-            });
+            let retour = await updatePerson(person);
+
+            // *** Display person modification
+            await getPerson(person.conc_id);
+            displayPersonContent("mainActiveSection", person.conc_id);
+            editModal.hide();
+
         } catch (except) {
             document.querySelector("#modalmessage").innerHTML = `<div class="alert alert-danger" style="margin-top:30px" role="alert">${except}</div>`;
             // $('#modalmessage').html(`<div class="alert alert-danger" style="margin-top:30px" role="alert">${except}</div>`);
-
         }
     };
 
-    $(document).ready(function () {
-        editModal = new bootstrap.Modal(document.querySelector("#myModalDom")) // document.getElementById('myModalDom'));
-        editModal.show({ backdrop: 'static', keyboard: false });
-    });
+    // *** inital Load modal  action
+    //  $(document).ready(function () {
+    editModal = new bootstrap.Modal(document.querySelector("#myModalDom")) // document.getElementById('myModalDom'));
+    editModal.show({ backdrop: 'static', keyboard: false });
+    // });
 
 }

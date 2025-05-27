@@ -31,3 +31,19 @@ const secondsToMidnight = (n) => {
     ((24 - n.getHours() - 1) * 60 * 60) + ((60 - n.getMinutes() - 1) * 60) + (60 - n.getSeconds())
   )
 }
+
+
+
+/**
+ * Add an event listened  to  a list of HTML document (by class name)
+ * @param {*} elementClass  : the .XXXX class identifier of the element list 
+ * @param {*} functionOfEvent  = the function used when the event is fired
+ */
+export function addMultipleEnventListener(elementClass, functionOfEvent) {
+  const cbox = document.querySelectorAll(elementClass);
+  for (let i = 0; i < cbox.length; i++) {
+    cbox[i].addEventListener("click", functionOfEvent);
+
+
+  }
+}
