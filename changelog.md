@@ -1,4 +1,5 @@
 # Avancement
+28-05 : reprise complète de la structure
 25-05 : --remplacer le append de la modale : jQuery("#" + htlmPartId)
 24-05 : Création du login component
 23-05 : remplacement jquery dans modal 
@@ -11,13 +12,20 @@
 - 20-05 PPassage des webs services en async/await
 - 19-05 :  Stopper exécution tant que les initialisations ne sont pas faites
 
+
+## TODO : 
+- Tester la validité des paramètres dans les WS
+- Test les fonction hash
+Person : ne pas relire, utiliser la sauvegarde
+
+-
 -------------------------------------------------------------------------
 # Components
 ## Composant person
 - Finaliser la gestion du state.
 - Service supprimer les callbacks.
 (newModaleString);
-- géer les érreurs de fetch
+- --géer les érreurs de fetch
 
 ##  Login component
 - TODO : faire le logout
