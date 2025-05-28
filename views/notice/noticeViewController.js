@@ -193,9 +193,9 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
         output += `${exemplaire.exem_cote}  :  ${exemplaire.exow_name} </br> `;
 
     });
-    output += `<hr/>`;
-    output += `</br></br></br></br></br></br></br></br></br></br></br></br><hr/><div ><span class="fs-6" style="color:#8B2331">For developpers only</span></div>`;
-    output += "" + JSON.stringify(notice);
+    // output += `<hr/>`;
+    // output += `</br></br></br></br></br></br></br></br></br></br></br></br><hr/><div ><span class="fs-6" style="color:#8B2331">For developpers only</span></div>`;
+    // output += "" + JSON.stringify(notice);
 
     // *** Display 
     document.querySelector("#" + mainDisplay).innerHTML = output;

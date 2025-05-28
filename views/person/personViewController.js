@@ -2,19 +2,34 @@
 import { getPerson, getPersonAliases, getlinkedNotices, getPersonFromAliasID } from './personService.js'
 import { personEditModalDisplay } from './personEditModalViewController.js'
 import { personNewModalDisplay } from './personNewModalViewController.js'
+
 // *** Shared ressources
 import { getTranslation } from '../../shared/services/translationService.js'
 import { getArrayFromjson } from '../../shared/functions/commonFunctions.js'
 import { currentApplicationPath, imagePath, pencilsquare, plussquare } from '../../shared/assets/constants.js'
 import { getCurrentUSerRightLevel } from '../../shared/components/login/loginService.js'
-
+import { addMultipleEnventListener } from '../../shared/functions/commonFunctions.js'
 import { launchInitialisation } from '../../shared/services/initialisationService.js';
 import { headerViewDisplay } from '../../shared/components/global/headerViewCont.js'
 
 /**
  * Start script 
  */
+export function componentIdentityPerson() {
+    return `Business component: person : version 2.1.0 - 28 /05 / 2025`
+}
+
 export async function startPersonController() {
+
+    const searchParams = new URLSearchParams(window.location.search);
+
+    // *** Get URL params and launch display
+    if (searchParams.has('identity')) {
+        document.querySelector("#mainActiveSection").innerHTML = componentIdentity;
+        ` 
+        `
+        return
+    }
 
     try {
         // *** Initialisations
@@ -26,7 +41,7 @@ export async function startPersonController() {
     }
 
     // *** Get params
-    const searchParams = new URLSearchParams(window.location.search);
+    // searchParams = new URLSearchParams(window.location.search);
 
     // *** Get URL params and launch display
     if (searchParams.has('personID'))
@@ -45,7 +60,7 @@ export async function startPersonController() {
 export async function displayPersonContentFromAlias(htlmPartId, personAliaID) {
 
     // *** Display main fixed part of the screen 
-    let person = await getPersonFromAliasID(personAliaID,);
+    let person = await getPersonFromAliasID(personAliaID);
 
     // *** Display person component
     displayPersonContent(htlmPartId, person.conc_id);
@@ -136,14 +151,19 @@ export async function displayPersonContent(mainDisplay, personID) {
         };
 
         // *** Add action to each notice linked - Action = open notice component and load the notice. 
-        const cbox = document.querySelectorAll(".noticeButtons");
-        for (let i = 0; i < cbox.length; i++) {
-            cbox[i].addEventListener("click", function () {
-                console.log(cbox[i]);
-                // console.log("click span" + cbox[i].attributes.getNamedItem('sera_id').value);
-                window.location.href = `${currentApplicationPath} /views/notice/notice.html?noticeID=` + cbox[i].attributes.getNamedItem('searid').value;
-            });
-        }
+        addMultipleEnventListener(".noticeButtons", function () {
+            window.location.href = `${currentApplicationPath}/views/notice/notice.html?noticeID=` + $(this).attr('searid');
+        });
+
+
+        // const cbox = document.querySelectorAll(".noticeButtons");
+        // for (let i = 0; i < cbox.length; i++) {
+        //     cbox[i].addEventListener("click", function () {
+        //         console.log(cbox[i]);
+        //         // console.log("click span" + cbox[i].attributes.getNamedItem('sera_id').value);
+        //         window.location.href = `${currentApplicationPath}/views/notice/notice.html?noticeID=` + cbox[i].attributes.getNamedItem('searid').value;
+        //     });
+        // }
 
     } catch (error) {
         document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style = "margin-top:30px" role = "alert" > ${error}</div > `;

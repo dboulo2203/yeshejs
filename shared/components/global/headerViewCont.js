@@ -1,6 +1,7 @@
 // *** Shared ressources
 import { getTranslation } from '../../services/translationService.js'
-import { currentApplicationPath } from '../../assets/constants.js'
+// import { currentApplicationPath } from '../../assets/constants.js'
+import { getAppPath } from '../../functions/commonFunctions.js'
 import { loginViewDisplay } from '../../components/login/loginViewCont.js'
 
 import { leftMenuViewDisplay } from './leftMenuViewCont.js'
@@ -39,16 +40,17 @@ export function headerViewDisplay(htlmPartId, callbackFunction) {
 
     document.querySelector("#searchInputString").addEventListener("keypress", function (event) {
         if (event.keyCode === 13) {
-            window.location.href = `${currentApplicationPath}/views/search/search.html?searchStr=` + $("#searchInputString").val();
+            window.location.href = `${getAppPath()}/views/search/search.html?searchStr=` + $("#searchInputString").val();
         }
     });
 
+    // *** Actions
     document.querySelector("#searchBtn").onclick = function () {
-        window.location.href = `${currentApplicationPath}/views/search/search.html?searchStr=` + $("#searchInputString").val();
+        window.location.href = `${getAppPath()}/views/search/search.html?searchStr=` + $("#searchInputString").val();
     };
 
     document.querySelector("#mainNav").onclick = function () {
-        window.location.href = `${currentApplicationPath}/index.html`;
+        window.location.href = `${getAppPath()}/index.html`;
     };
 
     document.querySelector("#LoginBtn").onclick = function () {

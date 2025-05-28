@@ -8,7 +8,10 @@
 // *** version opérationnelle
 let yesheReal = "https://" + window.location.hostname;
 console.log(" SIte calculé :" + yesheReal);
-export const wsUrlformel = yesheReal + "/yeshe/api/";
+//export const wsUrlformel = yesheReal + "/yeshe/api/";
+
+// export const wsUrlformel = "https://catalogue.bibliotheque-dhagpo-kagyu.org" + "/yeshe/api/";
+const wsUrlformel = "https://kusala.fr" + "/yeshe/api/";
 
 export const imagePath = "https://kusala.fr/yeshe/";
 export const currentApplicationPath = window.location.protocol + "//" + window.location.hostname + '/yeshejs';
