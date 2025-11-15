@@ -1,7 +1,7 @@
 // *** shared services
 import { currentApplicationPath } from '../../shared/assets/constants.js'
 import { launchInitialisation } from '../../shared/services/initialisationService.js'
-import { headerViewDisplay } from '../../shared/components/global/headerViewCont.js'
+import { headerViewDisplay } from '../../shared/assets/components/global/headerViewCont.js'
 
 // *** Menu string
 const mainStringPage = ` 
@@ -17,7 +17,7 @@ export async function startMainPageController() {
         await launchInitialisation();
 
         // *** Display menu
-        headerViewDisplay("#menuSection", null);
+        headerViewDisplay("#menuSection");
 
 
     } catch (error) {

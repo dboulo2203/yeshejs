@@ -8,8 +8,7 @@ import { currentApplicationPath, imagePath, questionIcon, questionIcon18 } from 
 import { getTranslation } from '../../shared/services/translationService.js'
 
 import { launchInitialisation } from '../../shared/services/initialisationService.js';
-import { headerViewDisplay } from '../../shared/components/global/headerViewCont.js'
-
+import { headerViewDisplay } from '../../shared/assets/components/global/headerViewCont.js'
 
 /**
  * Start script 
@@ -145,7 +144,10 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
     let keywordList = getArrayFromjson(notice.keywordsFunctionFor);
 
     keywordList.map((keyword, index) => {
-        output += `<span class="fw-light" style ="color:grey"> ${keyword.tffc_name}</span> : ${keyword.coal_name}, `;
+        //  output += `<span class="fw-light" style ="color:grey"> ${keyword.tffc_name}</span> : ${keyword.coal_name}, `;
+        output += `<span class="fw-light" style ="color:grey"> ${keyword.tffd_name}</span> : <span style="cursor: pointer" class="keywordButtons" 
+        searid="${keyword.conc_id}">${keyword.coal_name} </span>, `;
+
 
     });
     output += `<hr/>`;
@@ -190,10 +192,11 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
     output += `<div ><span class="fs-6" style="color:#8B2331">Copies</span></div>`;
 
     exemplairesList.map((exemplaire, index) => {
-        output += `${exemplaire.exem_cote}  :  ${exemplaire.exow_name} </br> `;
+        output += ` ${exemplaire.exow_name} : ${exemplaire.exem_cote}  </br> `;
 
     });
-    // output += `<hr/>`;
+    output += `<hr/>`;
+    output += `</br></br>`;
     // output += `</br></br></br></br></br></br></br></br></br></br></br></br><hr/><div ><span class="fs-6" style="color:#8B2331">For developpers only</span></div>`;
     // output += "" + JSON.stringify(notice);
 
@@ -208,5 +211,12 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
     addMultipleEnventListener(".personButtons", function () {
         window.location.href = `${currentApplicationPath}/views/person/person.html?personAliasID=` + $(this).attr('searid');
     });
+
+    addMultipleEnventListener(".keywordButtons", function () {
+        window.location.href = `${currentApplicationPath}/views/keyword/keyword.html?keywordAliasID=` + $(this).attr('searid');
+    });
+
+
+
 }
 

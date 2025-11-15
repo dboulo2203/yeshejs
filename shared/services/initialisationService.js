@@ -2,8 +2,9 @@
 
 import { loadTranslations, getCurrentLanguage } from '../services/translationService.js'
 import { getLanguages } from '../services/languageService.js'
-// import { currentApplicationPath } from '../assets/constants.js'
 import { getAppPath } from '../functions/commonFunctions.js'
+
+
 /**
  * 
  */

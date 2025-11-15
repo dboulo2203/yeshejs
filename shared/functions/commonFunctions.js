@@ -48,7 +48,6 @@ export function getAppPath() {
 
 }
 
-
 /**
  * Add an event listened  to  a list of HTML document (by class name)
  * @param {*} elementClass  : the .XXXX class identifier of the element list 

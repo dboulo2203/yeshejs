@@ -1,5 +1,3 @@
-
-
 import { wsUrlformel } from '../../assets/constants.js';
 
 /**
@@ -11,7 +9,7 @@ import { wsUrlformel } from '../../assets/constants.js';
  */
 export async function getLogin(userEmail, userPassword) {
 
-    console.log("getLogin Service start");
+    console.log("getLogin Service start : " + wsUrlformel + `user/${userEmail}?logUser=user_email&password=${userPassword}`);
 
     localStorage.setItem("loggedUSer", "");
 

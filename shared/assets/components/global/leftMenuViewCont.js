@@ -1,5 +1,5 @@
 
-import { currentApplicationPath } from '../../assets/constants.js'
+import { currentApplicationPath } from '../../constants.js'
 
 //***
 // catalog

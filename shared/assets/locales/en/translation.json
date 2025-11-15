@@ -14,5 +14,6 @@
     "Materialdescription": "Material description",
     "Materialcharacteristic": "Material characteristic",
     "Format": "Format",
-    "person": "Person"
+    "person": "Person",
+    "keyword": "Keyword"
 }

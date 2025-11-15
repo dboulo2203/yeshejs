@@ -1,7 +1,7 @@
 // *** Component ressources
-import { getPerson, getPersonAliases, getlinkedNotices, getPersonFromAliasID } from './personService.js'
-import { personEditModalDisplay } from './personEditModalViewController.js'
-import { personNewModalDisplay } from './personNewModalViewController.js'
+import { getKeyword, getKeywordAliases, getKeywordlinkedNotices, getKeywordFromAliasID } from './keywordService.js' // , getKeywordFromAliasID 
+// import { personEditModalDisplay } from './personEditModalViewController.js'
+// import { personNewModalDisplay } from './personNewModalViewController.js'
 
 // *** Shared ressources
 import { getTranslation } from '../../shared/services/translationService.js'
@@ -16,21 +16,19 @@ import { headerViewDisplay } from '../../shared/assets/components/global/headerV
  * Start script 
  */
 export function componentIdentityPerson() {
-    return `Business component: person : version 2.1.0 - 28 /05 / 2025`
+    return `Business component: keyword : version 2.1.0 - 28 /05 / 2025`
 }
 
-export async function startPersonController() {
+export async function startKeywordController() {
 
     const searchParams = new URLSearchParams(window.location.search);
 
     // *** Get URL params and launch display
     if (searchParams.has('identity')) {
         document.querySelector("#mainActiveSection").innerHTML = componentIdentity;
-        ` 
-        `
+        `   `
         return
     }
-
     try {
         // *** Initialisations
         await launchInitialisation();
@@ -44,10 +42,10 @@ export async function startPersonController() {
     // searchParams = new URLSearchParams(window.location.search);
 
     // *** Get URL params and launch display
-    if (searchParams.has('personID'))
-        displayPersonContent('mainActiveSection', searchParams.get('personID'));
-    else if (searchParams.has('personAliasID'))
-        displayPersonContentFromAlias('mainActiveSection', searchParams.get('personAliasID'));
+    if (searchParams.has('keywordID'))
+        displayKeywordContent('mainActiveSection', searchParams.get('keywordID'));
+    else if (searchParams.has('keywordAliasID'))
+        displayKeywordContentFromAlias('mainActiveSection', searchParams.get('keywordAliasID'));
     else
         document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style="margin-top:30px" role="alert">Erreur, pas d'ID</div>`;
 }
@@ -57,13 +55,13 @@ export async function startPersonController() {
  * @param {*} htlmPartId 
  * @param {*} personAliaID 
  */
-export async function displayPersonContentFromAlias(htlmPartId, personAliaID) {
+export async function displayKeywordContentFromAlias(htlmPartId, keywordAliaID) {
 
     // *** Display main fixed part of the screen 
-    let person = await getPersonFromAliasID(personAliaID);
+    let keyword = await getKeywordFromAliasID(keywordAliaID);
 
     // *** Display person component
-    displayPersonContent(htlmPartId, person.conc_id);
+    displayKeywordContent(htlmPartId, keyword.conc_id);
 
 }
 /**
@@ -71,23 +69,22 @@ export async function displayPersonContentFromAlias(htlmPartId, personAliaID) {
  * @param {*} mainDisplay 
  * @param {*} personID 
  */
-export async function displayPersonContent(mainDisplay, personID) {
+export async function displayKeywordContent(mainDisplay, keywordID) {
 
     let output = '';
-    // let person = null;
     let testBoolean = false;
     try {
 
         // *** Load data from API
-        let person = await getPerson(personID);
+        let keyword = await getKeyword(keywordID);
 
-        let personAliases = getArrayFromjson(await getPersonAliases(personID));
-        let linkedNotices = await getlinkedNotices(personID);
+        let keywordAliases = getArrayFromjson(await getKeywordAliases(keywordID));
+        let keywordlinkedNotices = await getKeywordlinkedNotices(keywordID);
 
         // ** Main template
-        let personScreen = `<div class="d-flex  justify-content-between" style="padding-top:20px">
-                    <span class="fs-5" style="color:#8B2331"> ${getTranslation("person")} : <span
-                    id="concname">${person.conc_name}</span></span>
+        let keywordScreen = `<div class="d-flex  justify-content-between" style="padding-top:20px">
+                    <span class="fs-5" style="color:#8B2331"> ${getTranslation("keyword")} : <span
+                    id="concname">${keyword.conc_name}</span></span>
                    <div>
                 <span ${getCurrentUSerRightLevel(20)} id="editButton" style="cursor: pointer"> ${pencilsquare}</span>
                 <span ${getCurrentUSerRightLevel(20)} id="addnewButton" style="cursor: pointer; margin-left:5px"> ${plussquare}</span>
@@ -98,16 +95,16 @@ export async function displayPersonContent(mainDisplay, personID) {
         
         <!-- Display name and image -->
         <div class="row row-cols-1 row-cols-xs-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 "> 
-        ${person.conc_image && person.conc_image.length > 0 ?
+        ${keyword.conc_image && keyword.conc_image.length > 0 ?
                 `<div class="col-md-2 col-lg-2 col-xl-2" align="center" >
-                <img src="${imagePath}/img/persons/${person.conc_image}" width="100px" />
+                <img src="${imagePath}/img/keyword/${keyword.conc_image}" width="100px" />
             </div > 
             <div class="col-md-10 col-lg-10 col-xl-10" style = "" > 
-                ${person.conc_name} 
+                ${keyword.conc_name} 
             </div > `
                 :
                 `<div class="col-md-10 col-lg-10 col-xl-12" style = "" > 
-                ${person.conc_name} 
+                ${keyword.conc_name} 
             </div > `
             }
         </div>    
@@ -116,39 +113,39 @@ export async function displayPersonContent(mainDisplay, personID) {
          ${testBoolean ? 'Display bolean' : ''}
 
             <! Display aliases -->
-        <div style=""> <spanclass="fs-6" style="color:#8B2331"> Person Aliases</span></div >
+        <div style=""> <spanclass="fs-6" style="color:#8B2331"> Keyword Aliases</span></div >
         <div id="concaliases">
-            ${personAliases.map((personAliase, index) => (
-                `<span class="fw-light" style = "color:grey" >` + personAliase.lang_name + `</span > : ` + personAliase.coal_name + `, `
+            ${keywordAliases.map((keywordAliase, index) => (
+                `<span class="fw-light" style = "color:grey" >` + keywordAliase.lang_name + `</span > : ` + keywordAliase.coal_name + `, `
             )).join("")}
         </div >
         <hr />
 
         <div><span class="fs-6" style="color:#8B2331">Note</span></div>
-        <div id="concnote">${person.conc_note} </div>
+        <div id="concnote">${keyword.conc_note} </div>
         <hr />
 
         <div><span class="fs-6" style="color:#8B2331">Notices linked</span></div>
         <div id="conclinkednotices" style="margin-top:20px">
-               ${getLinkedNoticesHtml(linkedNotices)}
+               ${getLinkedNoticesHtml(keywordlinkedNotices)}
         </div>
         `;
-        personScreen += `<div id="modalPlace"></div>`;
+        keywordScreen += `<div id="modalPlace"></div>`;
         // *** Display template with variables
-        document.querySelector("#" + mainDisplay).innerHTML = personScreen;
+        document.querySelector("#" + mainDisplay).innerHTML = keywordScreen;
 
         //***  Actions
-        document.querySelector("#editButton").onclick = function () {
-            console.log("extractButton : ");
-            personEditModalDisplay(mainDisplay, person, function (status) {
-            });
-        };
-        document.querySelector("#addnewButton").onclick = function (event) {
-            console.log("addnewButton : ");
-            personNewModalDisplay(mainDisplay, person, function (status) {
-            });
+        // document.querySelector("#editButton").onclick = function () {
+        //     console.log("extractButton : ");
+        //     personEditModalDisplay(mainDisplay, person, function (status) {
+        //     });
+        // };
+        // document.querySelector("#addnewButton").onclick = function (event) {
+        //     console.log("addnewButton : ");
+        //     personNewModalDisplay(mainDisplay, person, function (status) {
+        //     });
 
-        };
+        // };
 
         // *** Add action to each notice linked - Action = open notice component and load the notice. 
         addMultipleEnventListener(".noticeButtons", function () {

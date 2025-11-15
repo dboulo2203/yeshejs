@@ -6,7 +6,7 @@ import { currentApplicationPath, imagePath } from '../../shared/assets/constants
 import { bookIcon, personIcon, keyIcon, printerIcon, publisherIcon, questionIcon } from '../../shared/assets/constants.js'
 import { addMultipleEnventListener } from '../../shared/functions/commonFunctions.js'
 import { getTranslation } from '../../shared/services/translationService.js'
-import { headerViewDisplay } from '../../shared/components/global/headerViewCont.js'
+import { headerViewDisplay } from '../../shared/assets/components/global/headerViewCont.js'
 import { launchInitialisation } from '../../shared/services/initialisationService.js'
 
 export const searchPart = `
@@ -94,7 +94,7 @@ export async function displaySearchContent(htlmPartId, searchString) {
                         output += `</div > `;
 
                         output += `<div class="col col-md-10 col-lg-10 col-xl-10" >
-                        ${keyIcon} -  <span class="personButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span> - <span style="color:#eff2f2"> (${searchLine.sear_type})</span>  </br >
+                        ${keyIcon} -  <span class="keywordButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span> - <span style="color:#eff2f2"> (${searchLine.sear_type})</span>  </br >
                         ${searchLine.sear_moreinfo}...
                         </div > `;
                         break
@@ -143,8 +143,13 @@ export async function displaySearchContent(htlmPartId, searchString) {
         });
 
         addMultipleEnventListener(".personButtons", function () {
-            window.location.href = `${currentApplicationPath}/views/person/person.html?personID=` + $(this).attr('searid') + `&indep=false`;
+            window.location.href = `${currentApplicationPath}/views/person/person.html?personID=` + $(this).attr('searid') + ``;
         });
+
+        addMultipleEnventListener(".keywordButtons", function () {
+            window.location.href = `${currentApplicationPath}/views/keyword/keyword.html?keywordID=` + $(this).attr('searid') + ``;
+        });
+
 
     } catch (error) {
         document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style = "margin-top:30px" role = "alert" > ${error}</div > `;
