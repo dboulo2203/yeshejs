@@ -8,55 +8,36 @@ import { leftMenuViewDisplay } from './leftMenuViewCont.js'
 // import { getLoggedUserPseudo, logout } from '../../components/login/loginService.js'
 
 // TODO : Manage callback
-export function headerViewDisplay(htlmPartId) {
+export function searchViewDisplay(htlmPartId) {
 
     let menuString = `
     <div id="menuPart">
-        <nav class="navbar navbar-expand-lg bg-body-tertiary"  style="padding:5px">
-            <div class="container-fluid">
-                <a class="navbar-brand" style="color:#8B2331" id="mainNav" href="#">${getTranslation("brandTitle")}</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link" href="#">Advanced search</a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link" href="#">Login</a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-                    </li>
-                </ul>
-                </div>
+    
+        <div class="d-flex justify-content-center col-12" style="padding:5px">
+            <div class="input-group justify-content-center input-group-sm mb-3">
+                <input class="text" type="search" style="margin-right:2px" placeholder="" id="searchInputString" aria-label="Search">
+                <button class="btn btn-secondary" id="searchBtn" >${getTranslation("search")}</button>
             </div>
-        </nav>
+        </div>
     </div>
-    <div id="leftMenu">
-    </div>
-    `;
+ `;
 
     // *** Display the navbar
     document.querySelector(htlmPartId).innerHTML = menuString;
 
     // *** Add the off canvas menu
-    leftMenuViewDisplay("leftMenu");
+    //  leftMenuViewDisplay("leftMenu");
 
-    // document.querySelector("#searchInputString").addEventListener("keypress", function (event) {
-    //     if (event.keyCode === 13) {
-    //         window.location.href = `${getAppPath()}/views/search/search.html?searchStr=` + $("#searchInputString").val();
-    //     }
-    // });
+    document.querySelector("#searchInputString").addEventListener("keypress", function (event) {
+        if (event.keyCode === 13) {
+            window.location.href = `${getAppPath()}/views/search/search.html?searchStr=` + $("#searchInputString").val();
+        }
+    });
 
     // *** Actions
-    // document.querySelector("#searchBtn").onclick = function () {
-    //     window.location.href = `${getAppPath()}/views/search/search.html?searchStr=` + $("#searchInputString").val();
-    // };
+    document.querySelector("#searchBtn").onclick = function () {
+        window.location.href = `${getAppPath()}/views/search/search.html?searchStr=` + $("#searchInputString").val();
+    };
 
     document.querySelector("#mainNav").onclick = function () {
         window.location.href = `${getAppPath()}/index.html`;

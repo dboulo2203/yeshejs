@@ -21,17 +21,19 @@ export async function startSearchController() {
         await launchInitialisation();
         headerViewDisplay("#menuSection");
 
+
+        // *** Get URL params
+        const searchParams = new URLSearchParams(window.location.search);
+        console.log(searchParams);
+
+        // *** launch render
+        if (searchParams.has('searchStr'))
+            displaySearchContent("mainActiveSection", searchParams.get('searchStr'));
+
     } catch (error) {
         document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style = "margin-top:30px" role = "alert" > ${error}</div > `;
     }
 
-    // *** Get URL params
-    const searchParams = new URLSearchParams(window.location.search);
-    console.log(searchParams);
-
-    // *** launch render
-    if (searchParams.has('searchStr'))
-        displaySearchContent("mainActiveSection", searchParams.get('searchStr'));
 }
 
 /**

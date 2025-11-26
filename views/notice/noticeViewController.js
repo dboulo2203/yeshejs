@@ -169,7 +169,7 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
     output += `<div ><span class="fs-6" style="color:#8B2331">Notes</span></div>`;
 
     notesList.map((note, index) => {
-        output += `<span class="fw-light" style ="color:grey">${note.ffnnt_name} </span> : ${note.ffnn_text} </br> `;
+        output += `<span class="fw-light" style ="color:grey;margin-top:20px">${note.ffnnt_name} </span> : ${note.ffnn_text} </br> `;
 
     });
     output += `<hr/>`;
