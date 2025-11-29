@@ -8,7 +8,7 @@ import { addMultipleEnventListener } from '../../shared/functions/commonFunction
 import { getTranslation } from '../../shared/services/translationService.js'
 import { headerViewDisplay } from '../../shared/assets/components/global/headerViewCont.js'
 import { launchInitialisation } from '../../shared/services/initialisationService.js'
-
+import { searchViewDisplay } from '../../shared/assets/components/global/searchViewCont.js'
 export const searchPart = `
               <div class="col-md-12 main" style="padding:10px" id="resultDisplay">
      </div >
@@ -20,7 +20,7 @@ export async function startSearchController() {
         // *** Initialisations
         await launchInitialisation();
         headerViewDisplay("#menuSection");
-
+        searchViewDisplay("#searchSection");
 
         // *** Get URL params
         const searchParams = new URLSearchParams(window.location.search);
@@ -29,6 +29,7 @@ export async function startSearchController() {
         // *** launch render
         if (searchParams.has('searchStr'))
             displaySearchContent("mainActiveSection", searchParams.get('searchStr'));
+
 
     } catch (error) {
         document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style = "margin-top:30px" role = "alert" > ${error}</div > `;
@@ -47,16 +48,24 @@ export async function displaySearchContent(htlmPartId, searchString) {
     let output = '';
 
     try {
-        output += `<div style="padding-top:20px"><p class="fs-5" style="color:#8B2331">${getTranslation("searchname")}</p></div><hr/>`;
+        output += `<div style="maargin-top:0">
+            <p class="fs-5" style="color:#8B2331">${getTranslation("searchname")}</p>
+        </div>
+        `;
 
         // *** Get data from API
         let searchLines = await getSearch(searchString, "3");
 
-        // ** Display data
+        // ** Display data                  <div class="row row-cols-1 row-cols-xs-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 " id = "search-row" > `;
+
+        output += `<div class="alert alert-secondary " style="margin-top:10px" role="alert" >
+            Search result : ${searchLines.length} lines
+        </div >`
+
         if (searchLines && searchLines.length > 0) {
             searchLines.map((searchLine, index) => {
                 output += `
-                 <div class="row row-cols-1 row-cols-xs-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 " id = "search-row" > `;
+                 <div class="row " id = "search-row" > `;
 
                 let sear_typeIcon = '';
 
@@ -69,65 +78,77 @@ export async function displaySearchContent(htlmPartId, searchString) {
                     case 4:
                     case 5:
                     case 6:
-                    case 7:
-                        output += ` <div class="col-md-2 col-lg-2 col-xl-2" align = "center" > `;
+                    case 7: // Book
+
                         if (searchLine.sear_image && searchLine.sear_image.length > 0) {
-                            output += ` <img src = '${imagePath}/img/books/${searchLine.sear_image}' width = "100px" /> `;
+                            output += ` <div class="col-3 " align = "center" > `;
+                            output += ` <img src = '${imagePath}/img/books/${searchLine.sear_image}' style="max-width:100px;width:100%" /> `;
+                            output += `</div > `;
+                            output += `<div class="col-9" >`;
+                        } else {
+                            output += ` <div class="" align = "center" > `;
+                            output += `</div > `;
+                            output += `<div class="col-12" >`;
+
                         }
-                        output += `</div > `;
-                        output += `<div class="col col-md-10 col-lg-10 col-xl-10" >
-                        ${bookIcon} -  <span class="bookButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span> - <span style="color:#eff2f2"> (${searchLine.sear_type})</span> </br >
+                        output += `${bookIcon} -  <span class="bookButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span> - <span style="color:#eff2f2"> (${searchLine.sear_type})</span> </br >
                             ${searchLine.sear_moreinfo}...
-                                            </div > `;
+                            </div > `;
                         break
-                    case 10:
-                        output += ` <div class="col-md-2 col-lg-2 col-xl-2" align = "center" > `;
+                    case 10: // Person
+
                         if (searchLine.sear_image && searchLine.sear_image.length > 0) {
+                            output += ` <div class= "col-3" align = "center" > `;
                             output += ` <img src = '${imagePath}/img/persons/${searchLine.sear_image}' width = "100px" /> `;
+                            output += `</div > `;
+                            output += `<div class= "col-9" > `;
+                        } else {
+                            output += ` <div class= "" align = "center" > `;
+                            output += `</div > `;
+                            output += `<div class= "col-12" > `;
                         }
-                        output += `</div > `;
-                        output += `<div class="col col-md-10 col-lg-10 col-xl-10" >
+                        output += `
                             ${personIcon} - <span class="personButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span> - <span style="color:#eff2f2"> (${searchLine.sear_type})</span>  </br >
-                                ${searchLine.sear_moreinfo}...
-                                            </div > `;
+            ${searchLine.sear_moreinfo}...
+                                </div > `;
                         break
-                    case 11:
-                        output += ` <div class="col-md-2 col-lg-2 col-xl-2" align = "center" > `;
+                    case 11: // Keyword
+                        output += ` <div class= "" align = "center" > `;
                         output += `</div > `;
 
-                        output += `<div class="col col-md-10 col-lg-10 col-xl-10" >
-                        ${keyIcon} -  <span class="keywordButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span> - <span style="color:#eff2f2"> (${searchLine.sear_type})</span>  </br >
-                        ${searchLine.sear_moreinfo}...
+                        output += `<div class= "col-12" >
+            ${keyIcon} - <span class="keywordButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span> - <span style="color:#eff2f2"> (${searchLine.sear_type})</span>  </br >
+            ${searchLine.sear_moreinfo}...
                         </div > `;
                         break
                     case 12: // printer
-                        output += ` <div class="col-md-2 col-lg-2 col-xl-2" align = "center" > `;
+                        output += ` <div class= "" align = "center" > `;
                         output += `</div > `;
 
-                        output += `<div class="col col-md-10 col-lg-10 col-xl-10" >
-                            ${printerIcon} -  <span class="printerButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span> - <span style="color:#eff2f2"> (${searchLine.sear_type})</span>  </br >
-                                ${searchLine.sear_moreinfo}...
+                        output += `<div class= "col-12" >
+            ${printerIcon} - <span class="printerButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span> - <span style="color:#eff2f2"> (${searchLine.sear_type})</span>  </br >
+            ${searchLine.sear_moreinfo}...
                                                 </div > `;
 
                         break
                     case 13: // Publisher
-                        output += ` <div class=<div class="col-md-2 col-lg-2 col-xl-2" align="center" >`;
+                        output += ` <div class= <div class="" align="center" >`;
                         output += `</div>`;
 
-                        output += `<div class="col col-md-10 col-lg-10 col-xl-10" >
-                            ${publisherIcon} -  <span class="publisherButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span> - <span style="color:#eff2f2"> (${searchLine.sear_type})</span>  </br >
-                                ${searchLine.sear_moreinfo}...
+                        output += `<div class= "col-12" >
+            ${publisherIcon} - <span class="publisherButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span> - <span style="color:#eff2f2"> (${searchLine.sear_type})</span>  </br >
+            ${searchLine.sear_moreinfo}...
                         </div > `;
 
                         break
 
                     default:
-                        output += ` <div class="col-md-2 col-lg-2 col-xl-2" align = "center" > `;
+                        output += ` <div class= "" align = "center" > `;
                         output += `</div > `;
 
-                        output += `<div class="col col-md-10 col-lg-10 col-xl-10" >
-                            ${questionIcon} -  <span>${searchLine.sear_label}</span> - (${searchLine.sear_type}) </br >
-                            ${searchLine.sear_moreinfo ? searchLine.sear_moreinfo : ''} 
+                        output += `<div class= "col-12" >
+            ${questionIcon} - <span>${searchLine.sear_label}</span> - (${searchLine.sear_type}) </br >
+                ${searchLine.sear_moreinfo ? searchLine.sear_moreinfo : ''} 
                         </div > `;
 
                 }
@@ -154,6 +175,6 @@ export async function displaySearchContent(htlmPartId, searchString) {
 
 
     } catch (error) {
-        document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style = "margin-top:30px" role = "alert" > ${error}</div > `;
+        document.querySelector("#messageSection").innerHTML = `< div class="alert alert-danger" style = "margin-top:30px" role = "alert" > ${error}</div > `;
     }
 }

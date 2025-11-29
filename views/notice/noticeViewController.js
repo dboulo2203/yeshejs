@@ -82,9 +82,10 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
         output += `</div > `
 
     }
-    output += `</div > <hr />`; // end row
+    output += `</div > <hr style="margin-block-start:0.3rem;margin-block-end:0.3rem"/>`; // end row
 
     // *** Notice titles
+    output += `<div style=""><spanclass="fs-6" style="color:#8B2331">Titles</span></div>`;
     output += `<div class="col-md-12 main" " > <span class="fw - light" style ="color:grey">${getTranslation("Maintitle")}</span> : ${notice.noti_main_title}`;
     output += `</div>`
     if (notice.noti_sub_title)
@@ -92,9 +93,10 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
     if (notice.noti_parallel_title)
         output += `<div class="col-md-12 main"> <span class="fw-light" style ="color:grey">Parallel title</span> :  ${notice.noti_parallel_title}</div>`;
 
-    output += `<hr/>`;
+    output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem"/>`;
 
     // *** Notice description
+    output += `<div style=""><spanclass="fs-6" style="color:#8B2331">General description</span></div>`;
     output += `<div class="row row-cols-1 row-cols-xs-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 ">`;
     output += `<div class="col">`;
     output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">${getTranslation("Genre")}</span> : ${notice.genrt_name}</div>`;
@@ -122,7 +124,7 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
 
     output += `</div>`
     output += `</div>`
-    output += `<hr/>`;
+    output += `<hr style="margin-block-start:0.1rem;margin-block-end:0.3rem"/>`;
 
     // *** Persons
     output += `<div style=""><spanclass="fs-6" style="color:#8B2331">Personnes</span></div>`;
@@ -135,7 +137,7 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
 
     });
 
-    output += `<hr/>`;
+    output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem"/>`;
 
     // *** Keywords
     //  console.log("</br>*** keywords: </br >");
@@ -150,7 +152,7 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
 
 
     });
-    output += `<hr/>`;
+    output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem"/>`;
 
     // *** Languages
     // console.log("</br>*** keywords: </br >");
@@ -162,14 +164,14 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
         output += `<span class="fw-light" style ="color:grey"> ${language.ffnlt_name}</span> : ${language.lang_name}, `;
 
     });
-    output += `<hr/>`;
+    output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem"/>`;
 
     // *** Notes
     let notesList = getArrayFromjson(notice.notesFunctionFor);
     output += `<div ><span class="fs-6" style="color:#8B2331">Notes</span></div>`;
 
     notesList.map((note, index) => {
-        output += `<span class="fw-light" style ="color:grey;margin-top:20px">${note.ffnnt_name} </span> : ${note.ffnn_text} </br> `;
+        output += `<div style ="margin-bottom:10px"><span class="fw-light" style ="color:grey;margin-top:40px">${note.ffnnt_name} </span> : ${note.ffnn_text} </br> </div>`;
 
     });
     output += `<hr/>`;
@@ -185,7 +187,7 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
         output += `${multimedia.mult_name}  : ${multimedia.multt_name} : ${multimedia.mult_file} </br> `;
 
     });
-    output += `<hr/>`;
+    output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem"/>`;
 
     // Copies
     let exemplairesList = getArrayFromjson(notice.exemplairesFunctionFor);
@@ -195,7 +197,7 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
         output += ` ${exemplaire.exow_name} : ${exemplaire.exem_cote}  </br> `;
 
     });
-    output += `<hr/>`;
+    output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem"/>`;
     output += `</br></br>`;
     // output += `</br></br></br></br></br></br></br></br></br></br></br></br><hr/><div ><span class="fs-6" style="color:#8B2331">For developpers only</span></div>`;
     // output += "" + JSON.stringify(notice);

@@ -177,28 +177,66 @@ export async function displayPersonContent(mainDisplay, personID) {
 function getLinkedNoticesHtml(linkedNotices) {
     let outputln = '';
     linkedNotices.map((linkedNotice, index) => {
-        outputln += `<div class="row row-cols-1 row-cols-xs-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 " > `;
+        outputln += `<div class="row" > `;
 
         if (linkedNotice.noti_main_image && linkedNotice.noti_main_image.length > 0) {
-            outputln += `<div class="col-md-10 col-lg-10 col-xl-10" > <span style="cursor: pointer"  class="noticeButtons"
-        searid="${linkedNotice.noti_id}" > ${linkedNotice.noti_main_title} </span > `;
-            outputln += `</div > `
-            outputln += ` <div class="col-md-2 col-lg-2 col-xl-2" align = "center" > `;
+            outputln += ` <div class="col-3" align = "center" > `;
             outputln += ` <img src = '${imagePath}/img/books/${linkedNotice.noti_main_image}' width = "80px" /> `;
             outputln += `</div > `;
+            outputln += `<div class="col-9" > <span style="cursor: pointer"  class="noticeButtons"
+        searid="${linkedNotice.noti_id}" > ${linkedNotice.noti_main_title} </span > `;
+            outputln += `</div > `
 
         } else {
-            outputln += `<div class="col-md-10 col-lg-10 col-xl-10" > <span style="cursor: pointer" class="noticeButtons"
+            // outputln += ` <div class="col-3" align = "center" > `;
+            // //  outputln += ` <img src = '${imagePath}/img/books/${linkedNotice.noti_main_image}' width = "80px" /> `;
+            // outputln += `</div > `;
+            outputln += `<div class="col-12" > <span style="cursor: pointer" class="noticeButtons"
         searid="${linkedNotice.noti_id}" > ${linkedNotice.noti_main_title} </span >`;
-            outputln += `</div > `
-            outputln += ` <div class="col-md-2 col-lg-2 col-xl-2" align = "center" > `;
             outputln += `</div > `;
 
         }
-        outputln += `</div > `
+        outputln += `</div > 
+        `
         outputln += `<hr style = "color:#a5a5a5" / > `;
 
     });
     return outputln;
 
 }
+
+
+// /**
+//  * Returns the list of the notices linked with the person
+//  * @param {*} linkedNotices
+//  * @returns
+//  */
+// function getLinkedNoticesHtml(linkedNotices) {
+//     let outputln = '';
+//     linkedNotices.map((linkedNotice, index) => {
+//         outputln += `<div class="row row-cols-1 row-cols-xs-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 " > `;
+
+//         if (linkedNotice.noti_main_image && linkedNotice.noti_main_image.length > 0) {
+//             outputln += `<div class="col-md-10 col-lg-10 col-xl-10" > <span style="cursor: pointer"  class="noticeButtons"
+//         searid="${linkedNotice.noti_id}" > ${linkedNotice.noti_main_title} </span > `;
+//             outputln += `</div > `
+//             outputln += ` <div class="col-md-2 col-lg-2 col-xl-2" align = "center" > `;
+//             outputln += ` <img src = '${imagePath}/img/books/${linkedNotice.noti_main_image}' width = "80px" /> `;
+//             outputln += `</div > `;
+
+//         } else {
+//             outputln += `<div class="col-md-10 col-lg-10 col-xl-10" > <span style="cursor: pointer" class="noticeButtons"
+//         searid="${linkedNotice.noti_id}" > ${linkedNotice.noti_main_title} </span >`;
+//             outputln += `</div > `
+//             outputln += ` <div class="col-md-2 col-lg-2 col-xl-2" align = "center" > `;
+//             outputln += `</div > `;
+
+//         }
+//         outputln += `</div >
+//         `
+//         outputln += `<hr style = "color:#a5a5a5" / > `;
+
+//     });
+//     return outputln;
+
+// }
