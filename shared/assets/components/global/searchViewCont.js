@@ -8,13 +8,10 @@ import { leftMenuViewDisplay } from './leftMenuViewCont.js'
 export function searchViewDisplay(htlmPartId) {
 
     let menuString = `
-    <div id="menuPart" style="margin-top:40px">
-        <hr style="color:grey"></hr>
-        <div class="flex justify-content-center " style="padding:5px">
-
+    <div id="menuPart" style="margin-top:60px">
+        <div class="flex justify-content-center " style="padding:0px">
             <div class="input-group mb-3">
                 <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
-
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="#">Standard</a></li>
                     <li><a class="dropdown-item" href="#">Database</a></li>
@@ -30,12 +27,10 @@ export function searchViewDisplay(htlmPartId) {
                     </svg>
                 </button>
             </div>
-
         </div>
-        <hr style="color:grey"></hr>
     </div>
  `;
-
+    //   <!-- <hr style="color:grey"></hr> -->
     //     < !-- < div class="input-group justify-content-center input-group-sm mb-3" >
     // <input class="text  border-secondary border-bottom" type="search" style="margin-right:4px;border-width:1px;border-top-style:none;border-left-style:none;border-right-style:none;padding-left:5px" placeholder="" id="searchInputString1" aria-label="Search">
     //     <button class="btn btn-outline-secondary border-secondary" id="searchBtn1" style="margin-right:30px">${getTranslation("search")}</button>

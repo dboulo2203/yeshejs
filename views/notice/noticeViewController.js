@@ -67,13 +67,13 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
         <hr />`;
 
     // *** Notice image and noticeCatalogDescription
-    output += `<div class="row row-cols-1 row-cols-xs-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 " > `;
+    output += `<div class="row " > `;
     if (notice.noti_main_image && notice.noti_main_image.length > 0) {
-        output += ` <div class="col-md-2 col-lg-2 col-xl-2" align="center" > `;
+        output += ` <div class="col-3" align="center" > `;
         output += ` <img src = '${imagePath}/img/books/${notice.noti_main_image}' width = "100px" /> `;
         output += `</div > `;
 
-        output += `<div class="col-md-10 col-lg-10 col-xl-10" style = "" > ${notice.noticeCatalogDescription} `;
+        output += `<div class="col-9 " style = "" > ${notice.noticeCatalogDescription} `;
         output += `</div > `
 
     } else {
@@ -96,9 +96,10 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
     output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem"/>`;
 
     // *** Notice description
-    output += `<div style=""><spanclass="fs-6" style="color:#8B2331">General description</span></div>`;
     output += `<div class="row row-cols-1 row-cols-xs-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 ">`;
     output += `<div class="col">`;
+    output += `<div style=""><spanclass="fs-6" style="color:#8B2331">General description</span></div>`;
+
     output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">${getTranslation("Genre")}</span> : ${notice.genrt_name}</div>`;
     output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">${getTranslation("Theme")}</span> : ${notice.them_name}</div>`;
     output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">${getTranslation("Bibliographiclevel")}</span> : ${notice.blil_name}</div>`;
@@ -115,64 +116,58 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
 
     // *** Edition
     output += `<div class="col">`;
+    output += `<div style=""><spanclass="fs-6" style="color:#8B2331">Publication</span></div>`;
     output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">Editeur </span> : ${notice.publ_name}</div>`;
     output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">Année de publication</span> : ${notice.noti_year_of_publication}</div>`;
     output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">Lieu de publication</span> : ${notice.noti_place_of_publication}</div>`;
     output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">Type de publication</span> : ${notice.noti_type_of_publication}</div>`;
     output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">ISBN/ISNN</span> : ${notice.noti_basenumber}</div>`;
     output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">EAN </span> : ${notice.noti_codedouchette}</div>`;
-
     output += `</div>`
     output += `</div>`
     output += `<hr style="margin-block-start:0.1rem;margin-block-end:0.3rem"/>`;
 
-    // *** Persons
-    output += `<div style=""><spanclass="fs-6" style="color:#8B2331">Personnes</span></div>`;
 
+    output += `<div class="row row-cols-1 row-cols-xs-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 ">`;
+    output += `<div class="col">`;
+    // *** Persons
+    output += `<div style=""><spanclass="fs-6 " style="color:#8B2331">Personnes</span></div>`;
     let personsList = getArrayFromjson(notice.personsFunctionFor);
 
     personsList.map((person, index) => {
         output += `<span class="fw-light" style ="color:grey"> ${person.tffd_name}</span> : <span style="cursor: pointer" class="personButtons" 
-            searid="${person.chaa_id}">${person.coal_name} </span>, `;
+            searid="${person.chaa_id}">${person.coal_name} </span>,</br> `;
 
     });
-
-    output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem"/>`;
+    output += `</div>`
+    // output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem"/>`;
 
     // *** Keywords
-    //  console.log("</br>*** keywords: </br >");
+    output += `<div class="col">`;
     output += `<div style=""><spanclass="fs-6" style="color:#8B2331">Keywords</span></div>`;
-
     let keywordList = getArrayFromjson(notice.keywordsFunctionFor);
-
     keywordList.map((keyword, index) => {
         //  output += `<span class="fw-light" style ="color:grey"> ${keyword.tffc_name}</span> : ${keyword.coal_name}, `;
         output += `<span class="fw-light" style ="color:grey"> ${keyword.tffd_name}</span> : <span style="cursor: pointer" class="keywordButtons" 
-        searid="${keyword.conc_id}">${keyword.coal_name} </span>, `;
-
-
+        searid="${keyword.conc_id}">${keyword.coal_name} </span>, </br>`;
     });
+    output += `</div>`;
+    output += `</div>`;
     output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem"/>`;
 
     // *** Languages
-    // console.log("</br>*** keywords: </br >");
     output += `<div style=""><spanclass="fs-6" style="color:#8B2331">Languages</span></div>`;
-
     let languagesList = getArrayFromjson(notice.languagesFunctionFor);
-
     languagesList.map((language, index) => {
         output += `<span class="fw-light" style ="color:grey"> ${language.ffnlt_name}</span> : ${language.lang_name}, `;
-
     });
     output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem"/>`;
 
     // *** Notes
     let notesList = getArrayFromjson(notice.notesFunctionFor);
     output += `<div ><span class="fs-6" style="color:#8B2331">Notes</span></div>`;
-
     notesList.map((note, index) => {
         output += `<div style ="margin-bottom:10px"><span class="fw-light" style ="color:grey;margin-top:40px">${note.ffnnt_name} </span> : ${note.ffnn_text} </br> </div>`;
-
     });
     output += `<hr/>`;
 
@@ -182,27 +177,21 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
     // *** Multimedia
     let multimediasList = getArrayFromjson(notice.multimediasFunctionFor);
     output += `<div ><span class="fs-6" style="color:#8B2331">Multimedia</span></div>`;
-
     multimediasList.map((multimedia, index) => {
         output += `${multimedia.mult_name}  : ${multimedia.multt_name} : ${multimedia.mult_file} </br> `;
-
     });
     output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem"/>`;
 
     // Copies
     let exemplairesList = getArrayFromjson(notice.exemplairesFunctionFor);
     output += `<div ><span class="fs-6" style="color:#8B2331">Copies</span></div>`;
-
     exemplairesList.map((exemplaire, index) => {
         output += ` ${exemplaire.exow_name} : ${exemplaire.exem_cote}  </br> `;
-
     });
     output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem"/>`;
     output += `</br></br>`;
-    // output += `</br></br></br></br></br></br></br></br></br></br></br></br><hr/><div ><span class="fs-6" style="color:#8B2331">For developpers only</span></div>`;
-    // output += "" + JSON.stringify(notice);
 
-    // *** Display 
+    // *** Display string
     document.querySelector("#" + mainDisplay).innerHTML = output;
 
     // *** Actions
