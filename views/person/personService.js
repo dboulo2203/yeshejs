@@ -1,5 +1,5 @@
-import { wsUrlformel } from '../../shared/assets/constants.js';
-
+// import { wsUrlformel } from '../../shared/assets/constants.js';
+import { getwsUrlformel } from '../../shared/services/initialisationService.js';
 /**
  * Load a person from the database, 
  * the person is saved in the localStorage
@@ -11,7 +11,7 @@ export async function getPerson(personId) {
 
     console.log("getPerson Service start");
 
-    var wsUrl = wsUrlformel + `person/${personId}`;
+    var wsUrl = getwsUrlformel() + `person/${personId}`;
     let responsefr = await fetch(wsUrl);
     if (responsefr.ok) {
         // *** Get the data and save in the localstorage
@@ -37,7 +37,7 @@ export async function getPerson(personId) {
 export async function getPersonFromAliasID(personAliasId, callback) {
 
     console.log("getPersonFromAliasID Service start");
-    var wsUrl = wsUrlformel + `person/${personAliasId}/getByAlias`;
+    var wsUrl = getwsUrlformel() + `person/${personAliasId}/getByAlias`;
     let responsefr = await fetch(wsUrl);
     if (responsefr.ok) {
         // *** Get the data and save in the localstorage
@@ -77,7 +77,7 @@ export async function getPersonAliases(personId) {
 
     console.log("getPersonAliases Service start");
 
-    var wsUrl = wsUrlformel + `person/${personId}/getAliases`;
+    var wsUrl = getwsUrlformel() + `person/${personId}/getAliases`;
 
     let responsefr = await fetch(wsUrl);
 
@@ -105,7 +105,7 @@ export async function getlinkedNotices(personId) {
 
     console.log("getlinkedNotices Service start");
 
-    var wsUrl = wsUrlformel + `person/${personId}/linkednotices`;
+    var wsUrl = getwsUrlformel() + `person/${personId}/linkednotices`;
 
     let responsefr = await fetch(wsUrl);
 
@@ -130,7 +130,7 @@ export async function getlinkedNotices(personId) {
  */
 export async function updatePerson(person) {
 
-    let wsUrl = wsUrlformel + `person/${person.conc_id}`;
+    let wsUrl = getwsUrlformel() + `person/${person.conc_id}`;
 
     console.log("updatePersonService start :2 " + wsUrl + " " + JSON.stringify(person));
 
@@ -156,7 +156,7 @@ export async function updatePerson(person) {
  */
 export async function createPerson(person) {
 
-    let wsUrl = wsUrlformel + `person/0`;
+    let wsUrl = getwsUrlformel() + `person/0`;
 
     console.log("createPerson Service start : " + wsUrl + JSON.stringify(person));
     const myHeaders = new Headers();

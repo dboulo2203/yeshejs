@@ -4,13 +4,16 @@ import { getKeyword, getKeywordAliases, getKeywordlinkedNotices, getKeywordFromA
 // import { personNewModalDisplay } from './personNewModalViewController.js'
 
 // *** Shared ressources
+import { getAppPath } from '../../shared/services/commonFunctions.js'
+import { keyIcon, bookIcon } from '../../shared/assets/constants.js';
 import { getTranslation } from '../../shared/services/translationService.js'
-import { getArrayFromjson } from '../../shared/functions/commonFunctions.js'
-import { currentApplicationPath, imagePath, pencilsquare, plussquare } from '../../shared/assets/constants.js'
-import { getCurrentUSerRightLevel } from '../../shared/components/login/loginService.js'
-import { addMultipleEnventListener } from '../../shared/functions/commonFunctions.js'
+import { getArrayFromjson } from '../../shared/services/commonFunctions.js'
+import { getimagePath } from '../../shared/services/initialisationService.js'
+import { pencilsquare, plussquare } from '../../shared/assets/constants.js'
+import { getCurrentUSerRightLevel } from '../../shared/services/login/loginService.js'
+import { addMultipleEnventListener } from '../../shared/services/commonFunctions.js'
 import { launchInitialisation } from '../../shared/services/initialisationService.js';
-import { headerViewDisplay } from '../../shared/assets/components/global/headerViewCont.js'
+import { headerViewDisplay } from '../../shared/services/headerViewCont.js'
 
 /**
  * Start script 
@@ -82,8 +85,8 @@ export async function displayKeywordContent(mainDisplay, keywordID) {
         let keywordlinkedNotices = await getKeywordlinkedNotices(keywordID);
 
         // ** Main template
-        let keywordScreen = `<div class="d-flex  justify-content-between" style="padding-top:20px">
-                    <span class="fs-5" style="color:#8B2331"> ${getTranslation("keyword")} : <span
+        let keywordScreen = `<div class="d-flex  justify-content-between" style="margin-top:60px">
+                    <span class="fs-5" style="color:#8B2331">${keyIcon} ${getTranslation("keyword")} : <span
                     id="concname">${keyword.conc_name}</span></span>
                    <div>
                 <span ${getCurrentUSerRightLevel(20)} id="editButton" style="cursor: pointer"> ${pencilsquare}</span>
@@ -91,7 +94,7 @@ export async function displayKeywordContent(mainDisplay, keywordID) {
             </div>
    
         </div>
-        <hr />
+        <hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>
         
         <!-- Display name and image -->
         <div class="row row-cols-1 row-cols-xs-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 "> 
@@ -109,21 +112,22 @@ export async function displayKeywordContent(mainDisplay, keywordID) {
             }
         </div>    
 
-         <hr /> 
+         <hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>
          ${testBoolean ? 'Display bolean' : ''}
 
             <! Display aliases -->
         <div style=""> <spanclass="fs-6" style="color:#8B2331"> Keyword Aliases</span></div >
         <div id="concaliases">
-            ${keywordAliases.map((keywordAliase, index) => (
-                `<span class="fw-light" style = "color:grey" >` + keywordAliase.lang_name + `</span > : ` + keywordAliase.coal_name + `, `
+            ${keywordAliases.map((keywordAliase, index, keywordAliases) => (
+                `<span class="fw-light" style = "color:grey" >` + keywordAliase.lang_name + `</span > : ` + keywordAliase.coal_name + `
+                    ${index + 1 === keywordAliases.length ? '.' : ', '}`
             )).join("")}
         </div >
-        <hr />
+        <hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>
 
         <div><span class="fs-6" style="color:#8B2331">Note</span></div>
         <div id="concnote">${keyword.conc_note} </div>
-        <hr />
+        <hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>
 
         <div><span class="fs-6" style="color:#8B2331">Notices linked</span></div>
         <div id="conclinkednotices" style="margin-top:20px">
@@ -149,7 +153,7 @@ export async function displayKeywordContent(mainDisplay, keywordID) {
 
         // *** Add action to each notice linked - Action = open notice component and load the notice. 
         addMultipleEnventListener(".noticeButtons", function () {
-            window.location.href = `${currentApplicationPath}/views/notice/notice.html?noticeID=` + $(this).attr('searid');
+            window.location.href = `${getAppPath()}/views/notice/notice.html?noticeID=` + event.currentTarget.getAttribute('searid');
         });
 
 
@@ -174,26 +178,27 @@ export async function displayKeywordContent(mainDisplay, keywordID) {
 function getLinkedNoticesHtml(linkedNotices) {
     let outputln = '';
     linkedNotices.map((linkedNotice, index) => {
-        outputln += `<div class="row row-cols-1 row-cols-xs-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 " > `;
+        outputln += `<div class="row " > `;
 
         if (linkedNotice.noti_main_image && linkedNotice.noti_main_image.length > 0) {
-            outputln += `<div class="col-md-10 col-lg-10 col-xl-10" > <span style="cursor: pointer"  class="noticeButtons"
-        searid="${linkedNotice.noti_id}" > ${linkedNotice.noti_main_title} </span > `;
-            outputln += `</div > `
-            outputln += ` <div class="col-md-2 col-lg-2 col-xl-2" align = "center" > `;
-            outputln += ` <img src = '${imagePath}/img/books/${linkedNotice.noti_main_image}' width = "80px" /> `;
+            outputln += ` <div class="col-3" align = "center" > `;
+            outputln += ` <img src = '${getimagePath()}/img/books/${linkedNotice.noti_main_image}' width = "80px" /> `;
             outputln += `</div > `;
+            outputln += `<div class="col-9" > <span style="cursor: pointer"  class="noticeButtons"
+        searid="${linkedNotice.noti_id}" > ${bookIcon} ${linkedNotice.noti_main_title} </span > `;
+            outputln += `</div > `
 
         } else {
-            outputln += `<div class="col-md-10 col-lg-10 col-xl-10" > <span style="cursor: pointer" class="noticeButtons"
-        searid="${linkedNotice.noti_id}" > ${linkedNotice.noti_main_title} </span >`;
-            outputln += `</div > `
-            outputln += ` <div class="col-md-2 col-lg-2 col-xl-2" align = "center" > `;
+            outputln += ` <div class="col-3" align = "center" > `;
+            // outputln += ` <img src = '${imagePath}/img/books/${linkedNotice.noti_main_image}' width = "80px" /> `;
+            outputln += `</div > `;
+            outputln += `<div class="col-9" > <span style="cursor: pointer" class="noticeButtons"
+        searid="${linkedNotice.noti_id}" > ${bookIcon} ${linkedNotice.noti_main_title} </span >`;
             outputln += `</div > `;
 
         }
         outputln += `</div > `
-        outputln += `<hr style = "color:#a5a5a5" / > `;
+        outputln += `<hr style = "color:#a5a5a5" /> `;
 
     });
     return outputln;

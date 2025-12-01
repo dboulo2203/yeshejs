@@ -1,4 +1,5 @@
-import { wsUrlformel } from '../../shared/assets/constants.js';
+// import { wsUrlformel } from '../../shared/assets/constants.js';
+import { getwsUrlformel } from '../../shared/services/initialisationService.js';
 
 /**
  * 
@@ -9,7 +10,7 @@ import { wsUrlformel } from '../../shared/assets/constants.js';
  */
 export async function getSearch(searchString, mode) {
 
-    var wsUrl = wsUrlformel + `searchAdvanced/${mode}/${searchString}`;
+    var wsUrl = getwsUrlformel() + `searchAdvanced/${mode}/${searchString}`;
     let responseWS = await fetch(wsUrl);
 
     if (responseWS.ok) {

@@ -2,6 +2,7 @@
 // import { getLogin } from '../../shared/services/loginService.js'
 import { getLogin } from './loginService.js'
 
+import { getAppPath } from '../../services/commonFunctions.js'
 const loginContainer = `<div id="modalPlace"></div>`;
 const editModaleString = `
 <div class="container">
@@ -60,7 +61,7 @@ export function loginViewDisplay(htlmPartId) {
 
         document.querySelector("#searchInputString").addEventListener("keypress", function (event) {
             if (event.keyCode === 13) {
-                window.location.href = `${currentApplicationPath}/views/search/search.html?searchStr=` + $("#searchInputString").val();
+                window.location.href = `${getAppPath()}/views/search/search.html?searchStr=` + $("#searchInputString").val();
             }
         });
 

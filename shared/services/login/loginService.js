@@ -1,4 +1,5 @@
-import { wsUrlformel } from '../../assets/constants.js';
+//import { wsUrlformel } from '../../assets/constants.js';
+import { getwsUrlformel } from '../initialisationService.js';
 
 /**
  * Load a person from the database, 
@@ -9,11 +10,11 @@ import { wsUrlformel } from '../../assets/constants.js';
  */
 export async function getLogin(userEmail, userPassword) {
 
-    console.log("getLogin Service start : " + wsUrlformel + `user/${userEmail}?logUser=user_email&password=${userPassword}`);
+    // console.log("getLogin Service start : " + getwsUrlformel() + `user/${userEmail}?logUser=user_email&password=${userPassword}`);
 
     localStorage.setItem("loggedUSer", "");
 
-    var wsUrl = wsUrlformel + `user/${userEmail}?logUser=user_email&password=${userPassword}`;
+    var wsUrl = getwsUrlformel() + `user/${userEmail}?logUser=user_email&password=${userPassword}`;
 
     let responsefr = await fetch(wsUrl);
 

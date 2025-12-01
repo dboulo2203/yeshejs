@@ -1,9 +1,10 @@
 // *** shared services
-import { currentApplicationPath } from '../../shared/assets/constants.js'
+// import { currentApplicationPath } from '../../shared/assets/constants.js'
+import { getAppPath } from '../../shared/services/commonFunctions.js'
 import { launchInitialisation } from '../../shared/services/initialisationService.js'
-import { headerViewDisplay } from '../../shared/assets/components/global/headerViewCont.js'
-import { footerViewDisplay } from '../../shared/assets/components/global/footerViewCont.js'
-import { parseMarkdown, simpleMarkdown, loadFile, loadFileFetch } from '../../shared/functions/commonFunctions.js'
+import { headerViewDisplay } from '../../shared/services/headerViewCont.js'
+import { footerViewDisplay } from '../../shared/services/footerViewCont.js'
+import { parseMarkdown, simpleMarkdown, loadFile, loadFileFetch } from '../../shared/services/commonFunctions.js'
 // *** Menu string
 const mainStringPage = ` 
 # test 
@@ -34,7 +35,7 @@ export async function startDocumentationController() {
     // *** Display menu
     headerViewDisplay("#menuSection");
 
-    let mdContent = await loadFileFetch(`${currentApplicationPath}/README.md`);
+    let mdContent = await loadFileFetch(`${getAppPath()}/README.md`);
 
     let htmldoc = simpleMarkdown(mdContent);
 

@@ -102,7 +102,7 @@ TODO : remplacement document.ready
         - les states sont sauvés dans le localstorage
         - Le service gère les méthodes de l'objet  
 
-    - commonFunctions : fonctions javascript communes.  
+    - commonFunctions.js : fonctions javascript communes.  
 
 - Locales : fichiers de sauvegarde des traductions
 

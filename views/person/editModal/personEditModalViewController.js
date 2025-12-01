@@ -1,6 +1,6 @@
 // Component ressources
-import { getPerson, updatePerson, getCurrentPerson } from './personService.js'
-import { displayPersonContent } from './personViewController.js'
+import { getPerson, updatePerson, getCurrentPerson } from '../personService.js'
+import { displayPersonContent } from '../personViewController.js'
 const editModaleString = `
 <div class="container">
     <div class="modal fade" id="myModalDom" role="dialog" data-bs-backdrop="static"

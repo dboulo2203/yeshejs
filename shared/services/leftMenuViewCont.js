@@ -1,5 +1,5 @@
 
-import { currentApplicationPath } from '../../constants.js'
+import { getAppPath } from '../services/commonFunctions.js'
 
 //***
 // catalog
@@ -46,6 +46,6 @@ export function leftMenuViewDisplay(htlmPartId) {
 
 
     document.querySelector("#newPersonButton").onclick = function () {
-        window.location.href = `${currentApplicationPath}/views/person/person.html`;
+        window.location.href = `${getAppPath()}/views/person/person.html`;
     };
 }

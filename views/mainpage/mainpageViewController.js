@@ -1,12 +1,12 @@
 // *** shared services
-import { currentApplicationPath } from '../../shared/assets/constants.js'
+import { getAppPath } from '../../shared/services/commonFunctions.js'
 import { launchInitialisation } from '../../shared/services/initialisationService.js'
-import { headerViewDisplay } from '../../shared/assets/components/global/headerViewCont.js'
-import { searchViewDisplay } from '../../shared/assets/components/global/searchViewCont.js'
-import { footerViewDisplay } from '../../shared/assets/components/global/footerViewCont.js'
+import { headerViewDisplay } from '../../shared/services/headerViewCont.js'
+import { searchViewDisplay } from '../../shared/services/searchViewCont.js'
+import { footerViewDisplay } from '../../shared/services/footerViewCont.js'
 // *** Menu string
 const mainStringPage = ` 
-           <img src="${currentApplicationPath}/shared/assets/main_picture.jpg" width="100%">
+           <img src="${getAppPath()}/shared/assets/main_picture.jpg" width="100%">
 `;
 
 export async function startMainPageController() {

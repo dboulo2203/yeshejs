@@ -1,14 +1,16 @@
 
-import { currentApplicationPath } from '../assets/constants.js'
+import { getAppPath } from '../services/commonFunctions.js'
+
 /**
  * Load the translation files in the localstorage
+ * Load fr and en languages
  * 
  * TODO : the function can load translations from languages
  */
 export async function loadTranslations() {
 
     // *** Load french language
-    const responsefr = await fetch(`${currentApplicationPath}/shared/assets/locales/fr/translation.json`);
+    const responsefr = await fetch(`${getAppPath()}/shared/assets/locales/fr/translation.json`);
     const datafr = await responsefr.json();
     if (responsefr.ok) {
         localStorage.setItem("frTranslation", JSON.stringify(datafr));
@@ -19,7 +21,7 @@ export async function loadTranslations() {
     }
 
     // *** Load english language 
-    const responseen = await fetch(`${currentApplicationPath}/shared/assets/locales/en/translation.json`);
+    const responseen = await fetch(`${getAppPath()}/shared/assets/locales/en/translation.json`);
     const dataen = await responseen.json();
 
     if (responsefr.ok) {
@@ -56,7 +58,6 @@ export function getCurrentLanguage() {
  */
 export function getTranslation(wordToTranslate) {
 
-    // let listresult = null;
     // *** Get the database according to the current language in the browser
     let frBase = localStorage.getItem(getCurrentLanguage() + "Translation");
     let base = JSON.parse(frBase);
@@ -66,6 +67,8 @@ export function getTranslation(wordToTranslate) {
     let valeur = '';
     if (foundIndex >= 0)
         valeur = (Object.values(base)[foundIndex]);
+    else
+        valeur = '!! Translation not found !! ';
 
     return valeur;
 

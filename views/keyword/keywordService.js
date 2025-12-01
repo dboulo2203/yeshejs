@@ -1,4 +1,4 @@
-import { wsUrlformel } from '../../shared/assets/constants.js';
+import { getwsUrlformel } from '../../shared/services/initialisationService.js';
 
 /**
  * Load a person from the database, 
@@ -11,7 +11,7 @@ export async function getKeyword(keywordId) {
 
     console.log("getKeyword Service start");
 
-    var wsUrl = wsUrlformel + `keyword/${keywordId}`;
+    var wsUrl = getwsUrlformel() + `keyword/${keywordId}`;
     let responsefr = await fetch(wsUrl);
     if (responsefr.ok) {
         // *** Get the data and save in the localstorage
@@ -36,7 +36,7 @@ export async function getKeyword(keywordId) {
 export async function getKeywordFromAliasID(keywordAliasId) {
 
     console.log("getKeywordFromAliasID Service start");
-    var wsUrl = wsUrlformel + `keyword/${keywordAliasId}/getByAlias`;
+    var wsUrl = getwsUrlformel() + `keyword/${keywordAliasId}/getByAlias`;
     let responsefr = await fetch(wsUrl);
     if (responsefr.ok) {
         // *** Get the data and save in the localstorage
@@ -76,7 +76,7 @@ export async function getKeywordAliases(keywordID) {
 
     console.log("getKeywordAliases Service start");
 
-    var wsUrl = wsUrlformel + `keyword/${keywordID}/getAliases`;
+    var wsUrl = getwsUrlformel() + `keyword/${keywordID}/getAliases`;
 
     let responsefr = await fetch(wsUrl);
 
@@ -103,7 +103,7 @@ export async function getKeywordlinkedNotices(personId) {
 
     console.log("getKeywordlinkedNotices Service start");
 
-    var wsUrl = wsUrlformel + `keyword/${personId}/linkednotices`;
+    var wsUrl = getwsUrlformel() + `keyword/${personId}/linkednotices`;
 
     let responsefr = await fetch(wsUrl);
 

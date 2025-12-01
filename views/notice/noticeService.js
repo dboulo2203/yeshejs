@@ -1,4 +1,4 @@
-import { wsUrlformel } from '../../shared/assets/constants.js';
+import { getwsUrlformel } from '../../shared/services/initialisationService.js';
 
 /**
  * 
@@ -9,7 +9,7 @@ export async function getNotice(noticeId) {
 
     console.log("getNotice Service start");
 
-    var wsUrl = wsUrlformel + `notice/${noticeId}`;
+    var wsUrl = getwsUrlformel() + `notice/${noticeId}`;
     let responsefr = await fetch(wsUrl);
     if (responsefr.ok) {
         // *** Get the data and save in the localstorage

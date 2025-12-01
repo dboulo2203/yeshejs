@@ -1,7 +1,7 @@
 // Component ressources
-import { getPerson, createPerson, getCurrentPerson } from './personService.js'
-import { getLanguagesList } from '../../shared/services/languageService.js'
-import { displayPersonContent } from './personViewController.js'
+import { getPerson, createPerson, getCurrentPerson } from '../personService.js'
+import { getLanguagesList } from '../../../shared/yesheServices/yesheLanguageService.js'
+// import { displayPersonContent } from './personViewController.js'
 
 const newModaleString = `
 <div class="container">

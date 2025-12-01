@@ -2,13 +2,16 @@
 import { getSearch } from './searchService.js';
 
 //***  shared ressources
-import { currentApplicationPath, imagePath } from '../../shared/assets/constants.js'
+import { getAppPath } from '../../shared/services/commonFunctions.js'
+// import { imagePath } from '../../shared/assets/constants.js'
+import { getimagePath } from '../../shared/services/initialisationService.js'
 import { bookIcon, personIcon, keyIcon, printerIcon, publisherIcon, questionIcon } from '../../shared/assets/constants.js'
-import { addMultipleEnventListener } from '../../shared/functions/commonFunctions.js'
+import { addMultipleEnventListener } from '../../shared/services/commonFunctions.js'
 import { getTranslation } from '../../shared/services/translationService.js'
-import { headerViewDisplay } from '../../shared/assets/components/global/headerViewCont.js'
+import { headerViewDisplay } from '../../shared/services/headerViewCont.js'
 import { launchInitialisation } from '../../shared/services/initialisationService.js'
-import { searchViewDisplay } from '../../shared/assets/components/global/searchViewCont.js'
+import { searchViewDisplay } from '../../shared/services/searchViewCont.js'
+
 export const searchPart = `
               <div class="col-md-12 main" style="padding:10px" id="resultDisplay">
      </div >
@@ -19,6 +22,7 @@ export async function startSearchController() {
     try {
         // *** Initialisations
         await launchInitialisation();
+
         headerViewDisplay("#menuSection");
         searchViewDisplay("#searchSection");
 
@@ -54,10 +58,10 @@ export async function displaySearchContent(htlmPartId, searchString) {
         // ** Display data   
         output += `<div style="margin-bottom:20px">
         <span class="fs-5" style="color:#8B2331" style="margin-bottom:0px; margin-top:0px">
-          ${getTranslation("searchname")} : 
+          ${getTranslation("searchname")} - ${searchString} : 
         </span>
         <span ><small>
-            : ${searchLines.length} lines
+             ${searchLines.length} lines
         </small>
         </span ><hr style="margin-top:0px"/>
         </div>`;
@@ -86,7 +90,7 @@ export async function displaySearchContent(htlmPartId, searchString) {
 
                         if (searchLine.sear_image && searchLine.sear_image.length > 0) {
                             output += ` <div class="col-3 " align = "center" > `;
-                            output += ` <img src = '${imagePath}/img/books/${searchLine.sear_image}' style = "max-width:100px;width:100%" /> `;
+                            output += ` <img src = '${getimagePath()}/img/books/${searchLine.sear_image}' style = "max-width:100px;width:100%" /> `;
                             output += `</div > `;
                             output += `<div class="col-9" > `;
                         } else {
@@ -95,7 +99,7 @@ export async function displaySearchContent(htlmPartId, searchString) {
                             output += `<div class="col-12" > `;
 
                         }
-                        output += `${bookIcon} -  <span class="bookButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span> - 
+                        output += `${bookIcon} -  <span class="bookButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span>
                         <span style="color:#eff2f2"> (${searchLine.sear_type})</span> </br >
             ${searchLine.sear_moreinfo}...
                             </div > `;
@@ -104,7 +108,7 @@ export async function displaySearchContent(htlmPartId, searchString) {
 
                         if (searchLine.sear_image && searchLine.sear_image.length > 0) {
                             output += ` <div class= "col-3" align = "center" > `;
-                            output += ` <img src = '${imagePath}/img/persons/${searchLine.sear_image}' width = "100px" /> `;
+                            output += ` <img src = '${getimagePath()}/img/persons/${searchLine.sear_image}' width = "100px" /> `;
                             output += `</div > `;
                             output += `<div class= "col-9" > `;
                         } else {
@@ -113,7 +117,7 @@ export async function displaySearchContent(htlmPartId, searchString) {
                             output += `<div class= "col-12" > `;
                         }
                         output += `
-                            ${personIcon} - <span class="personButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span> - <span style="color:#eff2f2"> (${searchLine.sear_type})</span>  </br >
+                            ${personIcon} - <span class="personButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span> <span style="color:#eff2f2"> (${searchLine.sear_type})</span>  </br >
             ${searchLine.sear_moreinfo}...
                                 </div > `;
                         break
@@ -122,7 +126,7 @@ export async function displaySearchContent(htlmPartId, searchString) {
                         output += `</div > `;
 
                         output += `<div class= "col-12" >
-            ${keyIcon} - <span class="keywordButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span> - <span style="color:#eff2f2"> (${searchLine.sear_type})</span>  </br >
+            ${keyIcon} - <span class="keywordButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span> <span style="color:#eff2f2"> (${searchLine.sear_type})</span>  </br >
                 ${searchLine.sear_moreinfo}...
                         </div > `;
                         break
@@ -141,7 +145,7 @@ export async function displaySearchContent(htlmPartId, searchString) {
                         output += `</div>`;
 
                         output += `<div class= "col-12" >
-            ${publisherIcon} - <span class="publisherButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span> - <span style="color:#eff2f2"> (${searchLine.sear_type})</span>  </br >
+            ${publisherIcon} - <span class="publisherButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span>  <span style="color:#eff2f2"> (${searchLine.sear_type})</span>  </br >
                 ${searchLine.sear_moreinfo}...
                         </div > `;
 
@@ -166,16 +170,16 @@ export async function displaySearchContent(htlmPartId, searchString) {
 
 
         // *** Add actions 
-        addMultipleEnventListener(".bookButtons", function () {
-            window.location.href = `${currentApplicationPath}/views/notice/notice.html?noticeID=` + $(this).attr('searid');
+        addMultipleEnventListener(".bookButtons", function (event) {
+            window.location.href = `${getAppPath()}/views/notice/notice.html?noticeID=` + event.currentTarget.getAttribute('searid');
         });
 
-        addMultipleEnventListener(".personButtons", function () {
-            window.location.href = `${currentApplicationPath}/views/person/person.html?personID=` + $(this).attr('searid') + ``;
+        addMultipleEnventListener(".personButtons", function (event) {
+            window.location.href = `${getAppPath()}/views/person/person.html?personID=` + event.currentTarget.getAttribute('searid');
         });
 
-        addMultipleEnventListener(".keywordButtons", function () {
-            window.location.href = `${currentApplicationPath}/views/keyword/keyword.html?keywordID=` + $(this).attr('searid') + ``;
+        addMultipleEnventListener(".keywordButtons", function (event) {
+            window.location.href = `${getAppPath()}/views/keyword/keyword.html?keywordID=` + event.currentTarget.getAttribute('searid');
         });
 
 

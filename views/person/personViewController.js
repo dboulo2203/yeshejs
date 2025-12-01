@@ -1,16 +1,19 @@
 // *** Component ressources
 import { getPerson, getPersonAliases, getlinkedNotices, getPersonFromAliasID } from './personService.js'
-import { personEditModalDisplay } from './personEditModalViewController.js'
-import { personNewModalDisplay } from './personNewModalViewController.js'
+import { personEditModalDisplay } from './editModal/personEditModalViewController.js'
+import { personNewModalDisplay } from './editModal/personNewModalViewController.js'
 
 // *** Shared ressources
 import { getTranslation } from '../../shared/services/translationService.js'
-import { getArrayFromjson } from '../../shared/functions/commonFunctions.js'
-import { currentApplicationPath, imagePath, pencilsquare, plussquare } from '../../shared/assets/constants.js'
-import { getCurrentUSerRightLevel } from '../../shared/components/login/loginService.js'
-import { addMultipleEnventListener } from '../../shared/functions/commonFunctions.js'
+import { getArrayFromjson } from '../../shared/services/commonFunctions.js'
+import { pencilsquare, plussquare } from '../../shared/assets/constants.js'
+import { getimagePath } from '../../shared/services/initialisationService.js'
+import { getAppPath } from '../../shared/services/commonFunctions.js'
+import { getCurrentUSerRightLevel } from '../../shared/services/login/loginService.js'
+import { addMultipleEnventListener } from '../../shared/services/commonFunctions.js'
 import { launchInitialisation } from '../../shared/services/initialisationService.js';
-import { headerViewDisplay } from '../../shared/assets/components/global/headerViewCont.js'
+import { headerViewDisplay } from '../../shared/services/headerViewCont.js'
+import { personIcon24, bookIcon } from '../../shared/assets/constants.js'
 
 /**
  * Start script 
@@ -26,8 +29,6 @@ export async function startPersonController() {
     // *** Get URL params and launch display
     if (searchParams.has('identity')) {
         document.querySelector("#mainActiveSection").innerHTML = componentIdentity;
-        ` 
-        `
         return
     }
 
@@ -41,7 +42,6 @@ export async function startPersonController() {
     }
 
     // *** Get params
-    // searchParams = new URLSearchParams(window.location.search);
 
     // *** Get URL params and launch display
     if (searchParams.has('personID'))
@@ -85,8 +85,8 @@ export async function displayPersonContent(mainDisplay, personID) {
         let linkedNotices = await getlinkedNotices(personID);
 
         // ** Main template
-        let personScreen = `<div class="d-flex  justify-content-between" style="padding-top:20px">
-                    <span class="fs-5" style="color:#8B2331"> ${getTranslation("person")} : <span
+        let personScreen = `<div class="d-flex  justify-content-between" style="margin-top:60px">
+                     <span class="fs-5" style="color:#8B2331">${personIcon24} ${getTranslation("person")} : <span
                     id="concname">${person.conc_name}</span></span>
                    <div>
                 <span ${getCurrentUSerRightLevel(20)} id="editButton" style="cursor: pointer"> ${pencilsquare}</span>
@@ -97,36 +97,36 @@ export async function displayPersonContent(mainDisplay, personID) {
         <hr />
         
         <!-- Display name and image -->
-        <div class="row row-cols-1 row-cols-xs-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 "> 
+        <div class="row "> 
         ${person.conc_image && person.conc_image.length > 0 ?
-                `<div class="col-md-2 col-lg-2 col-xl-2" align="center" >
-                <img src="${imagePath}/img/persons/${person.conc_image}" width="100px" />
+                `<div class="col-3" align="center" >
+                <img src="${getimagePath()}/img/persons/${person.conc_image}" width="100px" />
             </div > 
-            <div class="col-md-10 col-lg-10 col-xl-10" style = "" > 
-                ${person.conc_name} 
+            <div class="col-10 > 
+                 ${person.conc_name} 
             </div > `
                 :
-                `<div class="col-md-10 col-lg-10 col-xl-12" style = "" > 
-                ${person.conc_name} 
+                `<div class="col-12" style = "" > 
+                  ${person.conc_name} 
             </div > `
             }
         </div>    
 
-         <hr /> 
+         <hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>
          ${testBoolean ? 'Display bolean' : ''}
 
             <! Display aliases -->
         <div style=""> <spanclass="fs-6" style="color:#8B2331"> Person Aliases</span></div >
         <div id="concaliases">
             ${personAliases.map((personAliase, index) => (
-                `<span class="fw-light" style = "color:grey" >` + personAliase.lang_name + `</span > : ` + personAliase.coal_name + `, `
+                `<span class="fw-light" style = "color:grey" >` + personAliase.lang_name + `</span > : ` + personAliase.coal_name + `${index + 1 === personAliases.length ? '.' : ', '} `
             )).join("")}
         </div >
-        <hr />
+       <hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>
 
         <div><span class="fs-6" style="color:#8B2331">Note</span></div>
         <div id="concnote">${person.conc_note} </div>
-        <hr />
+        <hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>
 
         <div><span class="fs-6" style="color:#8B2331">Notices linked</span></div>
         <div id="conclinkednotices" style="margin-top:20px">
@@ -152,7 +152,7 @@ export async function displayPersonContent(mainDisplay, personID) {
 
         // *** Add action to each notice linked - Action = open notice component and load the notice. 
         addMultipleEnventListener(".noticeButtons", function () {
-            window.location.href = `${currentApplicationPath}/views/notice/notice.html?noticeID=` + $(this).attr('searid');
+            window.location.href = `${getAppPath()}/views/notice/notice.html?noticeID=` + event.currentTarget.getAttribute('searid');
         });
 
 
@@ -181,10 +181,10 @@ function getLinkedNoticesHtml(linkedNotices) {
 
         if (linkedNotice.noti_main_image && linkedNotice.noti_main_image.length > 0) {
             outputln += ` <div class="col-3" align = "center" > `;
-            outputln += ` <img src = '${imagePath}/img/books/${linkedNotice.noti_main_image}' width = "80px" /> `;
+            outputln += ` <img src = '${getimagePath()}/img/books/${linkedNotice.noti_main_image}' width = "80px" /> `;
             outputln += `</div > `;
             outputln += `<div class="col-9" > <span style="cursor: pointer"  class="noticeButtons"
-        searid="${linkedNotice.noti_id}" > ${linkedNotice.noti_main_title} </span > `;
+        searid="${linkedNotice.noti_id}" >${bookIcon} ${linkedNotice.noti_main_title} </span > `;
             outputln += `</div > `
 
         } else {
@@ -192,7 +192,7 @@ function getLinkedNoticesHtml(linkedNotices) {
             // //  outputln += ` <img src = '${imagePath}/img/books/${linkedNotice.noti_main_image}' width = "80px" /> `;
             // outputln += `</div > `;
             outputln += `<div class="col-12" > <span style="cursor: pointer" class="noticeButtons"
-        searid="${linkedNotice.noti_id}" > ${linkedNotice.noti_main_title} </span >`;
+        searid="${linkedNotice.noti_id}" >${bookIcon} ${linkedNotice.noti_main_title} </span >`;
             outputln += `</div > `;
 
         }
