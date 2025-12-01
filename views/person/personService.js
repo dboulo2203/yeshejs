@@ -1,4 +1,3 @@
-// import { wsUrlformel } from '../../shared/assets/constants.js';
 import { getwsUrlformel } from '../../shared/services/initialisationService.js';
 /**
  * Load a person from the database, 

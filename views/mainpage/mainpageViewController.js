@@ -15,6 +15,8 @@ export async function startMainPageController() {
     // *** Init app
     await launchInitialisation();
 
+    let test = window.location;
+
     // *** Display menu
     headerViewDisplay("#menuSection");
     searchViewDisplay("#searchSection");

@@ -4,6 +4,18 @@ import { loadTranslations, getCurrentLanguage } from '../services/translationSer
 import { getLanguages } from '../yesheServices/yesheLanguageService.js'
 import { getAppPath } from '../services/commonFunctions.js'
 
+
+/**
+ * 
+ */
+export async function launchInitialisation() {
+
+    await getConfigurationFromJson();
+    await loadTranslations();
+    await getLanguages();
+}
+
+// *** Globals
 // *** API URL 
 let wsUrlformel = "";
 
@@ -18,23 +30,11 @@ export function getimagePath() {
     return imagePath;
 }
 
-/**
- * 
- */
-export async function launchInitialisation() {
-
-    await getConfigurationFromJson();
-    await loadTranslations();
-    await getLanguages();
-}
 
 
 //*** Application initialisation**************************** */
 export async function getConfigurationFromJson() {
-    // let configurationFile = "";
 
-    // if (store.getState().globalListsReducer.configuration !== "")
-    //     return;
     var wsUrl = `${getAppPath()}/shared/services/configuration.json`;
     let responsefr = await fetch(wsUrl);
     if (responsefr.ok) {
@@ -47,8 +47,8 @@ export async function getConfigurationFromJson() {
         return (data);
 
     } else {
-        console.log(`getNotice Error : ${JSON.stringify(responsefr)}`);
-        throw new Error("getNotice Error message : " + responsefr.status + " " + responsefr.statusText);
+        console.log(`getConfigurationFromJson Error : ${JSON.stringify(responsefr)}`);
+        throw new Error("getConfigurationFromJson Error message : " + responsefr.status + " " + responsefr.statusText);
     }
 }
 
