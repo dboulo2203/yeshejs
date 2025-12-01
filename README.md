@@ -12,7 +12,7 @@
 - FIX : tous : modifié les espacements entre les hr (barre horizontale)
 - FIX : notice : supprimé les affichages de null 
 - FIX : Tech : suppression de jquery
-
+- NEW : All : Configurer l'accès au backend dans un fichier de config.
 
 ### 5.0.1
 - FIX : search : rétrécit la zone de recherche, trop large
@@ -35,7 +35,7 @@
 
 ## TODO tech
 - Tester Bootstrap troncate dans la page de search
-- Configurer l'accès au bckend dans un fichier de config.
+- Ajoutre routing sur #
 
 ------------------
 ## Installation
