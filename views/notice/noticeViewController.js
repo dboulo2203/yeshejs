@@ -73,7 +73,7 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
     output += `<div class="row " > `;
     if (notice.noti_main_image && notice.noti_main_image.length > 0) {
         output += ` <div class="col-3" align="center" > `;
-        output += ` <img src = '${getimagePath()}/img/books/${notice.noti_main_image}' width = "100px" /> `;
+        output += ` <img src = '${getimagePath()}/img/books/${notice.noti_main_image}' style = "max-width:100px;width:100%"  /> `;
         output += `</div > `;
 
         output += `<div class="col-9 " style = "" > ${notice.noticeCatalogDescription} `;
@@ -116,8 +116,9 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
     // *** Edition
     output += `<div class="col">`;
     output += `<div style=""><spanclass="fs-6" style="color:#8B2331">Publication</span></div>`;
-    output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">Editeur </span> : ${notice.publ_name === null ? '' : notice.publ_name}</div>`;
-    output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">Année de publication</span> :${notice.noti_year_of_publication === null ? '' : notice.noti_year_of_publication}</div>`;
+    output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">${getTranslation("publisher")}  </span> : ${notice.publ_name === null ? '' : notice.publ_name}</div>`;
+    output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">${getTranslation("printer")} </span> : ${notice.prin_name === null ? '' : notice.prin_name}</div>`;
+    output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">${getTranslation("yearofpublication")}</span> :${notice.noti_year_of_publication === null ? '' : notice.noti_year_of_publication}</div>`;
     output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">Lieu de publication</span> :${notice.noti_place_of_publication === null ? '' : notice.noti_place_of_publication}</div>`;
     output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">Type de publication</span> : ${notice.noti_type_of_publication === null ? '' : notice.noti_type_of_publication}</div>`;
     output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">ISBN/ISNN</span> : ${notice.noti_basenumber === null ? '' : notice.noti_basenumber}</div>`;
@@ -127,24 +128,26 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
     output += `<hr style="margin-block-start:0.1rem;margin-block-end:0.3rem;margin-top:15px"/>`;
 
     // *** Persons
+    // Note : the , and . have been deleted but we have kept the code  
     output += `<div class="row ">`;
     output += `<div class="col">`;
     output += `<div style=""><spanclass="fs-6 " style="color:#8B2331">Personnes</span></div>`;
     let personsList = getArrayFromjson(notice.personsFunctionFor);
     personsList.map((person, index, personsList) => {
         output += `<span class="fw-light" style ="color:grey"> ${person.tffd_name}</span> : <span style="cursor: pointer" class="personButtons" 
-            searid="${person.chaa_id}">${person.coal_name}${index + 1 === personsList.length ? '.' : ', '}</span></br>`;
+            searid="${person.chaa_id}">${person.coal_name}${index + 1 === personsList.length ? '' : ''}</span></br>`;
 
     });
     output += `</div>`; // End persons col
 
     // *** Keywords
+    // Note : the , and . have been deleted but we have kept the code
     output += `<div class="col">`;
     output += `<div style=""><spanclass="fs-6" style="color:#8B2331">Keywords</span></div>`;
     let keywordList = getArrayFromjson(notice.keywordsFunctionFor);
     keywordList.map((keyword, index) => {
-        output += `<span class="fw-light" style ="color:grey"> ${keyword.tffc_name}</span> : <span style="cursor: pointer" class="keywordButtons" 
-        searid="${keyword.conc_id}">${keyword.coal_name}${index + 1 === keywordList.length ? '.' : ', '}</span></br>`;
+        output += `<span class="fw-light" style ="color:grey"> ${keyword.tffc_name}</span> : <span style="cursor: pointer;color:#8B2331" class="keywordButtons"  
+        searid="${keyword.conc_id}">${keyword.coal_name}${index + 1 === keywordList.length ? '' : ''}</span></br>`;
     });
     output += `</div>`;
     output += `</div>`; // End person & keyword row

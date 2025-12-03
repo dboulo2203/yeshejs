@@ -15,5 +15,8 @@
     "Materialcharacteristic": "Caractéristiques materielles",
     "Format": "Format",
     "person": "Personne",
-    "keyword": "Keyword"
+    "keyword": "Keyword",
+    "printer": "Imprimeur",
+    "publisher": "Editeur",
+    "yearofpublication": "Année de publication"
 }

@@ -32,6 +32,9 @@
 - Touche CTRL pour afficher une nouvelle page dans un nouvel onglet
 - Comment rendre le menu plus accessible quand on est dans une notice
 - Finaliser les emoj pour les recherches
+- Finaliser les simple entity tem, genr, matt,doct, coll,lang,
+- Faire la fiche sub notice 
+- Créer les liens dans la notice vers publ, ....
 
 ## TODO tech
 - Tester Bootstrap troncate dans la page de search

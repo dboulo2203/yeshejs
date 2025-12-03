@@ -33,7 +33,7 @@ export async function getNotice(noticeId) {
 export async function getNoticeExtract(noticeId) {
 
     console.log("getNoticeExtract Service start");
-    var wsUrl = wsUrlformel + `noticeextract/${noticeId}`; let responsefr = await fetch(wsUrl);
+    var wsUrl = getwsUrlformel() + `noticeextract/${noticeId}`; let responsefr = await fetch(wsUrl);
     if (responsefr.ok) {
         // *** Get the data and save in the localstorage
         console.log("getNoticeExtract ok");

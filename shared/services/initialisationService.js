@@ -1,9 +1,6 @@
-
-
 import { loadTranslations, getCurrentLanguage } from '../services/translationService.js'
 import { getLanguages } from '../yesheServices/yesheLanguageService.js'
 import { getAppPath } from '../services/commonFunctions.js'
-
 
 /**
  * 
@@ -29,8 +26,6 @@ export function getwsUrlformel() {
 export function getimagePath() {
     return imagePath;
 }
-
-
 
 //*** Application initialisation**************************** */
 export async function getConfigurationFromJson() {
