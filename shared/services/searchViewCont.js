@@ -15,7 +15,7 @@ export function searchViewDisplay(htlmPartId) {
                 <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="#">Standard</a></li>
-                    <li><a class="dropdown-item" href="#">Database</a></li>
+                   <!-- <li><a class="dropdown-item" href="#">Database</a></li> -->
                     <li><a class="dropdown-item" href="#">Predictive</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="#">Multi-criteria</a></li>

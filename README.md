@@ -1,10 +1,55 @@
 # Yeshe V5
 --------------
-# Documentation
-- Only Fr and En languages
+## Documentation
+### Database search
+     - <b>bdd:xxx  </b> : select all entities (notices, keywords etc) whose name contains the string xxx
+    - <b>titl:xxx </b> : select all notices whose title contains the string xxx
+    - <b>pers:xxx  </b> : select all persons whose name contains the string  xxx
+    - <b>keyw:xxx  </b> : select all keywords whose name contains the string  xxx
+    - <b>publ:xxx  </b> : select all publishers whose name contains the string  xxx
+    - <b>prin:xxx  </b> : select all printers whose name contains the string  xxx
+    - <b>cote:xxx  </b> : select all printers whose cote contains the string  xxx
+    - <b>stit:xxx  </b> : select all the sub-notices whose main title contains the string  xxx
+    - <b>them:xxx  </b> : select all the themes whose name contains the string  xxx
+    - <b>genr:xxx  </b> : select all the genres whose name contains the string  xxx
+    - <b>lang:xxx  </b> : select all the languages whose name contains the string  xxx
+    - <b>matt:xxx  </b> : select all the material types whose name contains the string  xxx
+    - <b>doct:xxx  </b> : select all the document types whose name contains the string  xxx
+    - <b>coll:xxx  </b> : select all the collections whose name contains the string  xxx
+    - <b>lastbr: </b> : select all the database entities that have been modified the last 4 weeks
+    - <b>miss:  </b> : select all the missing copies
+    - <b>outp:  </b> : select all the out of print bibliographic record
+    - <b>mult:  </b> : select all notices with at least one multimedia
+</ul>
+
 ------------
 ## Releases notes
+### Requests 05/12 - 5.0.4
+- notice, partie copies : Ajouter un accordéon par bibliothèque
+- notice : Agrandir la photo
+- notice : augmenter la police
+- notice : mettre les noms des champs en plus foncé
+- notice : Ajouter des traits verticaux entre partie general description et publication,
+- [Fait] Notice ajouter espace avant publication sur mobile, [Fait ajouté ligne de séparation]
+- notice : mettre le titre au niveau de la photo
+- [Fait] notice : afficher les langues à raison de 1 par ligne,
+- [Fait] notice : persons, keywords, supprimer les . et , 
+- notice : ce qui est clickable doit etre en bleu 
+- [Fait] notice : partie note : après chaque nom de note, ajouter un <br> pour rendre la séparation entre notes plus vosibles 
+- Notices : il reste des espaces entre : et contenu du champ  
+- Notice, une barre de menu peut être ajoutée 
+- [Fait] recherche : rendre database invisible 
+- recherche supprimer le trait dans le menu
+- person : afficher comme dans yeshe : image + nom + note dans une même ligne
 
+### 5.0.3 
+- NEW : page simpleEntity : printer, publisher, genr, them, mattype
+- NEW : Créer les liens dans la notice vers publ, prin
+- NEW : keyword, person, simpleEntity : Display nb of notices linked
+- NEW : Page subnotice,
+- NEW : réutilisation des fichiers de traduction de Yeshe 4
+- NEW Search : Gérer erreur trop de résultats, 
+ 
 ### 5.0.2
 - NEW : notice : classer les exemplaires par bibliothèque
 - NEW : tous : ajouté les emoj dans les titres des pages des notices, keywords, persons
@@ -29,16 +74,30 @@
 
 ------------------
 ## TODO User
-- Touche CTRL pour afficher une nouvelle page dans un nouvel onglet
-- Comment rendre le menu plus accessible quand on est dans une notice
-- Finaliser les emoj pour les recherches
-- Finaliser les simple entity tem, genr, matt,doct, coll,lang,
-- Faire la fiche sub notice 
-- Créer les liens dans la notice vers publ, ....
+- General 
+    - Touche CTRL pour afficher une nouvelle page dans un nouvel onglet
+    - Comment rendre la recherche plus accessible quand on est dans une notice
+- Routing pour url contenant un #
+
+- Page simple entity
+    Finaliser les simple entity 
+    - matt,doct, coll,lang, 
+
+- Page sub notice Faire la page  sub notice 
+
+- Page Search : 
+    - Clic sur la photo affiche une modale
+    - Finaliser les emoj et nom de recherche pour les recherches
+
+- Page notice : 
+    - Créer les liens dans la notice vers them, genr etc
+    - Rendre les multi media accessibles
+    - Gérer les liens dans les notes
 
 ## TODO tech
 - Tester Bootstrap troncate dans la page de search
 - Ajoutre routing sur #
+- Entités accessibles par url
 
 ------------------
 ## Installation

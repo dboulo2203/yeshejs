@@ -9,8 +9,6 @@ import { getwsUrlformel } from '../../shared/services/initialisationService.js';
  */
 export async function getSimpleEntity(simpleEntitydId, entityType) {
 
-    //  console.log("getKeyword Service start");
-
     var wsUrl = getwsUrlformel() + `${entityType}/${simpleEntitydId}`;
     let responsefr = await fetch(wsUrl);
     if (responsefr.ok) {
@@ -18,7 +16,6 @@ export async function getSimpleEntity(simpleEntitydId, entityType) {
         const data = await responsefr.json();
         // localStorage.setItem("printerd", JSON.stringify(data.content));
 
-        // console.log("getPrinter  await ok ");
         return (data.content);
 
     } else {
@@ -34,8 +31,6 @@ export async function getSimpleEntity(simpleEntitydId, entityType) {
  */
 export async function getSimpleEntitylinkedNotices(simpleEntitydId, entityType) {
 
-    // console.log("getKeywordlinkedNotices Service start");
-
     var wsUrl = getwsUrlformel() + `${entityType}/${simpleEntitydId}/linkednotices`;
 
     let responsefr = await fetch(wsUrl);
@@ -43,12 +38,10 @@ export async function getSimpleEntitylinkedNotices(simpleEntitydId, entityType) 
     if (responsefr.ok) {
         // *** Get the data and save in the localstorage
         const data = await responsefr.json();
-
-        //console.log("getPrinterlinkedNotices  await ok ");
         return (data.content);
 
     } else {
-        //console.log(`getPrinterlinkedNotices Error : ${JSON.stringify(responsefr)}`);
+        console.log(`get${entityType}linkedNotices Error message : ` + responsefr.status + ` ` + responsefr.statusText);
         throw new Error(`get${entityType}linkedNotices Error message : ` + responsefr.status + ` ` + responsefr.statusText);
     }
 }

@@ -86,7 +86,7 @@ export async function displayKeywordContent(mainDisplay, keywordID) {
 
         // ** Main template
         let keywordScreen = `<div class="d-flex  justify-content-between" style="margin-top:60px">
-                    <span class="fs-5" style="color:#8B2331">${keyIcon} ${getTranslation("keyword")} : <span
+                    <span class="fs-5" style="color:#8B2331">${keyIcon} ${getTranslation("KEY_TITLE")} : <span
                     id="concname">${keyword.conc_name}</span></span>
                    <div>
                 <span ${getCurrentUSerRightLevel(20)} id="editButton" style="cursor: pointer"> ${pencilsquare}</span>
@@ -116,7 +116,7 @@ export async function displayKeywordContent(mainDisplay, keywordID) {
          ${testBoolean ? 'Display bolean' : ''}
 
             <! Display aliases -->
-        <div style=""> <spanclass="fs-6" style="color:#8B2331"> Keyword Aliases</span></div >
+        <div style=""> <spanclass="fs-6" style="color:#8B2331"> ${getTranslation("KEY_ALIASES")}</span></div >
         <div id="concaliases">
             ${keywordAliases.map((keywordAliase, index, keywordAliases) => (
                 `<span class="fw-light" style = "color:grey" >` + keywordAliase.lang_name + `</span > : ` + keywordAliase.coal_name + `
@@ -129,10 +129,10 @@ export async function displayKeywordContent(mainDisplay, keywordID) {
         <div id="concnote">${keyword.conc_note} </div>
         <hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>
 
-        <div><span class="fs-6" style="color:#8B2331">Notices linked</span></div>
-        <div id="conclinkednotices" style="margin-top:20px">
+        
+        <!-- <div id="conclinkednotices" style="margin-top:20px"> -->
                ${getLinkedNoticesHtml(keywordlinkedNotices)}
-        </div>
+        <!-- </div> -->
         `;
         keywordScreen += `<div id="modalPlace"></div>`;
         // *** Display template with variables
@@ -176,9 +176,10 @@ export async function displayKeywordContent(mainDisplay, keywordID) {
  * @returns 
  */
 function getLinkedNoticesHtml(linkedNotices) {
-    let outputln = '';
+    let outputln = `<div style="margin-bottom:20px"><span class="fs-6" style="color:#8B2331">${getTranslation("KEY_LINKED")} (${linkedNotices.length} notices)</span>  </div>`;
     linkedNotices.map((linkedNotice, index) => {
-        outputln += `<div class="row " > `;
+        outputln += `
+        <div class="row " > `;
 
         if (linkedNotice.noti_main_image && linkedNotice.noti_main_image.length > 0) {
             outputln += ` <div class="col-3" align = "center" > `;
@@ -190,7 +191,6 @@ function getLinkedNoticesHtml(linkedNotices) {
 
         } else {
             outputln += ` <div class="col-3" align = "center" > `;
-            // outputln += ` <img src = '${imagePath}/img/books/${linkedNotice.noti_main_image}' width = "80px" /> `;
             outputln += `</div > `;
             outputln += `<div class="col-9" > <span style="cursor: pointer" class="noticeButtons"
         searid="${linkedNotice.noti_id}" > ${bookIcon} ${linkedNotice.noti_main_title} </span >`;

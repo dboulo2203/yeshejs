@@ -85,54 +85,62 @@ export async function displayPersonContent(mainDisplay, personID) {
         let linkedNotices = await getlinkedNotices(personID);
 
         // ** Main template
-        let personScreen = `<div class="d-flex  justify-content-between" style="margin-top:60px">
-                     <span class="fs-5" style="color:#8B2331">${personIcon24} ${getTranslation("person")} : <span
-                    id="concname">${person.conc_name}</span></span>
-                   <div>
-                <span ${getCurrentUSerRightLevel(20)} id="editButton" style="cursor: pointer"> ${pencilsquare}</span>
-                <span ${getCurrentUSerRightLevel(20)} id="addnewButton" style="cursor: pointer; margin-left:5px"> ${plussquare}</span>
+        let personScreen = `
+        <div class="row ">
+            <div class="d-flex  justify-content-between" style="margin-top:60px">
+                <span class="fs-5" style="color:#8B2331">${personIcon24} ${getTranslation("PERS_TITLE")} :
+                ${person.conc_name}</span>
+                <div>
+                    <span ${getCurrentUSerRightLevel(20)} id="editButton" style="cursor: pointer"> ${pencilsquare}</span>
+                    <span ${getCurrentUSerRightLevel(20)} id="addnewButton" style="cursor: pointer; margin-left:5px"> ${plussquare}</span>
+                </div>
             </div>
-   
         </div>
-        <hr />
+         <hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>    
+
         
-        <!-- Display name and image -->
-        <div class="row "> 
-        ${person.conc_image && person.conc_image.length > 0 ?
-                `<div class="col-3" align="center" >
-                <img src="${getimagePath()}/img/persons/${person.conc_image}" width="100px" />
-            </div > 
-            <div class="col-10 > 
-                 ${person.conc_name} 
-            </div > `
-                :
-                `<div class="col-12" style = "" > 
-                  ${person.conc_name} 
-            </div > `
+        <!-- Display image and aliases -->
+        <div class="row ">        
+            ${person.conc_image && person.conc_image.length > 0 ?
+                ` <div class="col-3" align="center">
+                        <img src="${getimagePath()}/img/persons/${person.conc_image}" width="100px" />
+                </div > ` : ''
             }
-        </div>    
-
-         <hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>
-         ${testBoolean ? 'Display bolean' : ''}
-
-            <! Display aliases -->
-        <div style=""> <spanclass="fs-6" style="color:#8B2331"> Person Aliases</span></div >
-        <div id="concaliases">
-            ${personAliases.map((personAliase, index) => (
-                `<span class="fw-light" style = "color:grey" >` + personAliase.lang_name + `</span > : ` + personAliase.coal_name + `${index + 1 === personAliases.length ? '.' : ', '} `
-            )).join("")}
-        </div >
-       <hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>
-
-        <div><span class="fs-6" style="color:#8B2331">Note</span></div>
-        <div id="concnote">${person.conc_note} </div>
-        <hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>
-
-        <div><span class="fs-6" style="color:#8B2331">Notices linked</span></div>
-        <div id="conclinkednotices" style="margin-top:20px">
-               ${getLinkedNoticesHtml(linkedNotices)}
+ 
+            ${person.conc_image && person.conc_image.length > 0 ?
+                `            <div class="col-9">
+                    <div style=""> <spanclass="fs-6" style="color:#8B2331"> ${getTranslation("PERS_ALIASES")}</span></div >
+                    <div id="concaliases">
+                        ${personAliases.map((personAliase, index) => (
+                    `<span class="fw-light" style = "color:grey" >` + personAliase.lang_name + `</span > : ` + personAliase.coal_name + `${index + 1 === personAliases.length ? '.' : ', '} `
+                )).join("")}
+                    </div >
+                </div >
+            ` : `
+            <div class="col-12">
+                <div style=""> <spanclass="fs-6" style="color:#8B2331"> ${getTranslation("PERS_ALIASES")}</span></div >
+                <div id="concaliases">
+                    ${personAliases.map((personAliase, index) => (
+                    `<span class="fw-light" style = "color:grey" >` + personAliase.lang_name + `</span > : ` + personAliase.coal_name + `${index + 1 === personAliases.length ? '.' : ', '} `
+                )).join("")}
+                </div >
+            </div >
+`
+            }
         </div>
-        `;
+               
+        <hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>    
+
+        <div class="row">
+            <div class="col">
+                <div><span class="fs-6" style="color:#8B2331">${getTranslation("PERS_NOTE")}</span></div>
+                <div id="concnote">${person.conc_note} </div>
+            </div>
+        </div>
+
+        <hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>     
+               ${getLinkedNoticesHtml(linkedNotices)}`;
+
         personScreen += `<div id="modalPlace"></div>`;
         // *** Display template with variables
         document.querySelector("#" + mainDisplay).innerHTML = personScreen;
@@ -176,8 +184,12 @@ export async function displayPersonContent(mainDisplay, personID) {
  */
 function getLinkedNoticesHtml(linkedNotices) {
     let outputln = '';
+    outputln += `    <div style="margin-bottom:20px"><span class="fs-6" style="color:#8B2331">${getTranslation("PERS_LINKED")} (${linkedNotices.length} notices)</span>  </div>`;
+
     linkedNotices.map((linkedNotice, index) => {
-        outputln += `<div class="row" > `;
+        outputln += `
+   
+        <div class="row" > `;
 
         if (linkedNotice.noti_main_image && linkedNotice.noti_main_image.length > 0) {
             outputln += ` <div class="col-3" align = "center" > `;
