@@ -5,7 +5,7 @@ import { getSearch } from './searchService.js';
 import { getAppPath } from '../../shared/services/commonFunctions.js'
 // import { imagePath } from '../../shared/assets/constants.js'
 import { getimagePath } from '../../shared/services/initialisationService.js'
-import { bookIcon, personIcon, keyIcon, printerIcon, publisherIcon, questionIcon, mattIcon, subnoticeIcon, genreIcon, themIcon } from '../../shared/assets/constants.js'
+import { bookIcon, personIcon, keyIcon, printerIcon, publisherIcon, questionIcon, mattIcon, subnoticeIcon, genreIcon, themIcon, languageIcon } from '../../shared/assets/constants.js'
 import { addMultipleEnventListener } from '../../shared/services/commonFunctions.js'
 import { getTranslation } from '../../shared/services/translationService.js'
 import { headerViewDisplay } from '../../shared/services/headerViewCont.js'
@@ -206,7 +206,7 @@ export async function displaySearchContent(htlmPartId, searchString) {
                         break
                     case 24: // language
                         output += `<div class= "col-12" >
-                        <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Language" >${questionIcon}</span> 
+                        <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Language" >${languageIcon}</span> 
                         - <span class="languageButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span>  <span style="color:#eff2f2"> (${searchLine.sear_type})</span>  </br >
                        ${searchLine.sear_moreinfo && searchLine.sear_moreinfo.length > 0 ? searchLine.sear_moreinfo : ''}
                         </div > `;
@@ -214,7 +214,7 @@ export async function displaySearchContent(htlmPartId, searchString) {
 
                     case 33: // theme
                         output += `<div class= "col-12" >
-                        <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Theme" >${questionIcon}</span>
+                        <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Theme" >${themIcon}</span>
                         - <span class="themeButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span>  <span style="color:#eff2f2"> (${searchLine.sear_type})</span>  </br >
                         ${searchLine.sear_moreinfo && searchLine.sear_moreinfo.length > 0 ? searchLine.sear_moreinfo : ''}
                         </div > `;

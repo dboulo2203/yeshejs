@@ -43,12 +43,18 @@
 - person : afficher comme dans yeshe : image + nom + note dans une même ligne
 
 ### 5.0.3 
-- NEW : page simpleEntity : printer, publisher, genr, them, mattype
-- NEW : Créer les liens dans la notice vers publ, prin
+- NEW notice : test des looks des liens vers les autres entités.
+- NEW notice : test des pictos,
+- NEW : page simpleEntity : printer, publisher, genr, them, mattype, doctype, collection
+- NEW : Créer les liens dans la notice vers publ, prin, genr, them, mattype, doctype,
 - NEW : keyword, person, simpleEntity : Display nb of notices linked
 - NEW : Page subnotice,
 - NEW : réutilisation des fichiers de traduction de Yeshe 4
-- NEW Search : Gérer erreur trop de résultats, 
+- NEW Search :  Gérer erreur trop de résultats, 
+- NEW Search :  Finaliser les emoj et nom de recherche pour les recherches
+- FIX : Notice : présentation de la liste des exemplaires
+
+- NEW : première version du routage sur # avec notice. [à valider]
  
 ### 5.0.2
 - NEW : notice : classer les exemplaires par bibliothèque
@@ -77,22 +83,20 @@
 - General 
     - Touche CTRL pour afficher une nouvelle page dans un nouvel onglet
     - Comment rendre la recherche plus accessible quand on est dans une notice
-- Routing pour url contenant un #
-
-- Page simple entity
-    Finaliser les simple entity 
-    - matt,doct, coll,lang, 
-
-- Page sub notice Faire la page  sub notice 
-
+ 
 - Page Search : 
     - Clic sur la photo affiche une modale
-    - Finaliser les emoj et nom de recherche pour les recherches
+- Search predictive
+- Search multi media
 
 - Page notice : 
-    - Créer les liens dans la notice vers them, genr etc
     - Rendre les multi media accessibles
     - Gérer les liens dans les notes
+
+## questions 
+- Collections ?
+- Style des liens entre entités [test sur notice]
+- Routing pour url contenant un #
 
 ## TODO tech
 - Tester Bootstrap troncate dans la page de search

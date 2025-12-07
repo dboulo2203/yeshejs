@@ -3,7 +3,7 @@ import { getSimpleEntity, getSimpleEntitylinkedNotices } from './simpleEntitySer
 
 // *** Shared ressources
 import { getAppPath } from '../../shared/services/commonFunctions.js'
-import { bookIcon, personIcon, keyIcon, printerIcon, publisherIcon, questionIcon, mattIcon, subnoticeIcon, genreIcon, themIcon } from '../../shared/assets/constants.js'
+import { bookIcon, personIcon, keyIcon, printerIcon, publisherIcon, questionIcon, languageIcon, mattIcon, subnoticeIcon, genreIcon, themIcon } from '../../shared/assets/constants.js'
 import { getTranslation } from '../../shared/services/translationService.js'
 import { getimagePath } from '../../shared/services/initialisationService.js'
 import { addMultipleEnventListener } from '../../shared/services/commonFunctions.js'
@@ -44,36 +44,36 @@ export async function displaysimpleEntityContent(htlmPartId, simpleEntityID, sim
     let output = ``;
     switch (simpleEntityType) {
         case '12': // printer
-            output += await getSimpleEntityContent(simpleEntityID, "printer", "prin_name", "printerIcon");
+            output += await getSimpleEntityContent(simpleEntityID, "printer", "prin_name", "printerIcon", "PRI_TITLE");
             break;
         case '13': // publisher
-            output += await getSimpleEntityContent(simpleEntityID, "publisher", "publ_name", "publisherIcon");
+            output += await getSimpleEntityContent(simpleEntityID, "publisher", "publ_name", "publisherIcon", "PUB_TITLE");
             break;
         case 24:
             // $location.path("language/" + newValue.sear_id);
             break;
         case '24':
-            output += await getSimpleEntityContent(simpleEntityID, "language", "lang_name", "themIcon");
+            output += await getSimpleEntityContent(simpleEntityID, "language", "lang_name", "languageIcon", "LANG_LANGUAGETITLE");
             break;
 
         case '33':
-            output += await getSimpleEntityContent(simpleEntityID, "theme", "them_name", "themIcon");
+            output += await getSimpleEntityContent(simpleEntityID, "theme", "them_name", "themIcon", "NOT_THEME");
             break;
             // $location.path("theme/" + newValue.sear_id);
             break;
         case '34':
-            output += await getSimpleEntityContent(simpleEntityID, "genre", "genr_name", "genreIcon");
+            output += await getSimpleEntityContent(simpleEntityID, "genre", "genr_name", "genreIcon", "NOT_GENRE");
             break;
         case '35':
-            output += await getSimpleEntityContent(simpleEntityID, "doctype", "doct_name", "questionIcon");
+            output += await getSimpleEntityContent(simpleEntityID, "doctype", "doct_name", "questionIcon", "NOT_DOCUMENTTYPE");
             break;
         case '36':
             // $location.path("doctype/" + newValue.sear_id);
-            output += await getSimpleEntityContent(simpleEntityID, "mattype", "matt_name", "mattIcon");
+            output += await getSimpleEntityContent(simpleEntityID, "mattype", "matt_name", "mattIcon", "NOT_MATERIALTYPE");
             break;
         case '37':
             // $location.path("doctype/" + newValue.sear_id);
-            output += await getSimpleEntityContent(simpleEntityID, "collection", "coll_name", "questionIcon");
+            output += await getSimpleEntityContent(simpleEntityID, "collection", "coll_name", "questionIcon", "COLL_TITLE");
             break;
 
         default:
@@ -96,7 +96,7 @@ export async function displaysimpleEntityContent(htlmPartId, simpleEntityID, sim
  * @param {*} entityIcon 
  * @returns 
  */
-export async function getSimpleEntityContent(simpleEntityID, entityType, varname, entityIcon) {
+export async function getSimpleEntityContent(simpleEntityID, entityType, varname, entityIcon, entityTypeName) {
 
     let output = '';
     try {
@@ -109,7 +109,7 @@ export async function getSimpleEntityContent(simpleEntityID, entityType, varname
         // ** Main template
         output = `
             <div class="d-flex  justify-content-between" style="margin-top:60px">
-                <span class="fs-5" style="color:#8B2331">${eval(entityIcon)} ${getTranslation(entityType)} : 
+                <span class="fs-5" style="color:#8B2331">${eval(entityIcon)} ${getTranslation(entityTypeName)} : 
                 <span
                     id="concname">${eval("simpleEntity." + varname)}</span></span>
                    <div>
