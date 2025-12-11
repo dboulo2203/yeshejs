@@ -88,7 +88,7 @@ export async function displaySearchContent(htlmPartId, searchString) {
                     case 10: // person images are in the persons directory
                         if (searchLine.sear_image && searchLine.sear_image.length > 0) {
                             output += ` <div class="col-3 " align = "center" > `;
-                            output += ` <img src = '${getimagePath()}/img/persons/${searchLine.sear_image}' style = "max-width:100px;width:100%" id="imgbook"/> `;
+                            output += ` <img src = '${getimagePath()}/img/persons/${searchLine.sear_image}' style = "width:100%" id="imgbook"/> `;
                             output += `</div > `;
                             output += `<div class="col-9" > `;
                         } else {
@@ -100,7 +100,7 @@ export async function displaySearchContent(htlmPartId, searchString) {
                     default: // other images are in the book directory
                         if (searchLine.sear_image && searchLine.sear_image.length > 0) {
                             output += ` <div class="col-3 " align = "center" > `;
-                            output += ` <img src = '${getimagePath()}/img/books/${searchLine.sear_image}' style = "max-width:100px;width:100%" id="imgbook"/> `;
+                            output += ` <img src = '${getimagePath()}/img/books/${searchLine.sear_image}' style = "width:100%" id="imgbook"/> `;
                             output += `</div > `;
                             output += `<div class="col-9" > `;
                         } else {

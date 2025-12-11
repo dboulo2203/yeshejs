@@ -75,11 +75,11 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
     // *** Notice image and noticeCatalogDescription
     output += `<div class="row " > `;
     if (notice.noti_main_image && notice.noti_main_image.length > 0) {
-        output += ` <div class="col-4" align="center" > `;
+        output += ` <div class="col-3" align="center" > `;
         output += ` <img src = '${getimagePath()}/img/books/${notice.noti_main_image}' style = "width:100%"  /> `;
         output += `</div > `;
 
-        output += `<div class="col-8 " style = "" > ${notice.noticeCatalogDescription} `;
+        output += `<div class="col-9 " style = "" > ${notice.noticeCatalogDescription} `;
         output += `</div > `
 
     } else {

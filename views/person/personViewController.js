@@ -104,11 +104,11 @@ export async function displayPersonContent(mainDisplay, personID) {
         <div class="row ">`;
         if (person.conc_image && person.conc_image.length > 0)
             personScreen += ` 
-                <div class="col-4" align="center">
+                <div class="col-3" align="center">
                     <img src="${getimagePath()}/img/persons/${person.conc_image}" width="100%"    />
                 </div >
             
-                <div class="col-8" >
+                <div class="col-9" >
                     <div><span class="fs-6" style="color:#8B2331">${getTranslation("PERS_NOTE")}</span></div>
                     <div id="concnote">${person.conc_note} </div>
                 </div >`
@@ -162,10 +162,10 @@ export async function displayPersonContent(mainDisplay, personID) {
 
         // *** Add action to each notice linked - Action = open notice component and load the notice. 
         addMultipleEnventListener(".noticeButtons", function () {
-            window.location.href = `${getAppPath()} /views/notice / notice.html ? noticeID = ` + event.currentTarget.getAttribute('searid');
+            window.location.href = `${getAppPath()}/views/notice/notice.html?noticeID=` + event.currentTarget.getAttribute('searid');
         });
         addMultipleEnventListener(".subnoticeButtons", function () {
-            window.location.href = `${getAppPath()} /views/subNotice / subNotice.html ? subNoticeID = ` + event.currentTarget.getAttribute('searid');
+            window.location.href = `${getAppPath()}/views/subNotice/subNotice.html?subNoticeID=` + event.currentTarget.getAttribute('searid');
         });
 
 
