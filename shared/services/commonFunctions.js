@@ -181,3 +181,16 @@ export async function loadFileFetch(filePath) {
   return myText.value;
 }
 
+export function getLinkWithctrl(link, withctrl) {
+  if (withctrl)
+    window.open(link, '_blank');
+  else
+    window.location.href = link;
+}
+
+export function getEntityLinkClass(buttonType, entityName, searId) {
+  return `<span style="cursor: pointer; border-bottom: 0.1em solid #dddbdbff" class="${buttonType}" searid="${searId}" onpointerenter="this.setAttribute('style', 'color: #8B2331;border-bottom: 0.1em solid #8B2331;cursor:pointer')" onpointerleave="this.setAttribute('style', 'color: bs-body-color;border-bottom: 0.1em solid #dddbdbff')">
+        ${entityName === null ? '' : entityName}
+    </span>`;
+
+}

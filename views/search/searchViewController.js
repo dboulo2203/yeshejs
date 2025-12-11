@@ -2,7 +2,7 @@
 import { getSearch } from './searchService.js';
 
 //***  shared ressources
-import { getAppPath } from '../../shared/services/commonFunctions.js'
+import { getAppPath, getLinkWithctrl } from '../../shared/services/commonFunctions.js'
 // import { imagePath } from '../../shared/assets/constants.js'
 import { getimagePath } from '../../shared/services/initialisationService.js'
 import { bookIcon, personIcon, keyIcon, printerIcon, publisherIcon, questionIcon, mattIcon, subnoticeIcon, genreIcon, themIcon, languageIcon } from '../../shared/assets/constants.js'
@@ -54,6 +54,7 @@ export async function displaySearchContent(htlmPartId, searchString) {
     try {
 
         let test = searchString.indexOf(":");
+
         // *** Get data from API
         if (searchString.indexOf(":") > 0 && (searchString.indexOf(":") === 3 || searchString.indexOf(":") === 4)) {
             searchLines = await getSearch(searchString, "1");
@@ -81,20 +82,36 @@ export async function displaySearchContent(htlmPartId, searchString) {
                 <div class="row " id = "search-row" > `;
 
                 let sear_typeIcon = '';
-                // *** Display image if exists
-                if (searchLine.sear_image && searchLine.sear_image.length > 0) {
-                    output += ` <div class="col-3 " align = "center" > `;
-                    output += ` <img src = '${getimagePath()}/img/books/${searchLine.sear_image}' style = "max-width:100px;width:100%" id="imgbook"/> `;
-                    output += `</div > `;
-                    output += `<div class="col-9" > `;
-                } else {
-                    output += ` <div class="" align = "center" > `;
-                    output += `</div > `;
-                    output += `<div class="col-12" > `;
 
+                // *** Display image if exists
+                switch (searchLine.sear_type) {
+                    case 10: // person images are in the persons directory
+                        if (searchLine.sear_image && searchLine.sear_image.length > 0) {
+                            output += ` <div class="col-3 " align = "center" > `;
+                            output += ` <img src = '${getimagePath()}/img/persons/${searchLine.sear_image}' style = "max-width:100px;width:100%" id="imgbook"/> `;
+                            output += `</div > `;
+                            output += `<div class="col-9" > `;
+                        } else {
+                            output += ` <div class="" align = "center" > `;
+                            output += `</div > `;
+                            output += `<div class="col-12" > `;
+                        }
+                        break;
+                    default: // other images are in the book directory
+                        if (searchLine.sear_image && searchLine.sear_image.length > 0) {
+                            output += ` <div class="col-3 " align = "center" > `;
+                            output += ` <img src = '${getimagePath()}/img/books/${searchLine.sear_image}' style = "max-width:100px;width:100%" id="imgbook"/> `;
+                            output += `</div > `;
+                            output += `<div class="col-9" > `;
+                        } else {
+                            output += ` <div class="" align = "center" > `;
+                            output += `</div > `;
+                            output += `<div class="col-12" > `;
+                        }
+                        break;
                 }
 
-                // *** Select icon and dependding on the search type 
+                // *** Select icon text and dependding on the search type 
                 switch (searchLine.sear_type) {
                     case 1: // bibliographic record found by bibliographic record id
                         output += `<span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="bibliographic record found by bibliographic record id" >
@@ -270,53 +287,51 @@ export async function displaySearchContent(htlmPartId, searchString) {
 
         // *** Add actions 
         addMultipleEnventListener(".bookButtons", function (event) {
-            window.location.href = `${getAppPath()}/views/notice/notice.html?noticeID=` + event.currentTarget.getAttribute('searid');
+            getLinkWithctrl(`${getAppPath()}/views/notice/notice.html?noticeID=` + event.currentTarget.getAttribute('searid'), event.ctrlKey)
         });
 
         addMultipleEnventListener(".subbookButtons", function (event) {
-            window.location.href = `${getAppPath()}/views/subNotice/subNotice.html?subNoticeID=` + event.currentTarget.getAttribute('searid');
+            getLinkWithctrl(`${getAppPath()}/views/subNotice/subNotice.html?subNoticeID=` + event.currentTarget.getAttribute('searid'), event.ctrlKey)
         });
 
-
-
         addMultipleEnventListener(".personButtons", function (event) {
-            window.location.href = `${getAppPath()}/views/person/person.html?personID=` + event.currentTarget.getAttribute('searid');
+            getLinkWithctrl(`${getAppPath()}/views/person/person.html?personID=` + event.currentTarget.getAttribute('searid'), event.ctrlKey)
         });
 
         addMultipleEnventListener(".keywordButtons", function (event) {
-            window.location.href = `${getAppPath()}/views/keyword/keyword.html?keywordID=` + event.currentTarget.getAttribute('searid');
+            getLinkWithctrl(`${getAppPath()}/views/keyword/keyword.html?keywordID=` + event.currentTarget.getAttribute('searid'), event.ctrlKey)
         });
 
         addMultipleEnventListener(".printerButtons", function (event) {
-            window.location.href = `${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=` + event.currentTarget.getAttribute('searid') + `&simpleEntitytype=12`;
+            getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=` + event.currentTarget.getAttribute('searid') + `&simpleEntitytype=12`, event.ctrlKey)
         });
 
         addMultipleEnventListener(".publisherButtons", function (event) {
-            window.location.href = `${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=` + event.currentTarget.getAttribute('searid') + `&simpleEntitytype=13`;
+            getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=` + event.currentTarget.getAttribute('searid') + `&simpleEntitytype=13`, event.ctrlKey)
         });
 
         addMultipleEnventListener(".languageButtons", function (event) {
-            window.location.href = `${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=` + event.currentTarget.getAttribute('searid') + `&simpleEntitytype=24`;
+            getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=` + event.currentTarget.getAttribute('searid') + `&simpleEntitytype=24`, event.ctrlKey)
         });
 
         addMultipleEnventListener(".themeButtons", function (event) {
-            window.location.href = `${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=` + event.currentTarget.getAttribute('searid') + `&simpleEntitytype=33`;
+            getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=` + event.currentTarget.getAttribute('searid') + `&simpleEntitytype=33`, event.ctrlKey)
         });
 
         addMultipleEnventListener(".genreButtons", function (event) {
-            window.location.href = `${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=` + event.currentTarget.getAttribute('searid') + `&simpleEntitytype=34`;
+            getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=` + event.currentTarget.getAttribute('searid') + `&simpleEntitytype=34`, event.ctrlKey)
         });
 
         addMultipleEnventListener(".doctypeButtons", function (event) {
-            window.location.href = `${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=` + event.currentTarget.getAttribute('searid') + `&simpleEntitytype=35`;
+            getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=` + event.currentTarget.getAttribute('searid') + `&simpleEntitytype=35`, event.ctrlKey)
         });
 
         addMultipleEnventListener(".mattypeButtons", function (event) {
-            window.location.href = `${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=` + event.currentTarget.getAttribute('searid') + `&simpleEntitytype=36`;
+            getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=` + event.currentTarget.getAttribute('searid') + `&simpleEntitytype=36`, event.ctrlKey)
         });
 
         addMultipleEnventListener(".collectionButtons", function (event) {
-            window.location.href = `${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=` + event.currentTarget.getAttribute('searid') + `&simpleEntitytype=37`;
+            getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=` + event.currentTarget.getAttribute('searid') + `&simpleEntitytype=37`, event.ctrlKey)
         });
 
 
@@ -333,3 +348,5 @@ export async function displaySearchContent(htlmPartId, searchString) {
         document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style = "margin-top:30px" role = "alert" > ${error}</div > `;
     }
 }
+
+

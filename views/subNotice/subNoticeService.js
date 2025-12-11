@@ -9,7 +9,7 @@ export async function getsubNotice(subNoticeId) {
 
     console.log("getNotice Service start");
 
-    var wsUrl = getwsUrlformel() + `notice/${subNoticeId}`;
+    var wsUrl = getwsUrlformel() + `subnotice/${subNoticeId}`;
     let responsefr = await fetch(wsUrl);
     if (responsefr.ok) {
         // *** Get the data and save in the localstorage

@@ -62,7 +62,7 @@ export async function displaysimpleEntityContent(htlmPartId, simpleEntityID, sim
             // $location.path("theme/" + newValue.sear_id);
             break;
         case '34':
-            output += await getSimpleEntityContent(simpleEntityID, "genre", "genr_name", "genreIcon", "NOT_GENRE");
+            output += await getSimpleEntityContent(simpleEntityID, "genre", "genrt_name", "genreIcon", "NOT_GENRE");
             break;
         case '35':
             output += await getSimpleEntityContent(simpleEntityID, "doctype", "doct_name", "questionIcon", "NOT_DOCUMENTTYPE");
@@ -86,6 +86,9 @@ export async function displaysimpleEntityContent(htlmPartId, simpleEntityID, sim
     addMultipleEnventListener(".noticeButtons", function () {
         window.location.href = `${getAppPath()}/views/notice/notice.html?noticeID=` + event.currentTarget.getAttribute('searid');
     });
+    addMultipleEnventListener(".subnoticeButtons", function () {
+        window.location.href = `${getAppPath()}/views/subNotice/subNotice.html?subNoticeID=` + event.currentTarget.getAttribute('searid');
+    });
 
 }
 /**
@@ -104,7 +107,7 @@ export async function getSimpleEntityContent(simpleEntityID, entityType, varname
         // *** Load data from API
         let simpleEntity = await getSimpleEntity(simpleEntityID, entityType);
 
-        let linkedNotices = await getSimpleEntitylinkedNotices(simpleEntityID, entityType);
+
 
         // ** Main template
         output = `
@@ -116,10 +119,27 @@ export async function getSimpleEntityContent(simpleEntityID, entityType, varname
             </div>
    
         </div>
-        <hr style = "margin-block-start:0.1rem;margin-block-end:0.3rem;margin-top:15px" />
-           <div style="margin-bottom:20px"><span class="fs-6" style="color:#8B2331">Notices linked (${linkedNotices.length} notices)</span>  </div>
    `;
+
+        // *** Display linked notices
+        let linkedNotices = await getSimpleEntitylinkedNotices(simpleEntityID, entityType);
+
+        let maxLenght = 0;
+        if (linkedNotices.lenght > 1000)
+            maxLenght = 1000;
+        else
+            maxLenght = linkedNotices.lenght;
+        output += `
+                <hr style = "margin-block-start:0.1rem;margin-block-end:0.3rem;margin-top:15px" />`;
+
+        if (linkedNotices.length > 1000)
+            output += ` <div class="alert alert-warning" role="alert" style="margin-bottom:20px;margin-top:10px"><span class="fs-6" style="color:#8B2331">Notices linked (${linkedNotices.length} notices), only the first 1000 are displayed</span>  </div>`;
+        else
+            output += ` <div style="margin-bottom:20px"><span class="fs-6" style="color:#8B2331">Notices linked (${linkedNotices.length} notices)</span>  </div>`;
+
         linkedNotices.map((linkedNotice, index) => {
+            // if (index > 1000)
+            //     return true;
             output += `<div class="row " > `;
 
             if (linkedNotice.noti_main_image && linkedNotice.noti_main_image.length > 0) {
@@ -127,15 +147,21 @@ export async function getSimpleEntityContent(simpleEntityID, entityType, varname
                 output += ` <img src = '${getimagePath()}/img/books/${linkedNotice.noti_main_image}' width = "80px" /> `;
                 output += `</div > `;
 
-                output += `<div class="col-9" > <span style="cursor: pointer"  class="noticeButtons"
-                searid="${linkedNotice.noti_id}" > ${bookIcon} ${linkedNotice.noti_main_title} </span > `;
+                if (linkedNotice.noti_hierarchical_level && linkedNotice.noti_hierarchical_level === '2')
+                    output += `<div class="col-9" > <span style="cursor: pointer" class="subnoticeButtons" searid="${linkedNotice.noti_id}" > ${subnoticeIcon} ${linkedNotice.noti_main_title} </span >`;
+                else
+                    output += `<div class="col-9" > <span style="cursor: pointer"  class="noticeButtons" searid="${linkedNotice.noti_id}" > ${bookIcon} ${linkedNotice.noti_main_title} </span > `;
                 output += `</div > `
 
             } else {
                 output += ` <div class="col-3" align = "center" > `;
                 output += `</div > `;
 
-                output += `<div class="col-9" > <span style="cursor: pointer" class="noticeButtons" searid="${linkedNotice.noti_id}" > ${bookIcon} ${linkedNotice.noti_main_title} </span >`;
+                if (linkedNotice.noti_hierarchical_level && linkedNotice.noti_hierarchical_level === '2')
+                    output += `<div class="col-9" > <span style="cursor: pointer" class="subnoticeButtons" searid="${linkedNotice.noti_id}" > ${subnoticeIcon} ${linkedNotice.noti_main_title} </span >`;
+                else
+                    output += `<div class="col-9" > <span style="cursor: pointer" class="noticeButtons" searid="${linkedNotice.noti_id}" > ${bookIcon} ${linkedNotice.noti_main_title} </span >`;
+
                 output += `</div > `;
             }
             output += `</div > `

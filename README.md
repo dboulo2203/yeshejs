@@ -24,23 +24,34 @@
 
 ------------
 ## Releases notes
+###- 5.0.5
+- NEW : Notice : liens publisher, printer, genre etc + person, keyword, language : onhover red + souligné
+- NEW : Présentation de la zone de recherche : supprime liste de choix, ajoute checkbox predictive.
+- NEW : Person : affichage photo + note sur une ligne puis les aliases à raison d'un par ligne.
+- [A valider]  NEW : notice, person : la photo s'adapte à la taille de l'écran 
+- NEW : Search, notice : Touche CTRL pour afficher une nouvelle page dans un nouvel onglet
+    [Que faire pour les notices linked ?]
+- NEW : Keyword : reprise du format : note puis aliases puis notices linked
+- NWE : Search : premier test de la barre de recheche et du formulaire multi critères
+
 ### Requests 05/12 - 5.0.4
-- notice, partie copies : Ajouter un accordéon par bibliothèque
-- notice : Agrandir la photo
-- notice : augmenter la police
-- notice : mettre les noms des champs en plus foncé
-- notice : Ajouter des traits verticaux entre partie general description et publication,
+- [Abandonné] notice, partie copies : Ajouter un accordéon par bibliothèque 
+- [Abandonné] notice : Agrandir la photo, modale grande taille
+- [Abandonné] notice : augmenter la police 
+- [Abandonné] notice : mettre les noms des champs en plus foncé 
+- [Abandonné] notice : Ajouter des traits verticaux entre partie general description et publication, 
 - [Fait] Notice ajouter espace avant publication sur mobile, [Fait ajouté ligne de séparation]
-- notice : mettre le titre au niveau de la photo
+- [Abandonné] notice : mettre le titre au niveau de la photo 
 - [Fait] notice : afficher les langues à raison de 1 par ligne,
 - [Fait] notice : persons, keywords, supprimer les . et , 
-- notice : ce qui est clickable doit etre en bleu 
+- [Fait mais modifié] notice : ce qui est clickable doit etre en bleu [Proposition pour souligné et changement de couleur]
 - [Fait] notice : partie note : après chaque nom de note, ajouter un <br> pour rendre la séparation entre notes plus vosibles 
-- Notices : il reste des espaces entre : et contenu du champ  
-- Notice, une barre de menu peut être ajoutée 
+- [Fait] Notices : il reste des espaces entre : et contenu du champ  
+- [Abandonné] Notice, une barre de menu peut être ajoutée 
 - [Fait] recherche : rendre database invisible 
-- recherche supprimer le trait dans le menu
-- person : afficher comme dans yeshe : image + nom + note dans une même ligne
+- [Abandonné] recherche supprimer le trait dans le menu
+- [Fait] person : afficher comme dans yeshe : image + nom + note dans une même ligne : Note en face de la photo, aliases en 2 colonnes
+-  [Pas possible car en PHP]- Natural search : recherche avec 3 caractères, ou liste d'exceptions 
 
 ### 5.0.3 
 - NEW notice : test des looks des liens vers les autres entités.
@@ -53,8 +64,8 @@
 - NEW Search :  Gérer erreur trop de résultats, 
 - NEW Search :  Finaliser les emoj et nom de recherche pour les recherches
 - FIX : Notice : présentation de la liste des exemplaires
-
 - NEW : première version du routage sur # avec notice. [à valider]
+- NEW : imple entity : limite le nombre de résultats affichés.
  
 ### 5.0.2
 - NEW : notice : classer les exemplaires par bibliothèque
@@ -81,17 +92,30 @@
 ------------------
 ## TODO User
 - General 
-    - Touche CTRL pour afficher une nouvelle page dans un nouvel onglet
-    - Comment rendre la recherche plus accessible quand on est dans une notice
- 
+    - Liens affichés avec souligé et couleur change, utiliser le composant link
+    - Analyse des anciens liens.
+    - Affichage de la note dans 'karmapa word' BUg
+    
 - Page Search : 
-    - Clic sur la photo affiche une modale
-- Search predictive
-- Search multi media
+    - Clic sur la photo affiche une modale avec la photo
+    - Search predictive
+    - Search multi media
+
+- Page sous-notice :
+    - Finaliser
 
 - Page notice : 
+    - Clic sur la photo affiche une modale
     - Rendre les multi media accessibles
     - Gérer les liens dans les notes
+
+- Page Person :
+   [ A voir]  - Clic sur la photo affiche une modale 
+    - Aliases en colonnes
+
+- Page simple entity :
+    - Détecter les sous-notices liées et afficher
+    - Limiter les notices linked à 1000
 
 ## questions 
 - Collections ?
@@ -102,6 +126,13 @@
 - Tester Bootstrap troncate dans la page de search
 - Ajoutre routing sur #
 - Entités accessibles par url
+- Traduire les tooltips
+- notice : publiqher et printer nd
+- Supprimer le $tooltip
+- Valider l'ordre du search
+- Initialisation de l'application (faite à chaque page ou bien ). l'init est exécutée à chaque fois, on teste si l'entité est chargée ou non.
+- Comment rendre la recherche plus accessible quand on est dans une notice
+ 
 
 ------------------
 ## Installation

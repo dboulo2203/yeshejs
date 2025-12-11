@@ -96,44 +96,39 @@ export async function displayKeywordContent(mainDisplay, keywordID) {
         </div>
         <hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>
         
-        <!-- Display name and image -->
-        <div class="row row-cols-1 row-cols-xs-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 "> 
-        ${keyword.conc_image && keyword.conc_image.length > 0 ?
-                `<div class="col-md-2 col-lg-2 col-xl-2" align="center" >
-                <img src="${imagePath}/img/keyword/${keyword.conc_image}" width="100px" />
-            </div > 
-            <div class="col-md-10 col-lg-10 col-xl-10" style = "" > 
-                ${keyword.conc_name} 
-            </div > `
-                :
-                `<div class="col-md-10 col-lg-10 col-xl-12" style = "" > 
-                ${keyword.conc_name} 
-            </div > `
-            }
-        </div>    
+       <!-- Display image and note -->
+        <div class="row ">
+                 <div class="col-12" >
+                    <div><span class="fs-6" style="color:#8B2331">${getTranslation("PERS_NOTE")}</span></div>
+                   <div id="concnote">${keyword.conc_note} </div>
+                </div >
+            
+        </div>
+         `;
 
-         <hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>
-         ${testBoolean ? 'Display bolean' : ''}
+        // *** Display Aliases
+        keywordScreen += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/> `;
 
-            <! Display aliases -->
-        <div style=""> <spanclass="fs-6" style="color:#8B2331"> ${getTranslation("KEY_ALIASES")}</span></div >
-        <div id="concaliases">
-            ${keywordAliases.map((keywordAliase, index, keywordAliases) => (
-                `<span class="fw-light" style = "color:grey" >` + keywordAliase.lang_name + `</span > : ` + keywordAliase.coal_name + `
-                    ${index + 1 === keywordAliases.length ? '.' : ', '}`
-            )).join("")}
-        </div >
-        <hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>
+        keywordScreen += `
+        <div class="row justify-content-start" >
+            <div style=""> <spanclass="fs-6" style="color:#8B2331"> ${getTranslation("KEY_ALIASES")}</span></div >`;
 
-        <div><span class="fs-6" style="color:#8B2331">Note</span></div>
-        <div id="concnote">${keyword.conc_note} </div>
-        <hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>
+        // <div class="col-6 " >
+        keywordAliases.map((keywordAliase, index) => {
+            // if (index == 0 || index == halfAlias) {
+            //     keywordScreen += `<div class="col-6" >` person
+            // }
+            keywordScreen += `<div class="col-12" >`;
+            keywordScreen += `
+                    <span class="fw-light" style = "color:grey" > ` + keywordAliase.lang_name + `</span > : ` + keywordAliase.coal_name + `</br > `
+        });
 
-        
-        <!-- <div id="conclinkednotices" style="margin-top:20px"> -->
-               ${getLinkedNoticesHtml(keywordlinkedNotices)}
-        <!-- </div> -->
-        `;
+        keywordScreen += `</div >
+        </div > `;
+        keywordScreen += `<hr style = "margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px" />
+                    ${getLinkedNoticesHtml(keywordlinkedNotices)} `;
+
+
         keywordScreen += `<div id="modalPlace"></div>`;
         // *** Display template with variables
         document.querySelector("#" + mainDisplay).innerHTML = keywordScreen;

@@ -13,7 +13,7 @@ import { getCurrentUSerRightLevel } from '../../shared/services/login/loginServi
 import { addMultipleEnventListener } from '../../shared/services/commonFunctions.js'
 import { launchInitialisation } from '../../shared/services/initialisationService.js';
 import { headerViewDisplay } from '../../shared/services/headerViewCont.js'
-import { personIcon24, bookIcon } from '../../shared/assets/constants.js'
+import { personIcon24, bookIcon, subnoticeIcon } from '../../shared/assets/constants.js'
 
 /**
  * Start script 
@@ -84,6 +84,7 @@ export async function displayPersonContent(mainDisplay, personID) {
         let personAliases = getArrayFromjson(await getPersonAliases(personID));
         let linkedNotices = await getlinkedNotices(personID);
 
+
         // ** Main template
         let personScreen = `
         <div class="row ">
@@ -99,50 +100,51 @@ export async function displayPersonContent(mainDisplay, personID) {
          <hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>    
 
         
-        <!-- Display image and aliases -->
-        <div class="row ">        
-            ${person.conc_image && person.conc_image.length > 0 ?
-                ` <div class="col-3" align="center">
-                        <img src="${getimagePath()}/img/persons/${person.conc_image}" width="100px" />
-                </div > ` : ''
-            }
- 
-            ${person.conc_image && person.conc_image.length > 0 ?
-                `            <div class="col-9">
-                    <div style=""> <spanclass="fs-6" style="color:#8B2331"> ${getTranslation("PERS_ALIASES")}</span></div >
-                    <div id="concaliases">
-                        ${personAliases.map((personAliase, index) => (
-                    `<span class="fw-light" style = "color:grey" >` + personAliase.lang_name + `</span > : ` + personAliase.coal_name + `${index + 1 === personAliases.length ? '.' : ', '} `
-                )).join("")}
-                    </div >
+        <!-- Display image and note -->
+        <div class="row ">`;
+        if (person.conc_image && person.conc_image.length > 0)
+            personScreen += ` 
+                <div class="col-4" align="center">
+                    <img src="${getimagePath()}/img/persons/${person.conc_image}" width="100%"    />
                 </div >
-            ` : `
-            <div class="col-12">
-                <div style=""> <spanclass="fs-6" style="color:#8B2331"> ${getTranslation("PERS_ALIASES")}</span></div >
-                <div id="concaliases">
-                    ${personAliases.map((personAliase, index) => (
-                    `<span class="fw-light" style = "color:grey" >` + personAliase.lang_name + `</span > : ` + personAliase.coal_name + `${index + 1 === personAliases.length ? '.' : ', '} `
-                )).join("")}
+            
+                <div class="col-8" >
+                    <div><span class="fs-6" style="color:#8B2331">${getTranslation("PERS_NOTE")}</span></div>
+                    <div id="concnote">${person.conc_note} </div>
+                </div >`
+        else personScreen += `   
+                <div class="col-12" >
+                    <div><span class="fs-6" style="color:#8B2331">${getTranslation("PERS_NOTE")}</span></div>
+                    <div id="concnote">${person.conc_note} </div>
                 </div >
-            </div >
-`
-            }
+            
         </div>
-               
-        <hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>    
+         `;
 
-        <div class="row">
-            <div class="col">
-                <div><span class="fs-6" style="color:#8B2331">${getTranslation("PERS_NOTE")}</span></div>
-                <div id="concnote">${person.conc_note} </div>
-            </div>
-        </div>
+        // *** Display Aliases
+        personScreen += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/> `;
 
-        <hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>     
-               ${getLinkedNoticesHtml(linkedNotices)}`;
+        personScreen += `
+        <div class="row justify-content-start" >
+            <div style=""> <spanclass="fs-6" style="color:#8B2331"> ${getTranslation("PERS_ALIASES")}</span></div >`;
 
-        personScreen += `<div id="modalPlace"></div>`;
+        // <div class="col-6 " >
+        personAliases.map((personAliase, index) => {
+            // if (index == 0 || index == halfAlias) {
+            //     personScreen += `<div class="col-6" >`
+            // }
+            personScreen += `<div class="col-12" >`;
+            personScreen += `
+                    <span class="fw-light" style = "color:grey" > ` + personAliase.lang_name + `</span > : ` + personAliase.coal_name + `</br > `
+        });
+
+        personScreen += `</div >
+        </div > `;
+        personScreen += `<hr style = "margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px" />
+                    ${getLinkedNoticesHtml(linkedNotices)} `;
+
         // *** Display template with variables
+        personScreen += `<div id = "modalPlace" ></div > `;
         document.querySelector("#" + mainDisplay).innerHTML = personScreen;
 
         //***  Actions
@@ -160,7 +162,10 @@ export async function displayPersonContent(mainDisplay, personID) {
 
         // *** Add action to each notice linked - Action = open notice component and load the notice. 
         addMultipleEnventListener(".noticeButtons", function () {
-            window.location.href = `${getAppPath()}/views/notice/notice.html?noticeID=` + event.currentTarget.getAttribute('searid');
+            window.location.href = `${getAppPath()} /views/notice / notice.html ? noticeID = ` + event.currentTarget.getAttribute('searid');
+        });
+        addMultipleEnventListener(".subnoticeButtons", function () {
+            window.location.href = `${getAppPath()} /views/subNotice / subNotice.html ? subNoticeID = ` + event.currentTarget.getAttribute('searid');
         });
 
 
@@ -169,12 +174,12 @@ export async function displayPersonContent(mainDisplay, personID) {
         //     cbox[i].addEventListener("click", function () {
         //         console.log(cbox[i]);
         //         // console.log("click span" + cbox[i].attributes.getNamedItem('sera_id').value);
-        //         window.location.href = `${currentApplicationPath}/views/notice/notice.html?noticeID=` + cbox[i].attributes.getNamedItem('searid').value;
+        //         window.location.href = `${ currentApplicationPath } /views/notice / notice.html ? noticeID = ` + cbox[i].attributes.getNamedItem('searid').value;
         //     });
         // }
 
     } catch (error) {
-        document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style = "margin-top:30px" role = "alert" > ${error}</div > `;
+        document.querySelector("#messageSection").innerHTML = `< div class="alert alert-danger" style = "margin-top:30px" role = "alert" > ${error}</div > `;
     }
 }
 /**
@@ -184,33 +189,32 @@ export async function displayPersonContent(mainDisplay, personID) {
  */
 function getLinkedNoticesHtml(linkedNotices) {
     let outputln = '';
-    outputln += `    <div style="margin-bottom:20px"><span class="fs-6" style="color:#8B2331">${getTranslation("PERS_LINKED")} (${linkedNotices.length} notices)</span>  </div>`;
+    outputln += `    <div style = "margin-bottom:20px" > <span class="fs-6" style="color:#8B2331">${getTranslation("PERS_LINKED")} (${linkedNotices.length} notices)</span>  </div > `;
 
     linkedNotices.map((linkedNotice, index) => {
         outputln += `
-   
         <div class="row" > `;
 
         if (linkedNotice.noti_main_image && linkedNotice.noti_main_image.length > 0) {
             outputln += ` <div class="col-3" align = "center" > `;
             outputln += ` <img src = '${getimagePath()}/img/books/${linkedNotice.noti_main_image}' width = "80px" /> `;
             outputln += `</div > `;
-            outputln += `<div class="col-9" > <span style="cursor: pointer"  class="noticeButtons"
-        searid="${linkedNotice.noti_id}" >${bookIcon} ${linkedNotice.noti_main_title} </span > `;
+            if (linkedNotice.noti_hierarchical_level && linkedNotice.noti_hierarchical_level === 2)
+                outputln += `<div class="col-9" > <span style="cursor: pointer" class="subnoticeButtons" searid="${linkedNotice.noti_id}" > ${subnoticeIcon} ${linkedNotice.noti_main_title} </span >`;
+            else
+                outputln += `<div class="col-9" > <span style="cursor: pointer" class="noticeButtons" searid="${linkedNotice.noti_id}" >${bookIcon} ${linkedNotice.noti_main_title} </span > `;
             outputln += `</div > `
 
         } else {
-            // outputln += ` <div class="col-3" align = "center" > `;
-            // //  outputln += ` <img src = '${imagePath}/img/books/${linkedNotice.noti_main_image}' width = "80px" /> `;
-            // outputln += `</div > `;
-            outputln += `<div class="col-12" > <span style="cursor: pointer" class="noticeButtons"
-        searid="${linkedNotice.noti_id}" >${bookIcon} ${linkedNotice.noti_main_title} </span >`;
+            if (linkedNotice.noti_hierarchical_level && linkedNotice.noti_hierarchical_level === 2)
+                outputln += `<div class="col-12" > <span style="cursor: pointer" class="subnoticeButtons" searid="${linkedNotice.noti_id}" > ${subnoticeIcon} ${linkedNotice.noti_main_title} </span >`;
+            else
+                outputln += `<div class="col-12" > <span style="cursor: pointer" class="noticeButtons" searid="${linkedNotice.noti_id}" >${bookIcon} ${linkedNotice.noti_main_title} </span >`;
             outputln += `</div > `;
-
         }
-        outputln += `</div > 
-        `
-        outputln += `<hr style = "color:#a5a5a5" / > `;
+        outputln += `</div >
+                    `
+        outputln += `<hr style = "margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px" />`;
 
     });
     return outputln;
@@ -226,10 +230,10 @@ function getLinkedNoticesHtml(linkedNotices) {
 // function getLinkedNoticesHtml(linkedNotices) {
 //     let outputln = '';
 //     linkedNotices.map((linkedNotice, index) => {
-//         outputln += `<div class="row row-cols-1 row-cols-xs-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 " > `;
+//         outputln += `< div class="row row-cols-1 row-cols-xs-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 " > `;
 
 //         if (linkedNotice.noti_main_image && linkedNotice.noti_main_image.length > 0) {
-//             outputln += `<div class="col-md-10 col-lg-10 col-xl-10" > <span style="cursor: pointer"  class="noticeButtons"
+//             outputln += `< div class="col-md-10 col-lg-10 col-xl-10" > <span style="cursor: pointer" class="noticeButtons"
 //         searid="${linkedNotice.noti_id}" > ${linkedNotice.noti_main_title} </span > `;
 //             outputln += `</div > `
 //             outputln += ` <div class="col-md-2 col-lg-2 col-xl-2" align = "center" > `;
