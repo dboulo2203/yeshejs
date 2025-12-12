@@ -3,7 +3,7 @@ import { getNotice } from './noticeService.js'
 import { displayModaleAndFunctions } from './abstractModalViewController.js'
 
 // ** Shared ressoucres
-import { getArrayFromjson, addMultipleEnventListener, getEntityLinkClass, getLinkWithctrl } from '../../shared/services/commonFunctions.js'
+import { getArrayFromjson, addMultipleEnventListener, getEntityLinkClass, getLinkWithctrl, getEntityLink } from '../../shared/services/commonFunctions.js'
 import { languageIcon, questionIcon, questionIcon18 } from '../../shared/assets/constants.js'
 import { bookIcon, personIcon, keyIcon, printerIcon, publisherIcon, mattIcon, subnoticeIcon, genreIcon, themIcon, linkIcon } from '../../shared/assets/constants.js'
 
@@ -20,9 +20,9 @@ import { headerViewDisplay } from '../../shared/services/headerViewCont.js'
  */
 export function startNoticeController() {
 
-    console.log("Start noticeViewController");
+    // console.log("Start noticeViewController");
     const searchParams = new URLSearchParams(window.location.search);
-    console.log(searchParams);
+    //console.log(searchParams);
 
     headerViewDisplay("#menuSection");
 
@@ -256,7 +256,6 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
     output += `</br></br>`;
 
     // *** Display string
-    console.log(output);
     document.querySelector("#" + mainDisplay).innerHTML = output;
 
     // ************** Actions
@@ -276,40 +275,41 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
         getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=${event.currentTarget.getAttribute('searid')}&simpleEntitytype=24`, event.ctrlKey);
     });
 
-    document.querySelector("#publisherButton").onclick = function () {
+    document.querySelector("#publisherButton").onclick = function (event) {
         getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=${notice.publ_id}&simpleEntitytype=13`, event.ctrlKey);
     };
 
-    document.querySelector("#printerButton").onclick = function () {
+    document.querySelector("#printerButton").onclick = function (event) {
         getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=${notice.prin_id}&simpleEntitytype=12`, event.ctrlKey);;
     };
 
-    document.querySelector("#genreButton").onclick = function () {
+    document.querySelector("#genreButton").onclick = function (event) {
         getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=${notice.genrt_id}&simpleEntitytype=34`, event.ctrlKey);;
     };
 
-    document.querySelector("#themeButton").onclick = function () {
+    document.querySelector("#themeButton").onclick = function (event) {
         getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=${notice.them_id}&simpleEntitytype=33`, event.ctrlKey);;
     };
-    document.querySelector("#doctButton").onclick = function () {
+    document.querySelector("#doctButton").onclick = function (event) {
         getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=${notice.doct_id}&simpleEntitytype=35`, event.ctrlKey);;
     };
 
-    document.querySelector("#mattButton").onclick = function () {
+    document.querySelector("#mattButton").onclick = function (event) {
         getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=${notice.matt_id}&simpleEntitytype=36`, event.ctrlKey);;
     };
 
-    document.querySelector("#collectionButton").onclick = function () {
+    document.querySelector("#collectionButton").onclick = function (event) {
         getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=${notice.coll_id}&simpleEntitytype=37`, event.ctrlKey);;
     };
 
 
 }
 
-function getEntityLink(buttonType, entityName) {
-    return `<span style="cursor: pointer; border-bottom: 0.1em solid #dddbdbff" id="${buttonType}" onpointerenter="this.setAttribute('style', 'color: #8B2331;border-bottom: 0.1em solid #8B2331;cursor:pointer')" onpointerleave="this.setAttribute('style', 'color: bs-body-color;border-bottom: 0.1em solid #dddbdbff')">
-        ${entityName === null ? '' : entityName}
-    </span>`;
+// function getEntityLink(buttonType, entityName) {
+//     return `<span style="cursor: pointer; border-bottom: 0.1em solid #dddbdbff"
+//     id="${buttonType}" onpointerenter="this.setAttribute('style', 'color: #8B2331;border-bottom: 0.1em solid #8B2331;cursor:pointer')" onpointerleave="this.setAttribute('style', 'color: bs-body-color;border-bottom: 0.1em solid #dddbdbff')">
+//         ${entityName === null ? '' : entityName}
+//     </span>`;
 
-}
+// }
 

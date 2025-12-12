@@ -1,6 +1,6 @@
 // *** Shared ressources
 import { getAppPath } from '../services/commonFunctions.js'
-
+import { getSelectFromDatabaseList } from '../yesheServices/yesheListsService.js'
 
 /**
  * Display the menu bar of the appplication 
@@ -40,9 +40,9 @@ export function searchViewDisplay(htlmPartId) {
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group row">
-                                <label for="exampleInputEmail1" class="col-sm-3 col-form-label"><small>Titles</small></label>
+                                <label for="inputTitles" class="col-sm-3 col-form-label"><small>Titles</small></label>
                                 <div class="col-sm-9">
-                                    <input type="email" class="form-control form-control-sm" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" class="form-control form-control-sm" id="inputTitles" aria-describedby="emailHelp" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -78,13 +78,17 @@ export function searchViewDisplay(htlmPartId) {
                             <div class="form-group row">
                                 <label for="exampleInputEmail1" class="col-sm-3 col-form-label"><small>Genre</small></label>
                                 <div class="col-sm-9">
-                                    <input type="email" class="form-control form-control-sm" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="">
+                                     <select class="form-select form-select-sm"  aria-label="Default select example" id="bdd_genre_type">
+                                    ${getSelectFromDatabaseList("bdd_genre_type", "genrt_id", "genrt_name")}
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="exampleInputPassword1" class="col-sm-3 col-form-label" ><small>Theme</small></label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control form-control-sm" id="exampleInputPassword1" placeholder="">
+                            <label for="exampleInputEmail1" class="col-sm-3 col-form-label"><small>Theme</small></label>
+                                 <div class="col-sm-9">
+                                     <select class="form-select form-select-sm"  aria-label="Default select example" id="bdd_genre_type">
+                                    ${getSelectFromDatabaseList("bdd_theme_type", "them_id", "them_name")}
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -103,7 +107,17 @@ export function searchViewDisplay(htlmPartId) {
                                 <label class="form-check-label" for="exampleCheck1"><small>With multimedia</small></label>
                                 <input type="checkbox" class="form-check-input form-control-sm" id="exampleCheck1">
                             </div>
-
+                            <div class="form-group form-check row">
+                                <div class="d-flex flex-row-reverse">                               
+                                    <button class="btn btn-outline-secondary" type="button" id="searchMultiBtn">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                                        </svg>
+                                        Multicriteria Search
+                                    </button>
+                                </div>
+                            </div>
+                       
                         </div>
                     </div>
             </form>
@@ -123,6 +137,7 @@ export function searchViewDisplay(htlmPartId) {
     // </ul>
 
 
+    getSelectFromDatabaseList("bdd_genre_type", "genrt_id", "genrt_id", "genrt_name")
     // *** Display the navbar
     document.querySelector(htlmPartId).innerHTML = menuString;
 
@@ -142,9 +157,18 @@ export function searchViewDisplay(htlmPartId) {
         window.location.href = `${getAppPath()}/views/search/search.html?searchStr=` + searchString;
     };
 
-    document.querySelector("#mainNav").onclick = function () {
-        window.location.href = `${getAppPath()}/index.html`;
+    // *** Actions
+    document.querySelector("#searchMultiBtn").onclick = function () {
+        // let searchString = document.querySelector("#searchInputString").value;
+        let multiCriteriatri = 'titl:' + document.querySelector("#inputTitles").value;
+
+        window.location.href = `${getAppPath()}/views/search/search.html?multiCritSearchStr=` + multiCriteriatri;
     };
+
+
+    // document.querySelector("#mainNav").onclick = function () {
+    //     window.location.href = `${getAppPath()}/index.html`;
+    // };
 
     // document.querySelector("#LoginBtn").onclick = function () {
     //     loginViewDisplay("mainActiveSection")

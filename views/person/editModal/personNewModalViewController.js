@@ -1,6 +1,6 @@
 // Component ressources
 import { getPerson, createPerson, getCurrentPerson } from '../personService.js'
-import { getLanguagesList } from '../../../shared/yesheServices/yesheLanguageService.js'
+import { getList } from '../../../shared/yesheServices/yesheListsService.js'
 // import { displayPersonContent } from './personViewController.js'
 
 const newModaleString = `
@@ -71,7 +71,7 @@ export async function personNewModalDisplay(htlmPartId, person) {
               <label for="exampleFormControlInput1" class="form-label col-2" >Langue défaut </label>
               <div class="col" style="margin:2px">
               <select class="form-select" aria-label="Default select example" id="conc_lanInput">`;
-    getLanguagesList().map((language, index) => {
+    getList("bdd_language").map((language, index) => {
         outpuStr += `<option value="${language.lang_id}">${language.lang_name}</option>`;
     });
     outpuStr += `

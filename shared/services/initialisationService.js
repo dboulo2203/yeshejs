@@ -1,6 +1,7 @@
 import { loadTranslations, getCurrentLanguage } from '../services/translationService.js'
-import { getLanguages } from '../yesheServices/yesheLanguageService.js'
+// import { getLanguages } from '../yesheServices/yesheLanguageService.js'
 import { getAppPath } from '../services/commonFunctions.js'
+import { loadList } from '../yesheServices/yesheListsService.js'
 
 /**
  * 
@@ -9,7 +10,11 @@ export async function launchInitialisation() {
 
     await getConfigurationFromJson();
     await loadTranslations();
-    await getLanguages();
+    // await getLanguages();
+    await loadList('bdd_language');
+    await loadList('bdd_doc_type');
+    await loadList('bdd_genre_type');
+    await loadList('bdd_theme_type');
 }
 
 // *** Globals
@@ -38,7 +43,7 @@ export async function getConfigurationFromJson() {
         imagePath = data.imagePath;
         wsUrlformel = data.wsUrlformel;
 
-        console.log("getNotice   ok ");
+        //console.log("getNotice   ok ");
         return (data);
 
     } else {

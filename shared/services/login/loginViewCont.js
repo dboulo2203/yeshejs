@@ -55,7 +55,7 @@ export function loginViewDisplay(htlmPartId) {
 
         // *** Actions
         document.querySelector("#myBtnCancel").onclick = function () {
-            console.log("annule clicked");
+            //console.log("annule clicked");
             editModal.hide();
         };
 

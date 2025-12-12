@@ -181,6 +181,11 @@ export async function loadFileFetch(filePath) {
   return myText.value;
 }
 
+/**
+ * Re route the page demending on
+ * @param {} link 
+ * @param {*} withctrl 
+ */
 export function getLinkWithctrl(link, withctrl) {
   if (withctrl)
     window.open(link, '_blank');
@@ -188,9 +193,48 @@ export function getLinkWithctrl(link, withctrl) {
     window.location.href = link;
 }
 
-export function getEntityLinkClass(buttonType, entityName, searId) {
-  return `<span style="cursor: pointer; border-bottom: 0.1em solid #dddbdbff" class="${buttonType}" searid="${searId}" onpointerenter="this.setAttribute('style', 'color: #8B2331;border-bottom: 0.1em solid #8B2331;cursor:pointer')" onpointerleave="this.setAttribute('style', 'color: bs-body-color;border-bottom: 0.1em solid #dddbdbff')">
+/**
+ * Retunrs a link to a class of entity
+ * @param {*} buttonType 
+ * @param {*} entityName 
+ * @param {*} searId 
+ * @param {*} withUnderline allow to display an underline
+ * @returns 
+ */
+export function getEntityLinkClass(buttonType, entityName, searId, withUnderline = true) {
+  if (!withUnderline === false)
+    return `<span style="cursor:pointer; border-bottom: 0.1em solid #dddbdbff" class="${buttonType}" searid="${searId}" 
+  onpointerenter="this.setAttribute('style', 'cursor:pointer;color: #8B2331;border-bottom: 0.1em solid #8B2331;cursor:pointer')" 
+  onpointerleave="this.setAttribute('style', 'color: bs-body-color')">
+        ${entityName === null ? '' : entityName}
+    </span>`;
+  else
+    return `<span style="cursor:pointer" class="${buttonType}" searid="${searId}" 
+  onpointerenter="this.setAttribute('style', 'cursor:pointer;color: #8B2331;border-bottom: 0.1em solid #8B2331;cursor:pointer')" 
+  onpointerleave="this.setAttribute('style', 'color: bs-body-color')">
         ${entityName === null ? '' : entityName}
     </span>`;
 
 }
+
+/**
+ * Retunrs a link to an entity
+ * @param { } buttonType 
+ * @param {*} entityName 
+ * @param {*} withUnderline  allow to display an underline
+ * @returns 
+ */
+export function getEntityLink(buttonType, entityName, withUnderline = true) {
+  if (!withUnderline === false)
+    return `<span style="cursor: pointer; border-bottom: 0.1em solid #dddbdbff" 
+    id="${buttonType}" onpointerenter="this.setAttribute('style', 'color: #8B2331;border-bottom: 0.1em solid #8B2331;cursor:pointer')" onpointerleave="this.setAttribute('style', 'color: bs-body-color;border-bottom: 0.1em solid #dddbdbff')">
+        ${entityName === null ? '' : entityName}
+    </span>`;
+  else
+    return `<span style="cursor: pointer" 
+    id="${buttonType}" onpointerenter="this.setAttribute('style', 'color: #8B2331;cursor:pointer')" onpointerleave="this.setAttribute('style', 'color: bs-body-color')">
+        ${entityName === null ? '' : entityName}
+    </span>`;
+
+}
+

@@ -16,7 +16,7 @@ export async function getLanguages() {
         localStorage.setItem("languages", JSON.stringify(data.content));
         return true;
     } else {
-        console.log(`getLanguages Error : }`);
+        // console.log(`getLanguages Error : }`);
         throw new Error("getLanguages Error : " + JSON.stringify(responseWS));
     }
 }

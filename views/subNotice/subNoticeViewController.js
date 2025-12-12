@@ -3,7 +3,7 @@ import { getsubNotice } from './subNoticeService.js'
 // import { displayModaleAndFunctions } from './abstractModalViewController.js'
 
 // ** Shared ressoucres
-import { getArrayFromjson, addMultipleEnventListener, getEntityLinkClass } from '../../shared/services/commonFunctions.js'
+import { getArrayFromjson, addMultipleEnventListener, getEntityLinkClass, getLinkWithctrl } from '../../shared/services/commonFunctions.js'
 import { questionIcon, questionIcon18, subbookIcon } from '../../shared/assets/constants.js'
 import { getimagePath } from '../../shared/services/initialisationService.js'
 import { getAppPath } from '../../shared/services/commonFunctions.js'
@@ -162,16 +162,16 @@ export async function displayNoticeContent(mainDisplay, subNoticeID) {
     //     });
     // };
     // *** Add action to each notice linked - Action = open notice component and load the notice. 
-    addMultipleEnventListener(".noticeButtons", function () {
-        window.location.href = `${getAppPath()}/views/notice/notice.html?noticeID=` + event.currentTarget.getAttribute('searid');
+    addMultipleEnventListener(".noticeButtons", function (event) {
+        getLinkWithctrl(`${getAppPath()}/views/notice/notice.html?noticeID=` + event.currentTarget.getAttribute('searid'), event.ctrlKey);;
     });
 
     addMultipleEnventListener(".personButtons", function (event) {
-        window.location.href = `${getAppPath()}/views/person/person.html?personAliasID=` + event.currentTarget.getAttribute('searid');
+        getLinkWithctrl(`${getAppPath()}/views/person/person.html?personAliasID=` + event.currentTarget.getAttribute('searid'), event.ctrlKey);
     });
 
     addMultipleEnventListener(".keywordButtons", function (event) {
-        window.location.href = `${getAppPath()}/views/keyword/keyword.html?keywordAliasID=` + event.currentTarget.getAttribute('searid');
+        getLinkWithctrl(`${getAppPath()}/views/keyword/keyword.html?keywordAliasID=` + event.currentTarget.getAttribute('searid'), event.ctrlKey);
     });
 
     // document.querySelector("#publisherButton").onclick = function () {

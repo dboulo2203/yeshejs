@@ -24,7 +24,13 @@
 
 ------------
 ## Releases notes
-###- 5.0.5
+### 5.0.6
+- NEW : search : multi criteria search
+- NEW : limit le nb de notices linked à 5000.
+- FIX : Sub notice : liens foctionnement avec cTRL
+- NEW : simple entities : lien vers sous notice n'est pas souligné
+
+### 5.0.5
 - NEW : Notice : liens publisher, printer, genre etc + person, keyword, language : onhover red + souligné
 - NEW : Présentation de la zone de recherche : supprime liste de choix, ajoute checkbox predictive.
 - NEW : Person : affichage photo + note sur une ligne puis les aliases à raison d'un par ligne.
@@ -32,7 +38,8 @@
 - NEW : Search, notice : Touche CTRL pour afficher une nouvelle page dans un nouvel onglet
     [Que faire pour les notices linked ?]
 - NEW : Keyword : reprise du format : note puis aliases puis notices linked
-- NWE : Search : premier test de la barre de recheche et du formulaire multi critères
+- NEW : Search : premier test de la barre de recheche et du formulaire multi critères
+- FIX : Simple Entities : Header de la page est invisible
 
 ### Requests 05/12 - 5.0.4
 - [Abandonné] notice, partie copies : Ajouter un accordéon par bibliothèque 
@@ -83,6 +90,7 @@
 - NEW : notice : les zones person et keyword sont afffichées dans 2 colonnes
 - NEW : Ajout des sites amis dans le menu
 - NEW : ajout d'une page de documentation projet sous l'item de menu 'About'
+
 ### 5.0.0
 - NEW : page principale, y compris menu de l'application
 - NEW : page Search
@@ -101,8 +109,6 @@
     - Search predictive
     - Search multi media
 
-- Page sous-notice :
-    - Finaliser
 
 - Page notice : 
     - Clic sur la photo affiche une modale
@@ -115,11 +121,8 @@
 
 - Page simple entity :
     - Détecter les sous-notices liées et afficher
-    - Limiter les notices linked à 1000
 
 ## questions 
-- Collections ?
-- Style des liens entre entités [test sur notice]
 - Routing pour url contenant un #
 
 ## TODO tech
@@ -132,6 +135,11 @@
 - Valider l'ordre du search
 - Initialisation de l'application (faite à chaque page ou bien ). l'init est exécutée à chaque fois, on teste si l'entité est chargée ou non.
 - Comment rendre la recherche plus accessible quand on est dans une notice
+- Réécrire les url pour qu'elles soient compatbles avec #/bbb
+- Sécuriser la recherche database en vérifiant les mots clés utilisés
+
+## Bugs
+- Pointer sur les liens non actif
  
 
 ------------------

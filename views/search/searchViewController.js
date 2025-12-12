@@ -32,7 +32,10 @@ export async function startSearchController() {
 
         // *** launch render
         if (searchParams.has('searchStr'))
-            displaySearchContent("mainActiveSection", searchParams.get('searchStr'));
+            displaySearchContent("mainActiveSection", searchParams.get('searchStr'), false);
+        if (searchParams.has('multiCritSearchStr'))
+            displaySearchContent("mainActiveSection", searchParams.get('multiCritSearchStr'), true);
+
 
 
     } catch (error) {
@@ -46,20 +49,24 @@ export async function startSearchController() {
  * @param {*} htlmPartId 
  * @param {*} searchString : the string to searched in the database 
  */
-export async function displaySearchContent(htlmPartId, searchString) {
+export async function displaySearchContent(htlmPartId, searchString, multiCriteriaSearch) {
 
     // *** Build the html string 
     let output = '';
     let searchLines = null;
     try {
 
-        let test = searchString.indexOf(":");
+        // let test = searchString.indexOf(":");
 
-        // *** Get data from API
-        if (searchString.indexOf(":") > 0 && (searchString.indexOf(":") === 3 || searchString.indexOf(":") === 4)) {
-            searchLines = await getSearch(searchString, "1");
+        if (multiCriteriaSearch === true) {
+            searchLines = await getSearch(searchString, "5");
         } else {
-            searchLines = await getSearch(searchString, "3");
+            // *** Get data from API
+            if (searchString.indexOf(":") > 0 && (searchString.indexOf(":") === 3 || searchString.indexOf(":") === 4)) {
+                searchLines = await getSearch(searchString, "1");
+            } else {
+                searchLines = await getSearch(searchString, "3");
+            }
         }
         // ** Display data   
         output += `<div style="margin-bottom:20px">
@@ -88,19 +95,19 @@ export async function displaySearchContent(htlmPartId, searchString) {
                     case 10: // person images are in the persons directory
                         if (searchLine.sear_image && searchLine.sear_image.length > 0) {
                             output += ` <div class="col-3 " align = "center" > `;
-                            output += ` <img src = '${getimagePath()}/img/persons/${searchLine.sear_image}' style = "width:100%" id="imgbook"/> `;
+                            output += ` <img src = '${getimagePath()}/img/persons/${searchLine.sear_image}' style = "width:100%" class="imgsearch"/> `;
                             output += `</div > `;
                             output += `<div class="col-9" > `;
                         } else {
                             output += ` <div class="" align = "center" > `;
-                            output += `</div > `;
+                            output += `</div > `; Search
                             output += `<div class="col-12" > `;
                         }
                         break;
                     default: // other images are in the book directory
                         if (searchLine.sear_image && searchLine.sear_image.length > 0) {
                             output += ` <div class="col-3 " align = "center" > `;
-                            output += ` <img src = '${getimagePath()}/img/books/${searchLine.sear_image}' style = "width:100%" id="imgbook"/> `;
+                            output += ` <img src = '${getimagePath()}/img/books/${searchLine.sear_image}' style = "width:100%" class="imgsearch"/> `;
                             output += `</div > `;
                             output += `<div class="col-9" > `;
                         } else {
@@ -289,6 +296,13 @@ export async function displaySearchContent(htlmPartId, searchString) {
         addMultipleEnventListener(".bookButtons", function (event) {
             getLinkWithctrl(`${getAppPath()}/views/notice/notice.html?noticeID=` + event.currentTarget.getAttribute('searid'), event.ctrlKey)
         });
+
+        addMultipleEnventListener(".imgsearch", function (event) {
+            // getLinkWithctrl(`${getAppPath()}/views/notice/notice.html?noticeID=` + event.currentTarget.getAttribute('searid'), event.ctrlKey)
+            console.log("imgSrach click");
+        });
+
+
 
         addMultipleEnventListener(".subbookButtons", function (event) {
             getLinkWithctrl(`${getAppPath()}/views/subNotice/subNotice.html?subNoticeID=` + event.currentTarget.getAttribute('searid'), event.ctrlKey)

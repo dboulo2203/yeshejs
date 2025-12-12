@@ -8,7 +8,7 @@ import { getwsUrlformel } from '../../shared/services/initialisationService.js';
  */
 export async function getPerson(personId) {
 
-    console.log("getPerson Service start");
+    // console.log("getPerson Service start");
 
     var wsUrl = getwsUrlformel() + `person/${personId}`;
     let responsefr = await fetch(wsUrl);
@@ -17,7 +17,7 @@ export async function getPerson(personId) {
         const data = await responsefr.json();
         localStorage.setItem("person", JSON.stringify(data.content));
 
-        console.log("getPerson  await ok ");
+        // console.log("getPerson  await ok ");
         return (data.content);
 
     } else {
@@ -35,7 +35,6 @@ export async function getPerson(personId) {
  */
 export async function getPersonFromAliasID(personAliasId, callback) {
 
-    console.log("getPersonFromAliasID Service start");
     var wsUrl = getwsUrlformel() + `person/${personAliasId}/getByAlias`;
     let responsefr = await fetch(wsUrl);
     if (responsefr.ok) {
@@ -43,7 +42,6 @@ export async function getPersonFromAliasID(personAliasId, callback) {
         const data = await responsefr.json();
         // localStorage.setItem("person", JSON.stringify(data.content));
 
-        console.log("getPersonFromAliasID  await ok ");
         return (data.content);
 
     } else {
@@ -74,7 +72,6 @@ export function getCurrentPerson() {
  */
 export async function getPersonAliases(personId) {
 
-    console.log("getPersonAliases Service start");
 
     var wsUrl = getwsUrlformel() + `person/${personId}/getAliases`;
 
@@ -85,7 +82,6 @@ export async function getPersonAliases(personId) {
         const data = await responsefr.json();
         // localStorage.setItem("person", JSON.stringify(data.content));
 
-        console.log("getPersonAliases  await ok ");
         return (data.content);
 
     } else {
@@ -102,8 +98,6 @@ export async function getPersonAliases(personId) {
  */
 export async function getlinkedNotices(personId) {
 
-    console.log("getlinkedNotices Service start");
-
     var wsUrl = getwsUrlformel() + `person/${personId}/linkednotices`;
 
     let responsefr = await fetch(wsUrl);
@@ -113,7 +107,6 @@ export async function getlinkedNotices(personId) {
         const data = await responsefr.json();
         // localStorage.setItem("person", JSON.stringify(data.content));
 
-        console.log("getlinkedNotices  await ok ");
         return (data.content);
 
     } else {

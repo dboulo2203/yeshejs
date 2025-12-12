@@ -9,7 +9,7 @@ import { getwsUrlformel } from '../../shared/services/initialisationService.js';
  */
 export async function getKeyword(keywordId) {
 
-    console.log("getKeyword Service start");
+    //console.log("getKeyword Service start");
 
     var wsUrl = getwsUrlformel() + `keyword/${keywordId}`;
     let responsefr = await fetch(wsUrl);
@@ -18,7 +18,7 @@ export async function getKeyword(keywordId) {
         const data = await responsefr.json();
         localStorage.setItem("keyword", JSON.stringify(data.content));
 
-        console.log("getKeyword  await ok ");
+        //console.log("getKeyword  await ok ");
         return (data.content);
 
     } else {
@@ -35,7 +35,7 @@ export async function getKeyword(keywordId) {
  */
 export async function getKeywordFromAliasID(keywordAliasId) {
 
-    console.log("getKeywordFromAliasID Service start");
+    // console.log("getKeywordFromAliasID Service start");
     var wsUrl = getwsUrlformel() + `keyword/${keywordAliasId}/getByAlias`;
     let responsefr = await fetch(wsUrl);
     if (responsefr.ok) {
@@ -43,7 +43,7 @@ export async function getKeywordFromAliasID(keywordAliasId) {
         const data = await responsefr.json();
         // localStorage.setItem("keyword", JSON.stringify(data.content));
 
-        console.log("getKeywordFromAliasID  await ok ");
+        //   console.log("getKeywordFromAliasID  await ok ");
         return (data.content);
 
     } else {

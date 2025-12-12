@@ -7,16 +7,12 @@ import { getwsUrlformel } from '../../shared/services/initialisationService.js';
  */
 export async function getNotice(noticeId) {
 
-    console.log("getNotice Service start");
-
     var wsUrl = getwsUrlformel() + `notice/${noticeId}`;
     let responsefr = await fetch(wsUrl);
     if (responsefr.ok) {
         // *** Get the data and save in the localstorage
         const data = await responsefr.json();
         localStorage.setItem("notice", JSON.stringify(data.content));
-
-        console.log("getNotice   ok ");
         return (data.content);
 
     } else {
@@ -32,11 +28,9 @@ export async function getNotice(noticeId) {
  */
 export async function getNoticeExtract(noticeId) {
 
-    console.log("getNoticeExtract Service start");
     var wsUrl = getwsUrlformel() + `noticeextract/${noticeId}`; let responsefr = await fetch(wsUrl);
     if (responsefr.ok) {
         // *** Get the data and save in the localstorage
-        console.log("getNoticeExtract ok");
         const data = await responsefr.json();
         return (data.content);
 
