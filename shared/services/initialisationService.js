@@ -15,6 +15,7 @@ export async function launchInitialisation() {
     await loadList('bdd_doc_type');
     await loadList('bdd_genre_type');
     await loadList('bdd_theme_type');
+    // await loadList('mattype');
 }
 
 // *** Globals

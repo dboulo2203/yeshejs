@@ -66,7 +66,8 @@ export function searchViewDisplay(htlmPartId) {
                             <div class="form-group row">
                                 <label for="exampleInputPassword1" class="col-sm-3 col-form-label" ><small>Owner</small></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control form-control-sm" id="exampleInputPassword1" placeholder="">
+    <input class="form-control" type="text" data-countries="England, Germany, China" list="countries" name="favCountry"
+        placeholder="Select a Country" required autocomplete="off" id="dominique" />
                                 </div>
                             </div>
 
@@ -86,7 +87,7 @@ export function searchViewDisplay(htlmPartId) {
                             <div class="form-group row">
                             <label for="exampleInputEmail1" class="col-sm-3 col-form-label"><small>Theme</small></label>
                                  <div class="col-sm-9">
-                                     <select class="form-select form-select-sm"  aria-label="Default select example" id="bdd_genre_type">
+                                     <select class="form-select form-select-sm"  aria-label="Default select example" id="bdd_theme_type">
                                     ${getSelectFromDatabaseList("bdd_theme_type", "them_id", "them_name")}
                                     </select>
                                 </div>
@@ -94,13 +95,16 @@ export function searchViewDisplay(htlmPartId) {
                             <div class="form-group row">
                                 <label for="exampleInputPassword1" class="col-sm-3 col-form-label" ><small>Mat type</small></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control form-control-sm" id="exampleInputPassword1" placeholder="">
+                                     <select class="form-select form-select-sm"  aria-label="Default select example" id="bdd_matt_type">
+                                     </select>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="exampleInputPassword1" class="col-sm-3 col-form-label" ><small>Language</small></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control form-control-sm" id="exampleInputPassword1" placeholder="">
+                                     <select class="form-select form-select-sm"  aria-label="Default select example" id="bdd_matt_type">
+                                    ${getSelectFromDatabaseList("bdd_language", "lang_id", "lang_name")}
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group form-check row">                               
@@ -166,12 +170,56 @@ export function searchViewDisplay(htlmPartId) {
     };
 
 
-    // document.querySelector("#mainNav").onclick = function () {
-    //     window.location.href = `${getAppPath()}/index.html`;
-    // };
+    // document.addEventListener('DOMContentLoaded', function () {
+    const inputs = document.querySelectorAll('input[list]');
+    let input = document.querySelector("#dominique");
+    // inputs.forEach((input) => {
+    // const dataListId = input.getAttribute('list');
+    // const dataOptions = input.dataset[dataListId];
+    // const options = dataOptions.split(',').map((option) => option.trim());
 
-    // document.querySelector("#LoginBtn").onclick = function () {
-    //     loginViewDisplay("mainActiveSection")
-    // };
+    const datalist = document.createElement('datalist');
+    const dataListId = input.getAttribute('list');
+    datalist.id = dataListId;
 
-}
+    let frBase = localStorage.getItem("bdd_genre_type");
+    let base = JSON.parse(frBase);
+
+
+    base.forEach((option) => {
+        const optionElement = document.createElement('option');
+        optionElement.value = option.genrt_name;
+        optionElement.id = option.genrt_id;
+        optionElement.text = option.genrt_name;;
+        datalist.appendChild(optionElement);
+    });
+
+    input.appendChild(datalist);
+    // });
+
+    //  inputs.forEach((input) => {
+    input.addEventListener('change', function () {
+        let optionFound = false,
+            datalist = this.list;
+
+        const optionsArray = Array.from(datalist.options);
+        optionFound = optionsArray.some((option) => option.value === this.value);
+
+        if (optionFound) {
+            this.setCustomValidity('');
+        } else {
+            this.setCustomValidity('Please select a valid value.');
+        }
+    });
+    // });
+};
+
+// document.querySelector("#mainNav").onclick = function () {
+//     window.location.href = `${getAppPath()}/index.html`;
+// };
+
+// document.querySelector("#LoginBtn").onclick = function () {
+//     loginViewDisplay("mainActiveSection")
+// };
+
+//}

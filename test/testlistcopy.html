@@ -1,0 +1,76 @@
+<html>
+
+
+
+
+<body>
+
+    <input class="form-control" type="text" data-countries="England, Germany, China" list="countries" name="favCountry"
+        placeholder="Select a Country" required autocomplete="off" id="dominique" />
+
+
+
+</body>
+<script>
+
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const inputs = document.querySelectorAll('input[list]');
+        // inputs.forEach((input) => {
+        let input = document.querySelector("#dominique");
+        const dataListId = input.getAttribute('list');
+        const dataOptions = input.dataset[dataListId];
+        const options = dataOptions.split(',').map((option) => option.trim());
+
+        const datalist = document.createElement('datalist');
+        datalist.id = dataListId;
+
+        // options.forEach((option) => {
+        //     const optionElement = document.createElement('option');
+        //     optionElement.value = option;
+        //     optionElement.text = option;
+        //     datalist.appendChild(optionElement);
+        // });
+
+        // const optionElement1 = document.createElement('option');
+        // optionElement1.value = "1";
+        // optionElement1.text = "option1";
+        // datalist.appendChild(optionElement1);
+        // const optionElement2 = document.createElement('option');
+        // optionElement2.value = "2";
+        // optionElement2.text = "option2";
+        // datalist.appendChild(optionElement2);
+
+        let frBase = localStorage.getItem("bdd_genre_type");
+        let base = JSON.parse(frBase);
+
+        base.forEach((option) => {
+            const optionElement = document.createElement('option');
+            optionElement.value = option.genrt_id;
+            optionElement.text = option.genrt_name;;
+            datalist.appendChild(optionElement);
+        });
+
+        input.parentNode.appendChild(datalist);
+        // });
+
+        // inputs.forEach((input) => {
+        input.addEventListener('change', function () {
+            let optionFound = false,
+                datalist = this.list;
+
+            const optionsArray = Array.from(datalist.options);
+            optionFound = optionsArray.some((option) => option.value === this.value);
+
+            if (optionFound) {
+                this.setCustomValidity('');
+            } else {
+                this.setCustomValidity('Please select a valid value.');
+            }
+        });
+        //  });
+    });
+</script>
+
+</html>

@@ -1,0 +1,62 @@
+<html>
+
+
+
+
+<body>
+
+    <input class="form-control" type="text" data-countries="England, Germany, China" list="countries" name="favCountry"
+        placeholder="Select a Country" required autocomplete="off" id="dominique" />
+
+
+
+</body>
+<script>
+
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const inputs = document.querySelectorAll('input[list]');
+        let input = document.querySelector("#dominique");
+        // inputs.forEach((input) => {
+        // const dataListId = input.getAttribute('list');
+        // const dataOptions = input.dataset[dataListId];
+        // const options = dataOptions.split(',').map((option) => option.trim());
+
+        const datalist = document.createElement('datalist');
+        const dataListId = input.getAttribute('list');
+        datalist.id = dataListId;
+
+        let frBase = localStorage.getItem("bdd_genre_type");
+        let base = JSON.parse(frBase);
+
+        base.forEach((option) => {
+            const optionElement = document.createElement('option');
+            optionElement.value = option.genrt_id;
+            optionElement.id = option.genrt_id;
+            optionElement.text = option.genrt_name;;
+            datalist.appendChild(optionElement);
+        });
+
+        input.appendChild(datalist);
+        // });
+
+        //  inputs.forEach((input) => {
+        input.addEventListener('change', function () {
+            let optionFound = false,
+                datalist = this.list;
+
+            const optionsArray = Array.from(datalist.options);
+            optionFound = optionsArray.some((option) => option.value === this.value);
+
+            if (optionFound) {
+                this.setCustomValidity('');
+            } else {
+                this.setCustomValidity('Please select a valid value.');
+            }
+        });
+        // });
+    });
+</script>
+
+</html>

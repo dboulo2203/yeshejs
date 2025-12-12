@@ -179,7 +179,7 @@ export async function displayPersonContent(mainDisplay, personID) {
         // }
 
     } catch (error) {
-        document.querySelector("#messageSection").innerHTML = `< div class="alert alert-danger" style = "margin-top:30px" role = "alert" > ${error}</div > `;
+        document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style = "margin-top:30px" role = "alert" > ${error}</div > `;
     }
 }
 /**
