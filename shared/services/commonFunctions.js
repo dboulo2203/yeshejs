@@ -39,15 +39,32 @@ const secondsToMidnight = (n) => {
 export function getAppPath() {
   let appName = '';
   var path = location.pathname.split('/');
-  if (path[0] == "")
+  const found = path.indexOf('views');
+  if (found === 2)
     appName = path[1]
   else
-    appName = path[0]
+    appName = '';
 
   return window.location.protocol + "//" + window.location.hostname + '/' + appName;
 
 }
 
+/**
+ * 
+ * @returns Get current app path http://host/app
+ * @deprecated
+ */
+export function getAppPathRemote() {
+  let appName = '';
+  var path = location.pathname.split('/');
+  if (path[0] == "")
+    appName = path[1]
+  else
+    appName = path[0]
+
+  return window.location.protocol + "//" + window.location.hostname + '/';
+
+}
 /**
  * Add an event listened  to  a list of HTML document (by class name)
  * @param {*} elementClass  : the .XXXX class identifier of the element list 
@@ -80,6 +97,7 @@ export function addMultipleEnventListener(elementClass, functionOfEvent) {
 
 /**
  * Parse a markdown string and return the HTML
+ * @deprecated
  * @param  text : string to parse
  * @returns string
  */
@@ -214,7 +232,6 @@ export function getEntityLinkClass(buttonType, entityName, searId, withUnderline
   onpointerleave="this.setAttribute('style', 'color: bs-body-color')">
         ${entityName === null ? '' : entityName}
     </span>`;
-
 }
 
 /**
@@ -236,5 +253,18 @@ export function getEntityLink(buttonType, entityName, withUnderline = true) {
         ${entityName === null ? '' : entityName}
     </span>`;
 
+}
+
+
+
+export function encodeHTML(str) {
+  const map = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  };
+  return str.replace(/[&<>"']/g, function (m) { return map[m]; });
 }
 

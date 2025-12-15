@@ -1,0 +1,142 @@
+<html>
+
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Yeshe JS </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+        </script>
+
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+        <h1>Composant craftmade bootstrap </h1>
+
+        <input class="form-control" type="text" list="countries" name="favCountry" placeholder="Select a Country"
+            required autocomplete="on" id="dominique" />
+</body>
+<script type="module">
+
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        let input = document.querySelector("#dominique");
+
+        // *** Load datalist
+        const datalist = document.createElement('datalist');
+        const dataListId = input.getAttribute('list');
+        datalist.id = dataListId;
+
+        //  inputs.forEach((input) => {
+        input.addEventListener('change', function () {
+            let optionFound = false,
+                datalist = this.list;
+            //  datalist.options = datalist.options.filter((option) => option.value === this.value);
+
+
+
+            // const optionElement = document.createElement('option');
+            // optionElement.id = "9990";
+            // optionElement.text = "Ajoute élément";;
+
+            // datalist.appendChild(optionElement);
+
+            // const optionsArray = Array.from(datalist.options);
+            // optionFound = optionsArray.filter((option) => option.value === this.value);
+
+            // if (optionFound) {
+            //     this.setCustomValidity('');
+            // } else {
+            //     this.setCustomValidity('Please select a valid value.');
+            // }
+        });
+        input.addEventListener('input', async function (e) {
+            console.log("Input event  : " + e.target.value + " - " + e.target.id)
+            let inputElement = document.querySelector("#dominique");
+
+            if (e.target.value.length >= 3) {
+                // *** Get result from the database
+                let searchLines = await getSearch(e.target.value, "6");
+                if (searchLines && searchLines.length > 0) {
+                    // *** Fill the datalist
+                    const datalist = document.createElement('datalist');
+                    const dataListId = input.getAttribute('list');
+                    datalist.id = dataListId;
+
+                    searchLines.forEach((option) => {
+                        const optionElement = document.createElement('option');
+                        optionElement.id = option.sear_id;
+                        optionElement.text = option.sear_label;;
+                        optionElement.numer = option.sear_id;
+                        datalist.appendChild(optionElement);
+                    });
+                    // *** remove the previous values
+                    let listElement = document.getElementById(dataListId);
+                    if (listElement)
+                        inputElement.removeChild(listElement);
+                    let currentdatalist = inputElement.list;
+                    // *** Put the nex values
+                    inputElement.appendChild(datalist);
+                }
+            } else {
+                // *** Less than 3 characters, empty the datalist
+                console.log("moins 3 de caractères");
+                let listElement = document.getElementById(dataListId);
+                if (listElement)
+                    inputElement.removeChild(listElement);
+            }
+
+
+        });
+        input.addEventListener('keypress', function (e) {
+            console.log("keypress event  : " + e.target.value + " - " + e.target.id)
+        });
+
+        // });
+    });
+    /**
+     *
+     * @param {*} searchString
+                        * @param {*} mode
+                        * @param {*} callback
+                        * @returns search list
+                        */
+    async function getSearch(searchString, mode) {
+
+        var wsUrl = "https://kusala.fr/yeshe/api/" + `searchAdvanced/${mode}/${searchString}`;
+        let responseWS = await fetch(wsUrl);
+
+        if (responseWS.ok) {
+            // *** Get the data and save in the localstorage
+            if (responseWS.status === 500)
+                throw new Error("Trop de résultats, raffinez votre recherche");
+            const data = await responseWS.json();
+            console.log(("getSearch Service  ok"))
+            return data.content;
+        } else {
+            console.log(`getSearch nothing to return`);
+            throw new Error("Trop de résultats, raffinez votre recherche");
+        }
+
+    }
+
+</script>
+
+</html>

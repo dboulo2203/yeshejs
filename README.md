@@ -24,6 +24,14 @@
 
 ------------
 ## Releases notes
+### 5.0.7
+- NEW : general : finalisé liens avec # pour notice, keyword, person
+- NEW : icons notes, predictive, abstract
+- NEW : notice abstract : nouvelle présentation, bouton d'envoi de mail.
+- NEW notice : pictogrammes pour les description, publication etc
+- NEW : Search : Ajouté Message si le champ de recherche est vide
+- NEW : Search : version 1 de la recherche predictive
+
 ### 5.0.6
 - NEW : search : multi criteria search
 - NEW : limit le nb de notices linked à 5000.
@@ -98,17 +106,12 @@
 - NEW : page de Keyword
 
 ------------------
-## TODO User
-- General 
-    - Liens affichés avec souligé et couleur change, utiliser le composant link
-    - Analyse des anciens liens.
-    - Affichage de la note dans 'karmapa word' BUg
-    
+## TODO 
+
 - Page Search : 
     - Clic sur la photo affiche une modale avec la photo
     - Search predictive
     - Search multi media
-
 
 - Page notice : 
     - Clic sur la photo affiche une modale
@@ -122,24 +125,22 @@
 - Page simple entity :
     - Détecter les sous-notices liées et afficher
 
-## questions 
-- Routing pour url contenant un #
-
 ## TODO tech
-- Tester Bootstrap troncate dans la page de search
-- Ajoutre routing sur #
-- Entités accessibles par url
 - Traduire les tooltips
 - notice : publiqher et printer nd
-- Supprimer le $tooltip
 - Valider l'ordre du search
-- Initialisation de l'application (faite à chaque page ou bien ). l'init est exécutée à chaque fois, on teste si l'entité est chargée ou non.
-- Comment rendre la recherche plus accessible quand on est dans une notice
-- Réécrire les url pour qu'elles soient compatbles avec #/bbb
-- Sécuriser la recherche database en vérifiant les mots clés utilisés
+- [abandonné] Comment rendre la recherche plus accessible quand on est dans une notice
 
-## Bugs
-- Pointer sur les liens non actif
+## TODO after
+- Réécrire les url pour qu'elles soient compatbles avec #/bbb. Voir s'il convient de modifier toutes les URL
+- Sécuriser la recherche database en vérifiant les mots clés utilisés
+- Supprimer le $tooltip
+- Initialisation de l'application (faite à chaque page ou bien ). l'init est exécutée à chaque fois, on teste si l'entité est chargée ou non.
+- Tester Bootstrap troncate dans la page de search
+- Rendre la photo visible dans Whatssapp lorsqu'on colle le lien d'une notice
+
+## TOTO Bugs
+- Affichage de la note dans 'karmapa word' BUg
  
 
 ------------------

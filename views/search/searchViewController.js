@@ -5,7 +5,10 @@ import { getSearch } from './searchService.js';
 import { getAppPath, getLinkWithctrl } from '../../shared/services/commonFunctions.js'
 // import { imagePath } from '../../shared/assets/constants.js'
 import { getimagePath } from '../../shared/services/initialisationService.js'
-import { bookIcon, personIcon, keyIcon, printerIcon, publisherIcon, questionIcon, mattIcon, subnoticeIcon, genreIcon, themIcon, languageIcon } from '../../shared/assets/constants.js'
+import {
+    bookIcon, personIcon, keyIcon, printerIcon, publisherIcon, questionIcon, mattIcon, subnoticeIcon,
+    genreIcon, themIcon, languageIcon, noteIcon
+} from '../../shared/assets/constants.js'
 import { addMultipleEnventListener } from '../../shared/services/commonFunctions.js'
 import { getTranslation } from '../../shared/services/translationService.js'
 import { headerViewDisplay } from '../../shared/services/headerViewCont.js'
@@ -100,7 +103,7 @@ export async function displaySearchContent(htlmPartId, searchString, multiCriter
                             output += `<div class="col-9" > `;
                         } else {
                             output += ` <div class="" align = "center" > `;
-                            output += `</div > `; Search
+                            output += `</div > `;
                             output += `<div class="col-12" > `;
                         }
                         break;
@@ -152,7 +155,7 @@ export async function displaySearchContent(htlmPartId, searchString, multiCriter
 
                     case 4: // bibliographic record found by bibliographic record note
                         output += `<span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="bibliographic record found by bibliographic record note" >
-                            ${bookIcon} 
+                            ${noteIcon} 
                             </span> -  
                             <span class="bookButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span>
                         <span style="color:#eff2f2"> (${searchLine.sear_type})</span> </br >

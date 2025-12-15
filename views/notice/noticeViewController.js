@@ -3,15 +3,15 @@ import { getNotice } from './noticeService.js'
 import { displayModaleAndFunctions } from './abstractModalViewController.js'
 
 // ** Shared ressoucres
-import { getArrayFromjson, addMultipleEnventListener, getEntityLinkClass, getLinkWithctrl, getEntityLink } from '../../shared/services/commonFunctions.js'
-import { languageIcon, questionIcon, questionIcon18 } from '../../shared/assets/constants.js'
-import { bookIcon, personIcon, keyIcon, printerIcon, publisherIcon, mattIcon, subnoticeIcon, genreIcon, themIcon, linkIcon } from '../../shared/assets/constants.js'
+import { getArrayFromjson, addMultipleEnventListener, getEntityLinkClass, getLinkWithctrl } from '../../shared/services/commonFunctions.js'
+import { getEntityLink } from '../../shared/services/commonFunctions.js'
+import { languageIcon, questionIcon, questionIcon18, noteIcon, abstractIcon } from '../../shared/assets/constants.js'
+import { bookIcon, personIcon, keyIcon, copiesIcon, multimediaIcon, descriptionIcon, publicationIcon, titleIcon } from '../../shared/assets/constants.js'
 
 import { getimagePath } from '../../shared/services/initialisationService.js'
 import { getAppPath } from '../../shared/services/commonFunctions.js'
 import { getTranslation } from '../../shared/services/translationService.js'
 
-// import { bookfillIcon24 } from '../../shared/assets/constants.js'
 import { launchInitialisation } from '../../shared/services/initialisationService.js';
 import { headerViewDisplay } from '../../shared/services/headerViewCont.js'
 
@@ -65,7 +65,7 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
     output += `
         <div class="d-flex  justify-content-between" style="padding-top:60px" >          
                 <span class="fs-5" style="color:#8B2331">${bookIcon} ${getTranslation("NOT_TITLE")} : ${notice.noti_main_title}</span>
-                <span id="extractButton" style="cursor: pointer">   ${questionIcon18}</span> 
+                <span id="extractButton" style="cursor: pointer">   ${abstractIcon}</span> 
        
         </div > 
         
@@ -91,7 +91,7 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
     output += `</div > <hr style="margin-block-start:0.3rem;margin-block-end:0.3rem"/>`; // end row
 
     // *** Notice titles
-    output += `<div style=""><spanclass="fs-6" style="color:#8B2331">${getTranslation("NOT_TITLES")}</span></div>`;
+    output += `<div style=""><spanclass="fs-6" style="color:#8B2331">${titleIcon} ${getTranslation("NOT_TITLES")}</span></div>`;
     output += `<div class="col-md-12 main" " > <span class="fw - light" style ="color:grey">${getTranslation("NOT_MAINTITLE")}</span> : ${notice.noti_main_title}`;
     output += `</div>`
     //if (notice.noti_sub_title)
@@ -114,7 +114,7 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
     output += `<div class="row row-cols-1 row-cols-xs-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 ">`;
     output += `<div class="col">`;
     output += `<hr style="margin-block-start:0.1rem;margin-block-end:0.3rem;margin-top:15px"/>`;
-    output += `<div style=""><spanclass="fs-6" style="color:#8B2331">${getTranslation("NOT_DESCRIPTION")}</span></div>`;
+    output += `<div style=""><spanclass="fs-6" style="color:#8B2331">${descriptionIcon} ${getTranslation("NOT_DESCRIPTION")}</span></div>`;
 
     output += `<div class="col-md-12 main" > 
         <span class="fw-light" style ="color:grey">${getTranslation("NOT_GENRE")}</span> : 
@@ -145,7 +145,7 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
     // *** Edition
     output += `<div class="col">`;
     output += `<hr style="margin-block-start:0.1rem;margin-block-end:0.3rem;margin-top:15px"/>`;
-    output += `<div style=""><spanclass="fs-6" style="color:#8B2331">${getTranslation("NOT_PUBLICATION")} </span></div>`;
+    output += `<div style=""><spanclass="fs-6" style="color:#8B2331">${publicationIcon} ${getTranslation("NOT_PUBLICATION")} </span></div>`;
 
     output += `<div class="col-md-12 main" " > 
      <span class="fw-light" style ="color:grey"  >
@@ -217,7 +217,7 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
 
     // *** Notes
     let notesList = getArrayFromjson(notice.notesFunctionFor);
-    output += `<div ><span class="fs-6" style="color:#8B2331">${getTranslation("NOT_NOTESTITLE")}</span></div>`;
+    output += `<div ><span class="fs-6" style="color:#8B2331">${noteIcon} ${getTranslation("NOT_NOTESTITLE")}</span></div>`;
     notesList.map((note, index) => {
         output += `<div style ="margin-bottom:10px"><span class="fw-light" style ="color:grey;margin-top:40px">${note.ffnnt_name} </span> :</br> ${note.ffnn_text} </br> </div>`;
     });
@@ -228,7 +228,7 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
 
     // *** Multimedia
     let multimediasList = getArrayFromjson(notice.multimediasFunctionFor);
-    output += `<div><span class="fs-6" style="color:#8B2331">${getTranslation("NOT_MULTIMEDIASTITLE")}</span></div>`;
+    output += `<div><span class="fs-6" style="color:#8B2331">${multimediaIcon} ${getTranslation("NOT_MULTIMEDIASTITLE")}</span></div>`;
     multimediasList.map((multimedia, index) => {
         output += `${multimedia.mult_name}  : ${multimedia.multt_name} : ${multimedia.mult_file} </br> `;
     });
@@ -236,7 +236,7 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
 
     // *** Copies
     let exemplairesList = getArrayFromjson(notice.exemplairesFunctionFor);
-    output += `<div ><span class="fs-6" style="color:#8B2331">${getTranslation("NOT_COPIESTITLE")}</span></div>`;
+    output += `<div ><span class="fs-6" style="color:#8B2331">${copiesIcon} ${getTranslation("NOT_COPIESTITLE")}</span></div>`;
 
     // sort copies array
     exemplairesList.sort(function (a, b) {

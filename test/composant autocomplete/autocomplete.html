@@ -1,0 +1,124 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yeshe JS </title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> -->
+  <!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
+  <!-- <script
+    src="https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@v2.3.7/dist/latest/bootstrap-autocomplete.min.js"></script> -->
+
+  <style>
+    canvas {
+      border: 1px solid black;
+    }
+  </style>
+  <!-- <script type="module" src="./app.js"></script> -->
+  <!-- <script type="module" src="./app.js"></script> -->
+</head>
+
+<body>
+  <div class="container">
+    <h1>Composant bootstrap autocomplete</h1>
+    <div class="col-md-4">
+      <label for="autocompleteFullWidthInput" class="form-label">Full width</label>
+      <input type="text" class="form-control autocomplete" id="autocompleteFullWidthInput"
+        name="autocompleteFullWidthInput" data-full-width="true" placeholder="Type something" />
+    </div>
+  </div>
+  <script type="module">
+    import Autocomplete from "./autocomplete.js";
+    var src = [];
+    //   for (let i = 0; i < 50; i++) {
+    //   src.push({
+    //     title: "Option " + i,
+    //     id: "opt" + i,
+    //     data: {
+    //       key: i,
+    //     },
+    //   });
+    // }
+    // test for fuzzy
+    src.push({
+      title: "Sümething",
+      id: "fuzzy1"
+    })
+    src.push({
+      title: "Sómething",
+      id: "fuzzy2"
+    });
+    src.push({
+      title: "Something",
+      id: "fuzzy2"
+    });
+
+    // test with numeric keys
+    // var numericSrc = [];
+    // for (let i = 50; i > 0; i--) {
+    //   numericSrc.push({
+    //     label: "Option " + i,
+    //     value: i,
+    //   });
+    // }
+
+    // var groupedSrc = [];
+    // for (let i = 0; i < 5; i++) {
+    //   var children = [];
+    //   for (let j = i * 10; j < i * 10 + 10; j++) {
+    //     children.push({
+    //       label: "Option " + j,
+    //       value: "opt" + j,
+    //     });
+    //   }
+    //   groupedSrc.push({
+    //     group: "Group " + i,
+    //     items: children,
+    //   });
+    // }
+
+    Autocomplete.init("input.autocomplete", {
+      items: src,
+      valueField: "id",
+      labelField: "title",
+      highlightTyped: true,
+      onSelectItem: function (value, inst) {
+        console.log('Select value:', value);
+      },
+      onChange: function (value, inst) {
+        console.log('Change value:', value);
+      },
+      onClearItem: function (value, inst) {
+        console.log('Cleared value:', value);
+      },
+      onBeforeFetch: (inst) => {
+        const icon = inst.getInput().parentElement.querySelector('.loading-icon');
+        if (icon) {
+          icon.style.display = "block";
+        }
+      },
+      onAfterFetch: (inst) => {
+        const icon = inst.getInput().parentElement.querySelector('.loading-icon');
+        if (icon) {
+          icon.style.display = "none";
+        }
+      },
+    });
+
+
+
+  </script>
+</body>
+
+
+</html>

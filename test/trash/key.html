@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en-EN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="max-age" content="2">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Yeshe JS </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+        </script>
+    <link rel="icon" href="/yeshejs/favicon.png" />
+</head>
+
+<body>
+    <div class="container" id="mainPart">
+        <div class="col-md-12 " id="menuSection" style="margin-top:50px">
+        </div>
+        <div class="col-md-12 " id="messageSection" style="margin-top:50px"></div>
+        <div class="col-md-12 " id="mainActiveSection" style="margin-top:50px">
+
+            <h1> Autocomplete Divers Solutiions</h1>
+            <form>
+                <br />****************************************************<br />
+                aria-describedby OK
+                <input type="text" class="form-control" placeholder="" id="searchInputString" aria-label="tete"
+                    aria-describedby="trash-desc">
+                <p id="trash-desc">
+                    <small>Aria-describedby Items in the trash will be permanently removed after 30 days.qdfs</small>
+                </p>
+                <br />****************************************************<br />
+                <label for="tac">
+                    <input id="tac" type="checkbox" name="terms-and-conditions" />
+                    I agree to the Terms and Conditions.
+                </label>
+                <p><a href="tac.html">Read our Terms and Conditions</a>.</p> <br />
+
+                <br />****************************************************<br />
+                <input type="search" />
+                <br />****************************************************<br />
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Dropdown button
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </div>
+                <hr />
+
+                <input type="text" aria-activedescendant="cb1-opt6" aria-readonly="true" aria-owns="cb1-list"
+                    aria-autocomplete="list" role="combobox" id="cb1-edit">
+                <ul aria-expanded="true" role="listbox" id="cb1-list">
+                    <li role="option" id="cb1-opt1">Alabama</li>
+                    <li role="option" id="cb1-opt2">Alaska</li>
+                    <li role="option" id="cb1-opt3">American Samoa</li>
+                    <li role="option" id="cb1-opt4">Arizona</li>
+                    <li role="option" id="cb1-opt5">Arkansas</li>
+                    <li role="option" id="cb1-opt6">California</li>
+                    <li role="option" id="cb1-opt7">Colorado</li>
+                </ul>
+
+
+                <br />
+
+
+                <br />****************************************************<br />
+
+                <div role="search"><input role="searchbox" type="text"><button role="button">Search</button></div>
+
+                <br />****************************************************<br />
+
+                <label for="name">Enter your name:</label>
+                <input type="text" id="name" aria-labelledby="name">
+                <br />****************************************************<br />
+
+                <div>
+                    <label for="cb1-input">
+                        State
+                    </label>
+                    <div class="combobox combobox-list">
+                        <div class="group">
+                            <input id="cb1-input" class="cb_edit" type="text" role="combobox" aria-autocomplete="list"
+                                aria-expanded="false" aria-controls="cb1-listbox">
+                            <button id="cb1-button" tabindex="-1" aria-label="States" aria-expanded="false"
+                                aria-controls="cb1-listbox">
+                                <svg width="18" height="16" aria-hidden="true" focusable="false"
+                                    style="forced-color-adjust: auto">
+                                    <polygon class="arrow" stroke-width="0" fill-opacity="0.75" fill="currentcolor"
+                                        points="3,6 15,6 9,14">
+                                    </polygon>
+                                </svg>
+                            </button>
+                        </div>
+                        <ul id="cb1-listbox" role="listbox" aria-label="States">
+                            <li id="lb1-al" role="option">
+                                Alabama
+                            </li>
+                            <li id="lb1-ak" role="option">
+                                Alaska
+                            </li>
+                            <li id="lb1-as" role="option">
+                                American Samoa
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+                **********************************************
+                <input type="submit">en avant</button>
+            </form>
+        </div>
+
+        <div id="error"></div>
+    </div>
+</body>
+<script type="module">
+
+</script>
+
+</html>

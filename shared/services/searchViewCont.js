@@ -1,6 +1,8 @@
 // *** Shared ressources
-import { getAppPath } from '../services/commonFunctions.js'
+import { getAppPath, getLinkWithctrl } from '../services/commonFunctions.js'
 import { getSelectFromDatabaseList } from '../yesheServices/yesheListsService.js'
+import { predictiveIcon, searchIcon, multicritIcon } from '../assets/constants.js';
+import { getSearch } from '../../views/search/searchService.js'
 
 /**
  * Display the menu bar of the appplication 
@@ -11,29 +13,32 @@ export function searchViewDisplay(htlmPartId) {
     let menuString = `
     <div id="menuPart" style="margin-top:60px; margin-bottom:20px">
         <div class="flex justify-content-center " style="padding:0px">
+        <div id="messagebox"></div>
             <div class="input-group mb-3">
 
                 <input type="text" class="form-control" placeholder="" id="searchInputString" aria-label="" aria-describedby="button-addon2">
                 <button class="btn btn-outline-secondary" type="button" id="searchBtn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                    </svg>
+                    ${searchIcon}
                 </button>
-                <button class="btn btn-outline-secondary " data-bs-toggle="button" type="button" id="searchBtn" data-toggle="tooltip" title="Recherche prédictive">
-                    Predic.
+               <button class="btn btn-outline-secondary " data-bs-toggle="collapse" href="#collapsePredictive" id="searchBtn" data-toggle="tooltip" title="Recherche multi-crières">
+                    ${predictiveIcon}
                 </button>
-               <button class="btn btn-outline-secondary " data-bs-toggle="collapse" href="#collapseExample" id="searchBtn" data-toggle="tooltip" title="Recherche multi-crières">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-checklist" viewBox="0 0 16 16">
-                <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"/>
-                <path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0M7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0"/>
-                </svg>
-                </button>
+               <button class="btn btn-outline-secondary " data-bs-toggle="collapse" href="#collapseMulti" id="searchBtn" data-toggle="tooltip" title="Recherche multi-crières">
+                    ${multicritIcon}
+               </button>
 
 
              <!-- <button class="btn btn-outline-secondary" type="button" id="searchBtn">Muti-criteria</button> -->
             </div>
         </div>
-        <div class="collapse" id="collapseExample">
+            <div class="collapse" id="collapsePredictive">
+                <div class="card card-body">
+                    <span class="fs-6" style="color:#8B2331">Predictive Search</span>
+                    <input type="text" class="form-control" placeholder="" id="predictive" aria-label="" list="domninique" aria-describedby="button-addon2">
+                </div>
+            </div>
+
+        <div class="collapse" id="collapseMulti">
             <div class="card card-body">
             <span class="fs-6" style="color:#8B2331">Multicriteria Search</span>
                 <form>
@@ -46,35 +51,25 @@ export function searchViewDisplay(htlmPartId) {
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="exampleInputPassword1" class="col-sm-3 col-form-label" ><small>Person</small></label>
+                                <label for="inputPerson" class="col-sm-3 col-form-label" ><small>Person</small></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control form-control-sm" id="exampleInputPassword1" placeholder="">
+                                    <input type="text" class="form-control form-control-sm" id="inputPerson" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="exampleInputPassword1" class="col-sm-3 col-form-label fs-6" ><small>Keyword</small></label>
+                                <label for="inputKeyword" class="col-sm-3 col-form-label fs-6" ><small>Keyword</small></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control form-control-sm" id="exampleInputPassword1" placeholder="">
+                                    <input type="text" class="form-control form-control-sm" id="inputKeyword" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="exampleInputPassword1" class="col-sm-3 col-form-label" ><small>Publisher</small></label>
+                                <label for="inputPublisher" class="col-sm-3 col-form-label" ><small>Publisher</small></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control form-control-sm" id="exampleInputPassword1" placeholder="">
+                                    <input type="text" class="form-control form-control-sm" id="inputPublisher" placeholder="">
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label for="exampleInputPassword1" class="col-sm-3 col-form-label" ><small>Owner</small></label>
-                                <div class="col-sm-9">
-    <input class="form-control" type="text" data-countries="England, Germany, China" list="countries" name="favCountry"
-        placeholder="Select a Country" required autocomplete="off" id="dominique" />
-                                </div>
-                            </div>
-
-                             <!--<div class="form-group form-check row">
-                                <button type="submit" class="btn btn-secondary">Submit</button>
-                        </div> -->
-                        </div>
+ 
+                         </div>
                         <div class="col-6">
                             <div class="form-group row">
                                 <label for="exampleInputEmail1" class="col-sm-3 col-form-label"><small>Genre</small></label>
@@ -102,7 +97,7 @@ export function searchViewDisplay(htlmPartId) {
                             <div class="form-group row">
                                 <label for="exampleInputPassword1" class="col-sm-3 col-form-label" ><small>Language</small></label>
                                 <div class="col-sm-9">
-                                     <select class="form-select form-select-sm"  aria-label="Default select example" id="bdd_matt_type">
+                                     <select class="form-select form-select-sm"  aria-label="Default select example" id="bdd_language">
                                     ${getSelectFromDatabaseList("bdd_language", "lang_id", "lang_name")}
                                     </select>
                                 </div>
@@ -141,7 +136,7 @@ export function searchViewDisplay(htlmPartId) {
     // </ul>
 
 
-    getSelectFromDatabaseList("bdd_genre_type", "genrt_id", "genrt_id", "genrt_name")
+    // getSelectFromDatabaseList("bdd_genre_type", "genrt_id", "genrt_id", "genrt_name")
     // *** Display the navbar
     document.querySelector(htlmPartId).innerHTML = menuString;
 
@@ -155,13 +150,17 @@ export function searchViewDisplay(htlmPartId) {
         }
     });
 
-    // *** Actions
+    // *** Actions Natural language search or datbase search
     document.querySelector("#searchBtn").onclick = function () {
+        if (!document.querySelector("#searchInputString").value.length > 0) {
+            document.querySelector("#messagebox").innerHTML = `<div class="alert alert-danger" style = "margin-top:30px" role = "alert" > Veuillez saisir un critère de recherche</div > `;
+            return;
+        }
         let searchString = document.querySelector("#searchInputString").value;
         window.location.href = `${getAppPath()}/views/search/search.html?searchStr=` + searchString;
     };
 
-    // *** Actions
+    // *** Actions Multi criteria search
     document.querySelector("#searchMultiBtn").onclick = function () {
         // let searchString = document.querySelector("#searchInputString").value;
         let multiCriteriatri = 'titl:' + document.querySelector("#inputTitles").value;
@@ -170,56 +169,174 @@ export function searchViewDisplay(htlmPartId) {
     };
 
 
-    // document.addEventListener('DOMContentLoaded', function () {
-    const inputs = document.querySelectorAll('input[list]');
-    let input = document.querySelector("#dominique");
-    // inputs.forEach((input) => {
-    // const dataListId = input.getAttribute('list');
-    // const dataOptions = input.dataset[dataListId];
-    // const options = dataOptions.split(',').map((option) => option.trim());
 
-    const datalist = document.createElement('datalist');
-    const dataListId = input.getAttribute('list');
-    datalist.id = dataListId;
+    // document.addEventListener('load', function () {
+    //     let input = document.querySelector("#predictive");
 
-    let frBase = localStorage.getItem("bdd_genre_type");
-    let base = JSON.parse(frBase);
+    //     // *** Load datalist
+    //     const datalist = document.createElement('datalist');
+    //     const dataListId = input.getAttribute('list');
+    //     datalist.id = dataListId;
+
+    //     //  inputs.forEach((input) => {
+    //     input.addEventListener('change', function () {
+    //         let optionFound = false,
+    // datalist = this.list;
+    //  datalist.options = datalist.options.filter((option) => option.value === this.value);
 
 
-    base.forEach((option) => {
-        const optionElement = document.createElement('option');
-        optionElement.value = option.genrt_name;
-        optionElement.id = option.genrt_id;
-        optionElement.text = option.genrt_name;;
-        datalist.appendChild(optionElement);
-    });
 
-    input.appendChild(datalist);
-    // });
+    // const optionElement = document.createElement('option');
+    // optionElement.id = "9990";
+    // optionElement.text = "Ajoute élément";;
 
-    //  inputs.forEach((input) => {
-    input.addEventListener('change', function () {
-        let optionFound = false,
-            datalist = this.list;
+    // datalist.appendChild(optionElement);
 
+    // const optionsArray = Array.from(datalist.options);
+    // optionFound = optionsArray.filter((option) => option.value === this.value);
+
+    // if (optionFound) {
+    //     this.setCustomValidity('');
+    // } else {
+    //     this.setCustomValidity('Please select a valid value.');
+    // }
+    //       });
+
+    document.querySelector("#predictive").addEventListener('change', function (event) {
+        // datalist = this.list;
+        // datalist.options = datalist.options.filter((option) => option.value === this.value);
+        let result = event.target.value;
+        let datalist = event.target.list;
         const optionsArray = Array.from(datalist.options);
-        optionFound = optionsArray.some((option) => option.value === this.value);
+        let optionFound = optionsArray.filter((option) => option.value === result);
 
-        if (optionFound) {
-            this.setCustomValidity('');
-        } else {
-            this.setCustomValidity('Please select a valid value.');
+        // if (optionFound[0] !== null)
+        //     throw new Error("Résultat incorrect")
+        let resultOption = optionFound[0];
+        switch (resultOption.asear_type) {
+
+            case 1, 2, 3, 4, 5:
+                getLinkWithctrl(`${getAppPath()}/views/notice/notice.html?noticeID=` + resultOption.asear_id)
+                break;
+            case 6:
+                getLinkWithctrl(`${getAppPath()}/views/subNotice/subNotice.html?subNoticeID=` + resultOption.asear_id)
+                break;
+            case 10:
+                getLinkWithctrl(`${getAppPath()}/views/person/person.html?personID=` + resultOption.asear_id)
+                break;
+            case 11:
+                getLinkWithctrl(`${getAppPath()}/views/keyword/keyword.html?keywordID=` + resultOption.asear_id)
+                break;
+            case 12:
+                getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=` + resultOption.asear_id + `&simpleEntitytype=12`, event.ctrlKey)
+                break;
+            case 13:
+                getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=` + resultOption.asear_id + `&simpleEntitytype=13`, event.ctrlKey)
+                break;
+            case 24:
+            case 33:
+            case 34:
+            case 35:
+            case 36:
+            case 37:
+            default:
+                throw new Error("Résultat incorrect");
         }
+
+
     });
+
+
+
+    document.querySelector("#predictive").addEventListener('input', async function (e) {
+        console.log("Input event  : " + e.target.value + " - " + e.target.id)
+        let inputElement = document.querySelector("#predictive");
+
+        if (e.target.value.length >= 3) {
+            // *** Get result from the database
+            let searchLines = await getSearch(e.target.value, "6");
+            if (searchLines && searchLines.length > 0) {
+                // *** Fill the datalist
+                const datalist = document.createElement('datalist');
+                const dataListId = inputElement.getAttribute('list');
+                datalist.id = dataListId;
+
+                searchLines.forEach((option) => {
+                    const optionElement = document.createElement('option');
+                    optionElement.id = option.sear_id;
+                    optionElement.text = option.sear_display + " (" + option.sear_type + ")";
+                    optionElement.asear_id = option.sear_id;
+                    optionElement.asear_type = option.sear_type;
+
+                    datalist.appendChild(optionElement);
+                });
+                // *** remove the previous values
+                let listElement = document.getElementById(dataListId);
+                if (listElement)
+                    inputElement.removeChild(listElement);
+                let currentdatalist = inputElement.list;
+                // *** Put the nex values
+                inputElement.appendChild(datalist);
+            }
+        } else {
+            // *** Less than 3 characters, empty the datalist
+            console.log("moins 3 de caractères");
+            const dataListId = inputElement.getAttribute('list');
+            let listElement = document.getElementById(dataListId);
+            if (listElement)
+                inputElement.removeChild(listElement);
+        }
+
+
+    });
+    document.querySelector("#predictive").addEventListener('keypress', function (e) {
+        console.log("keypress event  : " + e.target.value + " - " + e.target.id)
+    });
+
     // });
-};
+    //   });
+}
+//     // document.addEventListener('DOMContentLoaded', function () {
+//     const inputs = document.querySelectorAll('input[list]');
+//     let input = document.querySelector("#dominique");
+//     // inputs.forEach((input) => {
+//     // const dataListId = input.getAttribute('list');
+//     // const dataOptions = input.dataset[dataListId];
+//     // const options = dataOptions.split(',').map((option) => option.trim());
 
-// document.querySelector("#mainNav").onclick = function () {
-//     window.location.href = `${getAppPath()}/index.html`;
+//     const datalist = document.createElement('datalist');
+//     const dataListId = input.getAttribute('list');
+//     datalist.id = dataListId;
+
+//     let frBase = localStorage.getItem("bdd_genre_type");
+//     let base = JSON.parse(frBase);
+
+
+//     base.forEach((option) => {
+//         const optionElement = document.createElement('option');
+//         optionElement.value = option.genrt_name;
+//         optionElement.id = option.genrt_id;
+//         optionElement.text = option.genrt_name;;
+//         datalist.appendChild(optionElement);
+//     });
+
+//     input.appendChild(datalist);
+//     // });
+
+//     //  inputs.forEach((input) => {
+//     input.addEventListener('change', function () {
+//         let optionFound = false,
+//             datalist = this.list;
+
+//         const optionsArray = Array.from(datalist.options);
+//         optionFound = optionsArray.some((option) => option.value === this.value);
+
+//         if (optionFound) {
+//             this.setCustomValidity('');
+//         } else {
+//             this.setCustomValidity('Please select a valid value.');
+//         }
+//     });
+//     // });
 // };
 
-// document.querySelector("#LoginBtn").onclick = function () {
-//     loginViewDisplay("mainActiveSection")
-// };
-
-//}
