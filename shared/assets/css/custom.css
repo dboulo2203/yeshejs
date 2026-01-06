@@ -1,10 +1,28 @@
-@media (max-width: 320px) {
+body {
+    font-size: 0.95rem;
+}
 
-    /* .element {
-        width: 80%;
-    } */
+.fs-5 {
+    font-size: 1, 1rem !important;
+}
 
-    /* .container {
-        max-width: 640px
-    } */
+.btn {
+    font-size: 0.95rem;
+
+}
+
+h4 {
+    font-size: calc(1.1rem + .3vw);
+}
+
+input {
+    font-size: 0.95rem;
+}
+
+.form-select {
+    font-size: 0.95rem;
+}
+
+modal-title {
+    font-size: 1, 1rem !important;
 }

@@ -8,12 +8,12 @@ import { getEntityLink } from '../../shared/services/commonFunctions.js'
 import { languageIcon, questionIcon, questionIcon18, noteIcon, abstractIcon } from '../../shared/assets/constants.js'
 import { bookIcon, personIcon, keyIcon, copiesIcon, multimediaIcon, descriptionIcon, publicationIcon, titleIcon } from '../../shared/assets/constants.js'
 
-import { getimagePath } from '../../shared/services/initialisationService.js'
+import { getimagePath } from '../../shared/services/configurationService.js'
+import { launchInitialisation } from '../appservices/initialisationService.js'
 import { getAppPath } from '../../shared/services/commonFunctions.js'
 import { getTranslation } from '../../shared/services/translationService.js'
 
-import { launchInitialisation } from '../../shared/services/initialisationService.js';
-import { headerViewDisplay } from '../../shared/services/headerViewCont.js'
+import { headerViewDisplay } from '../appservices/headerViewCont.js'
 
 /**
  * Start script 
@@ -76,7 +76,7 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
     output += `<div class="row " > `;
     if (notice.noti_main_image && notice.noti_main_image.length > 0) {
         output += ` <div class="col-3" align="center" > `;
-        output += ` <img src = '${getimagePath()}/img/books/${notice.noti_main_image}' style = "width:100%"  /> `;
+        output += ` <img src = '${getimagePath()}/img/books/${notice.noti_main_image}' style = "width:100%;max-width:150px"  /> `;
         output += `</div > `;
 
         output += `<div class="col-9 " style = "" > ${notice.noticeCatalogDescription} `;
@@ -92,20 +92,20 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
 
     // *** Notice titles
     output += `<div style=""><spanclass="fs-6" style="color:#8B2331">${titleIcon} ${getTranslation("NOT_TITLES")}</span></div>`;
-    output += `<div class="col-md-12 main" " > <span class="fw - light" style ="color:grey">${getTranslation("NOT_MAINTITLE")}</span> : ${notice.noti_main_title}`;
+    output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_MAINTITLE")}</span> : ${notice.noti_main_title}`;
     output += `</div>`
     //if (notice.noti_sub_title)
-    output += `<div class="col-md-12 main"  > <span class="fw-light" style ="color:grey">${getTranslation("NOT_SUBTITLE")}</span> : ${notice.noti_sub_title}</div>`;
+    output += `<div class="col-md-12 main"  > <span class="fw-light" >${getTranslation("NOT_SUBTITLE")}</span> : ${notice.noti_sub_title}</div>`;
     //if (notice.noti_parallel_title)
-    output += `<div class="col-md-12 main"> <span class="fw-light" style ="color:grey">${getTranslation("NOT_PARALLELTITLE")}</span> :  ${notice.noti_parallel_title}</div>`;
+    output += `<div class="col-md-12 main"> <span class="fw-light" >${getTranslation("NOT_PARALLELTITLE")}</span> :  ${notice.noti_parallel_title}</div>`;
     //if (notice.noti_abreviated_title)
-    output += `<div class="col-md-12 main"> <span class="fw-light" style ="color:grey">${getTranslation("NOT_ABREVIATEDTITLE")}</span> :  ${notice.noti_abreviated_title}</div>`;
+    output += `<div class="col-md-12 main"> <span class="fw-light" >${getTranslation("NOT_ABREVIATEDTITLE")}</span> :  ${notice.noti_abreviated_title}</div>`;
     //if (notice.noti_original_title)
-    output += `<div class="col-md-12 main"> <span class="fw-light" style ="color:grey">${getTranslation("NOT_ORIGINALTITLE")}</span> :  ${notice.noti_original_title}</div>`;
+    output += `<div class="col-md-12 main"> <span class="fw-light" >${getTranslation("NOT_ORIGINALTITLE")}</span> :  ${notice.noti_original_title}</div>`;
     //if (notice.noti_main_title_translated)
-    output += `<div class="col-md-12 main"> <span class="fw-light" style ="color:grey">${getTranslation("NOT_MAINTRANSTITLE")}</span> :  ${notice.noti_main_title_translated}</div>`;
+    output += `<div class="col-md-12 main"> <span class="fw-light" >${getTranslation("NOT_MAINTRANSTITLE")}</span> :  ${notice.noti_main_title_translated}</div>`;
     //if (notice.noti_other_title)
-    output += `<div class="col-md-12 main"> <span class="fw-light" style ="color:grey">${getTranslation("NOT_OTHERTITLE")}</span> :  ${notice.noti_other_title}</div>`;
+    output += `<div class="col-md-12 main"> <span class="fw-light" >${getTranslation("NOT_OTHERTITLE")}</span> :  ${notice.noti_other_title}</div>`;
 
 
     //  output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
@@ -117,26 +117,26 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
     output += `<div style=""><spanclass="fs-6" style="color:#8B2331">${descriptionIcon} ${getTranslation("NOT_DESCRIPTION")}</span></div>`;
 
     output += `<div class="col-md-12 main" > 
-        <span class="fw-light" style ="color:grey">${getTranslation("NOT_GENRE")}</span> : 
+        <span class="fw-light">${getTranslation("NOT_GENRE")}</span> : 
         ${getEntityLink("genreButton", notice.genrt_name)}
     </div>`;
 
-    output += `<div class="col-md-12 main" > <span class="fw-light" style ="color:grey">${getTranslation("NOT_THEME")}</span> : 
+    output += `<div class="col-md-12 main" > <span class="fw-light" >${getTranslation("NOT_THEME")}</span> : 
         ${getEntityLink("themeButton", notice.them_name)}
         </div>`;
-    output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">${getTranslation("NOT_BIBLIOGRAPHICLEVEL")}</span> : ${notice.blil_name === null ? '' : notice.blil_name}</div>`;
-    output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">${getTranslation("NOT_DOCUMENTTYPE")}</span> :
+    output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_BIBLIOGRAPHICLEVEL")}</span> : ${notice.blil_name === null ? '' : notice.blil_name}</div>`;
+    output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_DOCUMENTTYPE")}</span> :
         ${getEntityLink("doctButton", notice.doct_name)}
         </div>`;
-    output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">${getTranslation("NOT_MATERIALTYPE")}</span> : 
+    output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_MATERIALTYPE")}</span> : 
     ${getEntityLink("mattButton", notice.matt_name)} 
     </div>`;
-    output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey"></div>`;
-    output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">${getTranslation("NOT_MATERIALDESCRIPTION")}</span> ${notice.noti_col_mat_description === null ? '' : notice.noti_col_mat_description}</div>`;
-    output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">${getTranslation("NOT_MATERIALCHARACTERISTIC")}</span> : ${notice.noti_col_car_description === null ? '' : notice.noti_col_car_description}</div>`;
-    output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">${getTranslation("NOT_MATERIALFORMAT")}</span> : ${notice.noti_col_format === null ? '' : notice.noti_col_format}</div>`;
-    output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">${getTranslation("NOT_OTHEMATERIAL")}</span> : ${notice.noti_col_other_material === null ? '' : notice.noti_col_other_material}</div>`;
-    output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">${getTranslation("NOT_TRANSLITERATION")}</span> : ${notice.noti_transliteration === null || notice.noti_transliteration <= 0 ? '' : notice.noti_transliteration}</div>`;
+    output += `<div class="col-md-12 main" " > <span class="fw-light" ></div>`;
+    output += `<div class="col-md-12 main" " > <span class="fw-light">${getTranslation("NOT_MATERIALDESCRIPTION")}</span> ${notice.noti_col_mat_description === null ? '' : notice.noti_col_mat_description}</div>`;
+    output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_MATERIALCHARACTERISTIC")}</span> : ${notice.noti_col_car_description === null ? '' : notice.noti_col_car_description}</div>`;
+    output += `<div class="col-md-12 main" " > <span class="fw-light""${getTranslation("NOT_MATERIALFORMAT")}</span> : ${notice.noti_col_format === null ? '' : notice.noti_col_format}</div>`;
+    output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_OTHEMATERIAL")}</span> : ${notice.noti_col_other_material === null ? '' : notice.noti_col_other_material}</div>`;
+    output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_TRANSLITERATION")}</span> : ${notice.noti_transliteration === null || notice.noti_transliteration <= 0 ? '' : notice.noti_transliteration}</div>`;
     // ** output += NOT_CHECKINSTATE, chek_name
     // ** output += NOT_INFO, Created on { { notice.noti_creation_date | date : 'dd/MM/yyyy HH:mm' } } by { { notice.noti_creation_user } } - Last modified on { { notice.noti_last_modification_date | date : 'dd/MM/yyyy HH:mm' } } by { { notice.noti_last_modification_user } } - Id : { { notice.noti_id } }
     // ** output +={wsLanguage.NOT_IMAGE}}</b> : {{notice.noti_main_image}}
@@ -148,27 +148,27 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
     output += `<div style=""><spanclass="fs-6" style="color:#8B2331">${publicationIcon} ${getTranslation("NOT_PUBLICATION")} </span></div>`;
 
     output += `<div class="col-md-12 main" " > 
-     <span class="fw-light" style ="color:grey"  >
+     <span class="fw-light"  >
         ${getTranslation("PUB_TITLE")}  
     </span> : 
        ${getEntityLink("publisherButton", notice.publ_name)}
       </div>`;
 
 
-    output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">${getTranslation("COLL_TITLE")}</span> : <span style="cursor: pointer; border-bottom: 0.1em solid #dddbdbff" id="collectionButton">${notice.coll_name === null || notice.coll_name === 'nd' ? '' : notice.coll_name}</span></div>`;
-    output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">${getTranslation("NOT_NUMBERINCOLLECTION")} </span> : 
-    <span style="cursor: pointer;color:#dddbdbff" id="noti_num_in_col">${notice.noti_num_in_col}</span></div>`;
+    output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("COLL_TITLE")}</span> : <span style="cursor: pointer; border-bottom: 0.1em solid #dddbdbff" id="collectionButton">${notice.coll_name === null || notice.coll_name === 'nd' ? '' : notice.coll_name}</span></div>`;
+    output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_NUMBERINCOLLECTION")} </span> : 
+    <span id="noti_num_in_col">${notice.noti_num_in_col}</span></div>`;
 
     output += `<div class="col-md-12 main" > 
-    <span class="fw-light" style ="color:grey">${getTranslation("PRI_TITLE")} </span> :
+    <span class="fw-light" >${getTranslation("PRI_TITLE")} </span> :
      ${getEntityLink("printerButton", notice.prin_name)}
      </div>`;
 
-    output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">${getTranslation("NOT_YEAROFPUBLICATION")}</span> : ${notice.noti_year_of_publication === null ? '' : notice.noti_year_of_publication}</div>`;
-    output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">${getTranslation("NOT_PLACEOFPUBLICATION")}</span> : ${notice.noti_place_of_publication === null ? '' : notice.noti_place_of_publication}</div>`;
-    output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">${getTranslation("NOT_TYPEOFPUBLICATION")}</span> : ${notice.noti_type_of_publication === null ? '' : notice.noti_type_of_publication}</div>`;
-    output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">${getTranslation("NOT_ISBN")}</span> : ${notice.noti_basenumber === null ? '' : notice.noti_basenumber}</div>`;
-    output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">${getTranslation("NOT_EAN")} </span> : ${notice.noti_codedouchette === null ? '' : notice.noti_codedouchette}</div>`;
+    output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_YEAROFPUBLICATION")}</span> : ${notice.noti_year_of_publication === null ? '' : notice.noti_year_of_publication}</div>`;
+    output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_PLACEOFPUBLICATION")}</span> : ${notice.noti_place_of_publication === null ? '' : notice.noti_place_of_publication}</div>`;
+    output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_TYPEOFPUBLICATION")}</span> : ${notice.noti_type_of_publication === null ? '' : notice.noti_type_of_publication}</div>`;
+    output += `<div class="col-md-12 main" " > <span class="fw-light" ${getTranslation("NOT_ISBN")}</span> : ${notice.noti_basenumber === null ? '' : notice.noti_basenumber}</div>`;
+    output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_EAN")} </span> : ${notice.noti_codedouchette === null ? '' : notice.noti_codedouchette}</div>`;
     output += `</div>`
     output += `</div>`
 
@@ -181,7 +181,7 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
     output += `<div style=""><spanclass="fs-6 " style="color:#8B2331">${personIcon} ${getTranslation("PERS_TITLE")}</span></div>`;
     let personsList = getArrayFromjson(notice.personsFunctionFor);
     personsList.map((person, index, personsList) => {
-        output += `<span class="fw-light" style ="color:grey"> ${person.tffd_name}</span> : 
+        output += `<span class="fw-light" > ${person.tffd_name}</span> : 
              ${getEntityLinkClass("personButtons", person.coal_name, person.chaa_id)}</br>`;
 
     });
@@ -195,7 +195,7 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
     let keywordList = getArrayFromjson(notice.keywordsFunctionFor);
     keywordList.map((keyword, index) => {
         output += `
-            <span class="fw-light" style ="color:grey"> ${keyword.tffc_name}</span> : 
+            <span class="fw-light" > ${keyword.tffc_name}</span> : 
                 ${getEntityLinkClass("keywordButtons", keyword.coal_name, keyword.conc_id)}</br>
            `;
     });
@@ -208,7 +208,7 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
     output += `<div style=""><spanclass="fs-6" style="color:#8B2331">${languageIcon} ${getTranslation("NOT_LANGAUGESTITLE")}</span></div>`;
     let languagesList = getArrayFromjson(notice.languagesFunctionFor);
     languagesList.map((language, index) => {
-        output += `<span class="fw-light" style ="color:grey"> ${language.ffnlt_name}</span> : 
+        output += `<span class="fw-light" > ${language.ffnlt_name}</span> : 
                 ${getEntityLinkClass("languageButtons", language.lang_name, language.lang_id)}</br>
            `;
     });

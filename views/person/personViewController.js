@@ -7,12 +7,12 @@ import { personNewModalDisplay } from './editModal/personNewModalViewController.
 import { getTranslation } from '../../shared/services/translationService.js'
 import { getArrayFromjson } from '../../shared/services/commonFunctions.js'
 import { pencilsquare, plussquare } from '../../shared/assets/constants.js'
-import { getimagePath } from '../../shared/services/initialisationService.js'
+import { getimagePath } from '../../shared/services/configurationService.js'
 import { getAppPath } from '../../shared/services/commonFunctions.js'
-import { getCurrentUSerRightLevel } from '../../shared/services/login/loginService.js'
+import { getCurrentUSerRightLevel } from '../../shared/services/loginService.js'
 import { addMultipleEnventListener } from '../../shared/services/commonFunctions.js'
-import { launchInitialisation } from '../../shared/services/initialisationService.js';
-import { headerViewDisplay } from '../../shared/services/headerViewCont.js'
+import { launchInitialisation } from '../appservices/initialisationService.js';
+import { headerViewDisplay } from '../appservices/headerViewCont.js'
 import { personIcon24, bookIcon, subnoticeIcon } from '../../shared/assets/constants.js'
 
 /**

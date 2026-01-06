@@ -1,4 +1,4 @@
-import { getwsUrlformel } from '../services/initialisationService.js';
+import { getwsUrlformel } from '../services/configurationService.js';
 
 /**
  * Load a  list from the database and save it in the localStorage 

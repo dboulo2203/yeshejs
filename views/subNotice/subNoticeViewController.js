@@ -75,32 +75,32 @@ export async function displayNoticeContent(mainDisplay, subNoticeID) {
 
     // *** Notice titles
     output += `<div style=""><spanclass="fs-6" style="color:#8B2331">Titles</span></div>`;
-    output += `<div class="col-md-12 main" " > <span class="fw - light" style ="color:grey">${getTranslation("NOT_MAINTITLE")}</span> : ${subNotice.noti_main_title}`;
+    output += `<div class="col-md-12 main" " > <span class="fw - light" >${getTranslation("NOT_MAINTITLE")}</span> : ${subNotice.noti_main_title}`;
     output += `</div>`
     if (subNotice.noti_other_title)
-        output += `<div class="col-md-12 main"> <span class="fw-light" style ="color:grey">${getTranslation("NOT_OTHERTITLE")}</span> :  ${subNotice.noti_other_title}</div>`;
+        output += `<div class="col-md-12 main"> <span class="fw-light" >${getTranslation("NOT_OTHERTITLE")}</span> :  ${subNotice.noti_other_title}</div>`;
 
     // *** Notice description
     output += `<div class="row ">`;
     output += `<div class="col">`;
     output += `<hr style="margin-block-start:0.1rem;margin-block-end:0.3rem;margin-top:15px"/>`;
     output += `<div style=""><spanclass="fs-6" style="color:#8B2331">General description</span></div>`;
-    output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">${getTranslation("NOT_MATERIALDESCRIPTION")}</span> : ${subNotice.noti_col_mat_description === null ? '' : subNotice.noti_col_mat_description}</div>`;
-    output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">${getTranslation("NOT_ORIENTALDATE")}</span> : ${subNotice.noti_oriental_date === null ? '' : subNotice.noti_oriental_date}</div>`;
-    // output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">${getTranslation("Format")}</span> : ${notice.noti_col_format === null ? '' : notice.noti_col_format}</div>`;
+    output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_MATERIALDESCRIPTION")}</span> : ${subNotice.noti_col_mat_description === null ? '' : subNotice.noti_col_mat_description}</div>`;
+    output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_ORIENTALDATE")}</span> : ${subNotice.noti_oriental_date === null ? '' : subNotice.noti_oriental_date}</div>`;
+    // output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("Format")}</span> : ${notice.noti_col_format === null ? '' : notice.noti_col_format}</div>`;
     // output += `</div>`
 
     // // *** Edition
     // output += `<div class="col">`;
     // output += `<hr style="margin-block-start:0.1rem;margin-block-end:0.3rem;margin-top:15px"/>`;
     // output += `<div style=""><spanclass="fs-6" style="color:#8B2331">Publication</span></div>`;
-    output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">${getTranslation("NOT_ISBN")}</span> : ${subNotice.noti_basenumber === null ? '' : subNotice.noti_basenumber}</div>`;
-    //  output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">EAN </span> : ${notice.noti_codedouchette === null ? '' : notice.noti_codedouchette}</div>`; NOT_SUBFATHERNOTICE
-    output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">${getTranslation("NOT_SUBFATHERNOTICE")}</span> : 
+    output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_ISBN")}</span> : ${subNotice.noti_basenumber === null ? '' : subNotice.noti_basenumber}</div>`;
+    //  output += `<div class="col-md-12 main" " > <span class="fw-light" EAN </span> : ${notice.noti_codedouchette === null ? '' : notice.noti_codedouchette}</div>`; NOT_SUBFATHERNOTICE
+    output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_SUBFATHERNOTICE")}</span> : 
      ${getEntityLinkClass("noticeButtons", subNotice.father_title, subNotice.father_id)}
     </div>`;
-    output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">${getTranslation("NOT_SUBORDER")}</span> : ${subNotice.sdoc_order === null ? '' : subNotice.sdoc_order}</div>`;
-    //  output += `<div class="col-md-12 main" " > <span class="fw-light" style ="color:grey">EAN </span> : ${notice.noti_codedouchette === null ? '' : notice.noti_codedouchette}</div>`; NOT_SUBFATHERNOTICE
+    output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_SUBORDER")}</span> : ${subNotice.sdoc_order === null ? '' : subNotice.sdoc_order}</div>`;
+    //  output += `<div class="col-md-12 main" " > <span class="fw-light" >EAN </span> : ${notice.noti_codedouchette === null ? '' : notice.noti_codedouchette}</div>`; NOT_SUBFATHERNOTICE
     output += `</div>`
     output += `</div>`
 
@@ -113,7 +113,7 @@ export async function displayNoticeContent(mainDisplay, subNoticeID) {
     output += `<div style=""><spanclass="fs-6 " style="color:#8B2331">Personnes</span></div>`;
     let personsList = getArrayFromjson(subNotice.personsFunctionFor);
     personsList.map((person, index, personsList) => {
-        output += `<span class="fw-light" style ="color:grey"> ${person.tffd_name}</span> :
+        output += `<span class="fw-light" > ${person.tffd_name}</span> :
          ${getEntityLinkClass("personButtons", person.coal_name, person.chaa_id)}</br>`;
     });
     output += `</div>`; // End persons col
@@ -125,7 +125,7 @@ export async function displayNoticeContent(mainDisplay, subNoticeID) {
     output += `<div style=""><spanclass="fs-6" style="color:#8B2331">Keywords</span></div>`;
     let keywordList = getArrayFromjson(subNotice.keywordsFunctionFor);
     keywordList.map((keyword, index) => {
-        output += `<span class="fw-light" style ="color:grey"> ${keyword.tffc_name}</span> : 
+        output += `<span class="fw-light" > ${keyword.tffc_name}</span> : 
         <span style="cursor: pointer;color:#8B2331" class="keywordButtons"  
         searid="${keyword.conc_id}"></span>
          ${getEntityLinkClass("keywordButtons", keyword.coal_name, keyword.conc_id)}

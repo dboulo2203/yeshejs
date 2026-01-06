@@ -1,7 +1,7 @@
 // *** Shared ressources
-import { getAppPath, getLinkWithctrl } from '../services/commonFunctions.js'
-import { getSelectFromDatabaseList } from '../yesheServices/yesheListsService.js'
-import { predictiveIcon, searchIcon, multicritIcon } from '../assets/constants.js';
+import { getAppPath, getLinkWithctrl } from '../../shared/services/commonFunctions.js'
+import { getSelectFromDatabaseList } from '../../shared/yesheServices/yesheListsService.js'
+import { predictiveIcon, searchIcon, multicritIcon } from '../../shared/assets/constants.js';
 import { getSearch } from '../../views/search/searchService.js'
 
 /**
@@ -9,7 +9,7 @@ import { getSearch } from '../../views/search/searchService.js'
  * @param {*} htlmPartId 
  */
 export function searchViewDisplay(htlmPartId) {
-
+    // <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="bibliographic sub-record found by id" >
     let menuString = `
     <div id="menuPart" style="margin-top:60px; margin-bottom:20px">
         <div class="flex justify-content-center " style="padding:0px">
@@ -20,11 +20,11 @@ export function searchViewDisplay(htlmPartId) {
                 <button class="btn btn-outline-secondary" type="button" id="searchBtn">
                     ${searchIcon}
                 </button>
-               <button class="btn btn-outline-secondary " data-bs-toggle="collapse" href="#collapsePredictive" id="searchBtn" data-toggle="tooltip" title="Recherche multi-crières">
-                    ${predictiveIcon}
+               <button class="btn btn-outline-secondary " data-bs-toggle="collapse" href="#collapsePredictive" id="searchBtn" >
+                    <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Predictive search" >${predictiveIcon}</span>
                 </button>
-               <button class="btn btn-outline-secondary " data-bs-toggle="collapse" href="#collapseMulti" id="searchBtn" data-toggle="tooltip" title="Recherche multi-crières">
-                    ${multicritIcon}
+               <button class="btn btn-outline-secondary " data-bs-toggle="collapse" href="#collapseMulti" id="searchBtn">
+                    <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Multicriteria search" > ${multicritIcon}</span>
                </button>
 
 
@@ -140,6 +140,18 @@ export function searchViewDisplay(htlmPartId) {
     // *** Display the navbar
     document.querySelector(htlmPartId).innerHTML = menuString;
 
+    //  $('[data-bs-toggle="tooltip"]').tooltip();
+
+    // let ElementWithTooltip = document.querySelector("span[data-bs-toggle='tooltip']");
+
+
+    // const exampleEl = document.getElementById('example')
+    // const tooltip = new bootstrap.Tooltip(ElementWithTooltip, {
+    //     boundary: document.body // or document.querySelector('#boundary')
+    // });
+
+
+    // test.tooltip();
     // *** Add the off canvas menu
     //  leftMenuViewDisplay("leftMenu");
 

@@ -1,5 +1,5 @@
 //import { wsUrlformel } from '../../assets/constants.js';
-import { getwsUrlformel } from '../initialisationService.js';
+import { getwsUrlformel } from './configurationService.js';
 
 /**
  * Load a person from the database, 
@@ -23,7 +23,7 @@ export async function getLogin(userEmail, userPassword) {
         const data = await responsefr.json();
         localStorage.setItem("loggedUSer", JSON.stringify(data.content));
 
-        console.log("getLogin  await ok ");
+        // console.log("getLogin  await ok ");
         return (data.content);
 
     } else {

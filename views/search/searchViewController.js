@@ -1,19 +1,19 @@
 // *** Component ressources
 import { getSearch } from './searchService.js';
-
+import { displayimageViewDisplay } from './displayImage/displayimageViewCont.js'
 //***  shared ressources
-import { getAppPath, getLinkWithctrl } from '../../shared/services/commonFunctions.js'
+import { getLinkWithctrl, getAppPath } from '../../shared/services/commonFunctions.js'
 // import { imagePath } from '../../shared/assets/constants.js'
-import { getimagePath } from '../../shared/services/initialisationService.js'
+import { getimagePath, } from '../../shared/services/configurationService.js'
 import {
     bookIcon, personIcon, keyIcon, printerIcon, publisherIcon, questionIcon, mattIcon, subnoticeIcon,
     genreIcon, themIcon, languageIcon, noteIcon
 } from '../../shared/assets/constants.js'
 import { addMultipleEnventListener } from '../../shared/services/commonFunctions.js'
 import { getTranslation } from '../../shared/services/translationService.js'
-import { headerViewDisplay } from '../../shared/services/headerViewCont.js'
-import { launchInitialisation } from '../../shared/services/initialisationService.js'
-import { searchViewDisplay } from '../../shared/services/searchViewCont.js'
+import { headerViewDisplay } from '../appservices/headerViewCont.js'
+import { launchInitialisation } from '../appservices/initialisationService.js'
+import { searchViewDisplay } from '../appservices/searchViewCont.js'
 
 export const searchPart = `
               <div class="col-md-12 main" style="padding:10px" id="resultDisplay">
@@ -89,7 +89,7 @@ export async function displaySearchContent(htlmPartId, searchString, multiCriter
         if (searchLines && searchLines.length > 0) {
             searchLines.map((searchLine, index) => {
                 output += `
-                <div class="row " id = "search-row" > `;
+                <div class="row " id = "search-row" style="padding-bottom:5px"> `;
 
                 let sear_typeIcon = '';
 
@@ -98,7 +98,7 @@ export async function displaySearchContent(htlmPartId, searchString, multiCriter
                     case 10: // person images are in the persons directory
                         if (searchLine.sear_image && searchLine.sear_image.length > 0) {
                             output += ` <div class="col-3 " align = "center" > `;
-                            output += ` <img src = '${getimagePath()}/img/persons/${searchLine.sear_image}' style = "width:100%" class="imgsearch"/> `;
+                            output += ` <img src = '${getimagePath()}/img/persons/${searchLine.sear_image}' style = "width:100%;max-width:100px;cursor:pointer" class="imgsearch"/> `;
                             output += `</div > `;
                             output += `<div class="col-9" > `;
                         } else {
@@ -110,7 +110,7 @@ export async function displaySearchContent(htlmPartId, searchString, multiCriter
                     default: // other images are in the book directory
                         if (searchLine.sear_image && searchLine.sear_image.length > 0) {
                             output += ` <div class="col-3 " align = "center" > `;
-                            output += ` <img src = '${getimagePath()}/img/books/${searchLine.sear_image}' style = "width:100%" class="imgsearch"/> `;
+                            output += ` <img src = '${getimagePath()}/img/books/${searchLine.sear_image}' style = "width:100%;max-width:100px;cursor:pointer" class="imgsearch"/> `;
                             output += `</div > `;
                             output += `<div class="col-9" > `;
                         } else {
@@ -350,6 +350,10 @@ export async function displaySearchContent(htlmPartId, searchString, multiCriter
         addMultipleEnventListener(".collectionButtons", function (event) {
             getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=` + event.currentTarget.getAttribute('searid') + `&simpleEntitytype=37`, event.ctrlKey)
         });
+        addMultipleEnventListener(".imgsearch", function (event) {
+            displayimageViewDisplay("modalSection", event.currentTarget.getAttribute('src'), event.ctrlKey)
+        });
+
 
 
         // *** try to manage image sizing by css

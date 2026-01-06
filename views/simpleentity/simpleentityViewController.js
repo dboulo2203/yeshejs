@@ -5,10 +5,10 @@ import { getSimpleEntity, getSimpleEntitylinkedNotices } from './simpleEntitySer
 import { getAppPath, getEntityLink, getLinkWithctrl, getEntityLinkClass } from '../../shared/services/commonFunctions.js'
 import { bookIcon, personIcon, keyIcon, printerIcon, publisherIcon, questionIcon, languageIcon, mattIcon, subnoticeIcon, genreIcon, themIcon } from '../../shared/assets/constants.js'
 import { getTranslation } from '../../shared/services/translationService.js'
-import { getimagePath } from '../../shared/services/initialisationService.js'
+import { getimagePath } from '../../shared/services/configurationService.js'
 import { addMultipleEnventListener } from '../../shared/services/commonFunctions.js'
-import { launchInitialisation } from '../../shared/services/initialisationService.js';
-import { headerViewDisplay } from '../../shared/services/headerViewCont.js'
+import { launchInitialisation } from '../appservices/initialisationService.js';
+import { headerViewDisplay } from '../appservices/headerViewCont.js'
 
 
 export async function startsimpleEntityController() {

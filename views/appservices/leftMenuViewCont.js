@@ -1,6 +1,6 @@
 
-import { getAppPath } from '../services/commonFunctions.js'
-
+import { getAppPath } from '../../shared/services/commonFunctions.js'
+import { loginIcon } from '../../shared/assets/constants.js'
 //***
 // catalog
 //  -> categories
@@ -18,9 +18,9 @@ const leftmenuString = `
         </div>
         <hr/>
         <div class="offcanvas-body">
-                <div>
-                    Présentation du menu principal de l'application        
-                </div>
+            <div id="newNoticeButton">Login</div>
+           <div  style="margin-bottom:10px;cursor:pointer"  ><span class="fs-6" id="btnSwitch" >${loginIcon} Theme</span></div>
+            
             <hr/>
             <div id="newNoticeButton">New Notice</div>
             <div id="newPersonButton">New Person</div>            
@@ -30,6 +30,9 @@ const leftmenuString = `
             <hr/>
             <div id="newPrinterButton">Utilisateurs</div>
             <div id="newPrinterButton">Prêts</div>
+            <hr/>
+            <div id="documentation" style="cursor:pointer">Documentation</div>
+
         </div>
     </div>
  `;
@@ -48,4 +51,21 @@ export function leftMenuViewDisplay(htlmPartId) {
     document.querySelector("#newPersonButton").onclick = function () {
         window.location.href = `${getAppPath()}/views/person/person.html`;
     };
+
+
+
+    document.querySelector("#documentation").onclick = function () {
+        window.location.href = `${getAppPath()}/views//documentation/documentation.html`;
+    };
+
+    document.querySelector("#btnSwitch").onclick = function () {
+        // document.getElementById('#btnSwitch').addEventListener('click', () => {
+        if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
+            document.documentElement.setAttribute('data-bs-theme', 'light')
+        }
+        else {
+            document.documentElement.setAttribute('data-bs-theme', 'dark')
+        }
+    }
+
 }

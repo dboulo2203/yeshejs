@@ -1,9 +1,9 @@
 // *** shared services
 import { getAppPath } from '../../shared/services/commonFunctions.js'
-import { launchInitialisation } from '../../shared/services/initialisationService.js'
-import { headerViewDisplay } from '../../shared/services/headerViewCont.js'
-import { searchViewDisplay } from '../../shared/services/searchViewCont.js'
-import { footerViewDisplay } from '../../shared/services/footerViewCont.js'
+import { launchInitialisation } from '../appservices/initialisationService.js'
+import { headerViewDisplay } from '../appservices/headerViewCont.js'
+import { searchViewDisplay } from '../appservices/searchViewCont.js'
+import { footerViewDisplay } from '../appservices//footerViewCont.js'
 // *** Menu string
 const mainStringPage = ` 
            <img src="${getAppPath()}/shared/assets/main_picture.jpg" width="100%">
