@@ -55,7 +55,7 @@ export function leftMenuViewDisplay(htlmPartId) {
 
 
     document.querySelector("#documentation").onclick = function () {
-        window.location.href = `${getAppPath()}/views//docu/docu.html`;
+        window.location.href = `${getAppPath()}/views/docu/docu.html`;
     };
 
     document.querySelector("#btnSwitch").onclick = function () {

@@ -21,6 +21,36 @@
     - <b>outp:  </b> : select all the out of print bibliographic record
     - <b>mult:  </b> : select all notices with at least one multimedia
 </ul>
+
+### Fonctionalités
+------------------------------------------------------------
+## TODO V 5.1
+
+- Page Search : 
+    - Search predictive
+    - Search multi criteria
+
+- Page notice : 
+    - Rendre les multi media accessibles
+    - Gérer les liens dans les notes
+
+- Page simple entity :
+    - Détecter les sous-notices liées et afficher
+
+### TODO tech
+- Traduire les tooltips
+- notice : publiqher et printer nd
+
+- Réécrire les url pour qu'elles soient compatbles avec #/bbb. Voir s'il convient de modifier toutes les URL
+- Sécuriser la recherche database en vérifiant les mots clés utilisés
+- Supprimer le $tooltip
+- Initialisation de l'application (faite à chaque page ou bien ). l'init est exécutée à chaque fois, on teste si l'entité est chargée ou non.
+- Tester Bootstrap troncate dans la page de search
+- Rendre la photo visible dans Whatssapp lorsqu'on colle le lien d'une notice
+
+### TOTO Bugs
+- Affichage de la note dans 'karmapa word' BUg
+ 
 ------------
 ## Releases notes
 
@@ -74,6 +104,7 @@
 - [Abandonné] recherche supprimer le trait dans le menu
 - [Fait] person : afficher comme dans yeshe : image + nom + note dans une même ligne : Note en face de la photo, aliases en 2 colonnes
 -  [Pas possible car en PHP]- Natural search : recherche avec 3 caractères, ou liste d'exceptions 
+- [abandonné] Comment rendre la recherche plus accessible quand on est dans une notice
 
 ### 5.0.3 
 - NEW notice : test des looks des liens vers les autres entités.
@@ -112,46 +143,9 @@
 - NEW : page de Notice
 - NEW : page de Keyword
 
-------------------
-## TODO 
-
-- Page Search : 
-    - Clic sur la photo affiche une modale avec la photo
-    - Search predictive
-    - Search multi media
-
-- Page notice : 
-    - Clic sur la photo affiche une modale
-    - Rendre les multi media accessibles
-    - Gérer les liens dans les notes
-
-- Page Person :
-   [ A voir]  - Clic sur la photo affiche une modale 
-    - Aliases en colonnes
-
-- Page simple entity :
-    - Détecter les sous-notices liées et afficher
-
-## TODO tech
-- Traduire les tooltips
-- notice : publiqher et printer nd
-- Valider l'ordre du search
-- [abandonné] Comment rendre la recherche plus accessible quand on est dans une notice
-
-## TODO after
-- Réécrire les url pour qu'elles soient compatbles avec #/bbb. Voir s'il convient de modifier toutes les URL
-- Sécuriser la recherche database en vérifiant les mots clés utilisés
-- Supprimer le $tooltip
-- Initialisation de l'application (faite à chaque page ou bien ). l'init est exécutée à chaque fois, on teste si l'entité est chargée ou non.
-- Tester Bootstrap troncate dans la page de search
-- Rendre la photo visible dans Whatssapp lorsqu'on colle le lien d'une notice
-
-## TOTO Bugs
-- Affichage de la note dans 'karmapa word' BUg
- 
 
 ------------------
 ## Installation
 - Copier la totalité du répertoire dans un répertoire du serveur
-- Configurer l'accès au web service du back end.
+- Configurer l'accès au web service du back end et le path des photos dans configuration.json.
 
