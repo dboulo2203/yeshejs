@@ -1,8 +1,10 @@
+// *** shared services
+import { getAppPath } from '../../shared/services/commonFunctions.js'
 import { launchInitialisation } from '../appservices/initialisationService.js'
-import { headerViewDisplay } from '../appservices/headerViewCont.js'
-import { footerViewDisplay } from '../appservices/footerViewCont.js'
-import { simpleMarkdown, loadFileFetch } from '../../../shared/services/markdownService.js'
-import { getAppPath } from '../../../shared/services/commonFunctions.js'
+// import { headerViewDisplay } from '../appservices/headerViewCont.js'
+// import { footerViewDisplay } from '../appservices/footerViewCont.js'
+// import { simpleMarkdown, loadFileFetch } from '../../shared/services/markdownService.js'
+// import { getAppPath } from '../../shared/services/commonFunctions.js'
 // *** Menu string
 
 export async function startDocumentationController() {
@@ -11,15 +13,15 @@ export async function startDocumentationController() {
     // *** Init app
     await launchInitialisation();
 
-    // *** Display menu
-    headerViewDisplay("#menuSection");
+    // // *** Display menu
+    // headerViewDisplay("#menuSection");
 
-    let mdContent = await loadFileFetch(`${getAppPath()}/README.md`);
+    // let mdContent = await loadFileFetch(`${getAppPath()}/README.md`);
 
-    let htmldoc = simpleMarkdown(mdContent);
-
+    // let htmldoc = simpleMarkdown(mdContent);
+    let htmldoc = "test";
     document.querySelector("#mainActiveSection").innerHTML = htmldoc;
-    footerViewDisplay("#footerSection");
+    // footerViewDisplay("#footerSection");
 
 
     // var isChrome = window.chrome;

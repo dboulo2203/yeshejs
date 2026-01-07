@@ -1,5 +1,4 @@
-import { loadTranslations, getCurrentLanguage } from '../../shared/services/translationService.js'
-// import { getLanguages } from '../yesheServices/yesheLanguageService.js'
+import { loadTranslations } from '../../shared/services/translationService.js'
 import { loadList } from '../../shared/yesheServices/yesheListsService.js'
 import { getConfigurationFromJson } from '../../shared/services/configurationService.js'
 

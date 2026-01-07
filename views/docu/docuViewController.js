@@ -2,8 +2,8 @@
 import { getAppPath } from '../../shared/services/commonFunctions.js'
 import { launchInitialisation } from '../appservices/initialisationService.js'
 import { headerViewDisplay } from '../appservices/headerViewCont.js'
-import { searchViewDisplay } from '../appservices/searchViewCont.js'
 import { footerViewDisplay } from '../appservices//footerViewCont.js'
+import { simpleMarkdown, loadFileFetch } from '../../shared/services/markdownService.js'
 // *** Menu string
 const mainStringPage = ` 
            <img src="${getAppPath()}/shared/assets/main_picture.jpg" width="100%">
@@ -19,11 +19,15 @@ export async function startMainPageController() {
 
     // *** Display menu
     headerViewDisplay("#menuSection");
-    searchViewDisplay("#searchSection");
-    document.querySelector("#mainActiveSection").innerHTML = mainStringPage;
-    footerViewDisplay("#footerSection");
-    let output = "";
+    // headerViewDisplay("#menuSection");
 
+    let mdContent = await loadFileFetch(`${getAppPath()}/README.md`);
+
+    let htmldoc = simpleMarkdown(mdContent);
+    // let htmldoc = "test";
+    document.querySelector("#mainActiveSection").innerHTML = htmldoc;
+
+    footerViewDisplay("#footerSection")
     // var isChrome = window.chrome;
     // if (isChrome)
     //   output += 'Chrome';

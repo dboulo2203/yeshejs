@@ -62,6 +62,8 @@ export function getTranslation(wordToTranslate) {
     let frBase = localStorage.getItem(getCurrentLanguage() + "Translation");
     let base = JSON.parse(frBase);
 
+    if (!base)
+        return "Translation base invalid";
     let foundIndex = Object.keys(base).indexOf(wordToTranslate);
 
     let valeur = '';

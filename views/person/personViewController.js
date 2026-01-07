@@ -2,7 +2,7 @@
 import { getPerson, getPersonAliases, getlinkedNotices, getPersonFromAliasID } from './personService.js'
 import { personEditModalDisplay } from './editModal/personEditModalViewController.js'
 import { personNewModalDisplay } from './editModal/personNewModalViewController.js'
-
+import { displayimageViewDisplay } from './displayImage/displayimageViewCont.js'
 // *** Shared ressources
 import { getTranslation } from '../../shared/services/translationService.js'
 import { getArrayFromjson } from '../../shared/services/commonFunctions.js'
@@ -105,7 +105,7 @@ export async function displayPersonContent(mainDisplay, personID) {
         if (person.conc_image && person.conc_image.length > 0)
             personScreen += ` 
                 <div class="col-3" align="center">
-                    <img src="${getimagePath()}/img/persons/${person.conc_image}" width="100%"    />
+                    <img src="${getimagePath()}/img/persons/${person.conc_image}" width="100%"   style="width:100%;max-width:150px;cursor:pointer" class="imgsearch" />
                 </div >
             
                 <div class="col-9" >
@@ -166,6 +166,11 @@ export async function displayPersonContent(mainDisplay, personID) {
         });
         addMultipleEnventListener(".subnoticeButtons", function () {
             window.location.href = `${getAppPath()}/views/subNotice/subNotice.html?subNoticeID=` + event.currentTarget.getAttribute('searid');
+        });
+
+
+        addMultipleEnventListener(".imgsearch", function (event) {
+            displayimageViewDisplay("modalSection", event.currentTarget.getAttribute('src'), event.ctrlKey)
         });
 
 

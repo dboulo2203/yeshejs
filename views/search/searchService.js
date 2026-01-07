@@ -17,7 +17,7 @@ export async function getSearch(searchString, mode) {
         if (responseWS.status === 500)
             throw new Error("Trop de résultats, raffinez votre recherche");
         const data = await responseWS.json();
-        console.log(("getSearch Service  ok"))
+        // console.log(("getSearch Service  ok"))
         return data.content;
     } else {
         console.log(`getSearch nothing to return`);

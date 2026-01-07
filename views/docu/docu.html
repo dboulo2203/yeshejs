@@ -29,12 +29,8 @@
     </script>
     <link href="../../shared/assets/css/custom.css" rel="stylesheet" />
     <link rel="icon" href="/yeshejs/favicon.png" />
-    <style>
-        canvas {
-            border: 1px solid black;
-        }
-    </style>
-    <!-- <script type="module" src="./app.js"></script> -->
+
+    <link href="./documentation.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -42,11 +38,8 @@
         <div id="menuSection"></div>
         <div id="messageSection"></div>
         <div id="searchSection"></div>
-    </div>
-    <div class="container-fluid" style="--bs-gutter-x:0rem">
+
         <div id="mainActiveSection"> </div>
-    </div>
-    <div class="container">
         <div id="error"></div>
         <div id="footerSection"> </div>
     </div>
@@ -54,7 +47,7 @@
     </div>
     <script type="module">
         // let wsUrlformel = "test";
-        import { startMainPageController } from './mainpageViewController.js'
+        import { startMainPageController } from './docuViewController.js'
         startMainPageController();
     </script>
 </body>

@@ -1,7 +1,7 @@
 // *** Component ressources
 import { getNotice } from './noticeService.js'
 import { displayModaleAndFunctions } from './abstractModalViewController.js'
-
+import { displayimageViewDisplay } from './displayImage/displayimageViewCont.js'
 // ** Shared ressoucres
 import { getArrayFromjson, addMultipleEnventListener, getEntityLinkClass, getLinkWithctrl } from '../../shared/services/commonFunctions.js'
 import { getEntityLink } from '../../shared/services/commonFunctions.js'
@@ -76,7 +76,7 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
     output += `<div class="row " > `;
     if (notice.noti_main_image && notice.noti_main_image.length > 0) {
         output += ` <div class="col-3" align="center" > `;
-        output += ` <img src = '${getimagePath()}/img/books/${notice.noti_main_image}' style = "width:100%;max-width:150px"  /> `;
+        output += ` <img src = '${getimagePath()}/img/books/${notice.noti_main_image}' style = "width:100%;max-width:150px;cursor:pointer" class="imgsearch" /> `;
         output += `</div > `;
 
         output += `<div class="col-9 " style = "" > ${notice.noticeCatalogDescription} `;
@@ -301,6 +301,10 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
     document.querySelector("#collectionButton").onclick = function (event) {
         getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=${notice.coll_id}&simpleEntitytype=37`, event.ctrlKey);;
     };
+
+    addMultipleEnventListener(".imgsearch", function (event) {
+        displayimageViewDisplay("modalSection", event.currentTarget.getAttribute('src'), event.ctrlKey)
+    });
 
 
 }
