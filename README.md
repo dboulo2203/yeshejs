@@ -37,6 +37,8 @@
 - Page simple entity :
     - Détecter les sous-notices liées et afficher
 
+- agrandir les caractères tibétains
+
 ### TODO tech
 - Traduire les tooltips
 - notice : publiqher et printer nd

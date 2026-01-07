@@ -1,6 +1,7 @@
 
 import { getAppPath } from '../../shared/services/commonFunctions.js'
 import { loginIcon } from '../../shared/assets/constants.js'
+import { toogleTheme } from '../../shared/services/bootstrapTheme.js'
 //***
 // catalog
 //  -> categories
@@ -19,8 +20,7 @@ const leftmenuString = `
         <hr/>
         <div class="offcanvas-body">
             <div id="newNoticeButton">Login</div>
-           <div  style="margin-bottom:10px;cursor:pointer"  ><span class="fs-6" id="btnSwitch" >${loginIcon} Theme</span></div>
-            
+           <div  style="margin-bottom:10px;cursor:pointer"  ><span class="fs-6" id="btnSwitch" >${loginIcon} Theme</span></div>        
             <hr/>
             <div id="newNoticeButton">New Notice</div>
             <div id="newPersonButton">New Person</div>            
@@ -31,12 +31,12 @@ const leftmenuString = `
             <div id="newPrinterButton">Utilisateurs</div>
             <div id="newPrinterButton">Prêts</div>
             <hr/>
-            <div id="documentation" style="cursor:pointer">Documentation</div>
+            <div id="documentation" style="cursor:pointer"><span style="cursor:pointer">Documentation</span></div>
 
         </div>
     </div>
  `;
-// 
+//           //  <div  style="margin-bottom:10px;cursor:pointer"  ><span class="fs-6" id="btnSwitchDys" >${loginIcon}Dyslex</span></div>
 // 
 
 // $(function () {
@@ -59,13 +59,27 @@ export function leftMenuViewDisplay(htlmPartId) {
     };
 
     document.querySelector("#btnSwitch").onclick = function () {
-        // document.getElementById('#btnSwitch').addEventListener('click', () => {
-        if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
-            document.documentElement.setAttribute('data-bs-theme', 'light')
-        }
-        else {
-            document.documentElement.setAttribute('data-bs-theme', 'dark')
-        }
+        toogleTheme();
     }
+
+    // document.querySelector("#btnSwitchDys").onclick = function () {
+    //     // document.getElementById('#btnSwitch').addEventListener('click', () => {
+    //     // if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
+    //     //     document.documentElement.setAttribute('data-bs-theme', 'light')
+    //     // }
+    //     // else {
+    //     // let test = document.documentElement.getAttribute('data-bs-theme');
+    //     // document.documentElement.setAttribute('bs-body-font-family', 'lexend')
+    //     // document.documentElement.setAttribute('font-family', 'lexend')
+
+    //     // function changeFont(element, name) {
+    //     //  document.documentElement.style.fontFamily = 'Lexend';
+    //     document.documentElement.style.setProperty('font-family', 'Lexend')
+    //     // }
+
+
+    //     // }
+    // }
+
 
 }

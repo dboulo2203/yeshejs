@@ -3,7 +3,6 @@ import { getSearch } from './searchService.js';
 import { displayimageViewDisplay } from './displayImage/displayimageViewCont.js'
 //***  shared ressources
 import { getLinkWithctrl, getAppPath } from '../../shared/services/commonFunctions.js'
-// import { imagePath } from '../../shared/assets/constants.js'
 import { getimagePath, } from '../../shared/services/configurationService.js'
 import {
     bookIcon, personIcon, keyIcon, printerIcon, publisherIcon, questionIcon, mattIcon, subnoticeIcon,
@@ -128,7 +127,7 @@ export async function displaySearchContent(htlmPartId, searchString, multiCriter
                             ${bookIcon}
                             </span> -  
                             <span class="bookButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span>
-                        <span style="color:#eff2f2"> (${searchLine.sear_type})</span> </br >
+                       </br >
                             ${searchLine.sear_moreinfo && searchLine.sear_moreinfo.length > 0 ? searchLine.sear_moreinfo : ''}
                             </div > `;
                         break
@@ -138,7 +137,7 @@ export async function displaySearchContent(htlmPartId, searchString, multiCriter
                             ${bookIcon}
                             </span> -  
                             <span class="bookButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span>
-                        <span style="color:#eff2f2"> (${searchLine.sear_type})</span> </br >
+                        </br >
                             ${searchLine.sear_moreinfo && searchLine.sear_moreinfo.length > 0 ? searchLine.sear_moreinfo : ''}
                             </div > `;
                         break
@@ -148,7 +147,7 @@ export async function displaySearchContent(htlmPartId, searchString, multiCriter
                             ${bookIcon} searchLine.sear_type
                             </span> -  
                             <span class="bookButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span>
-                        <span style="color:#eff2f2"> (${searchLine.sear_type})</span> </br >
+                         </br >
                             ${searchLine.sear_moreinfo && searchLine.sear_moreinfo.length > 0 ? searchLine.sear_moreinfo : ''}
                             </div > `;
                         break
@@ -158,7 +157,7 @@ export async function displaySearchContent(htlmPartId, searchString, multiCriter
                             ${noteIcon} 
                             </span> -  
                             <span class="bookButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span>
-                        <span style="color:#eff2f2"> (${searchLine.sear_type})</span> </br >
+                         </br >
                             ${searchLine.sear_moreinfo && searchLine.sear_moreinfo.length > 0 ? searchLine.sear_moreinfo : ''}
                             </div > `;
                         break
@@ -168,7 +167,7 @@ export async function displaySearchContent(htlmPartId, searchString, multiCriter
                             ${bookIcon} 
                             </span> -  
                             <span class="bookButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span>
-                        <span style="color:#eff2f2"> (${searchLine.sear_type})</span> </br >
+                         </br >
                             ${searchLine.sear_moreinfo && searchLine.sear_moreinfo.length > 0 ? searchLine.sear_moreinfo : ''}
                             </div > `;
                         break
@@ -178,7 +177,7 @@ export async function displaySearchContent(htlmPartId, searchString, multiCriter
                             ${subnoticeIcon} 
                             </span> -  
                             <span class="subbookButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span>
-                        <span style="color:#eff2f2"> (${searchLine.sear_type})</span> </br >
+                        </br >
                             ${searchLine.sear_moreinfo && searchLine.sear_moreinfo.length > 0 ? searchLine.sear_moreinfo : ''}
                             </div > `;
                         break
@@ -197,7 +196,8 @@ export async function displaySearchContent(htlmPartId, searchString, multiCriter
                     case 10: // Person // 
                         output += `
                             <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Person found by person name" >${personIcon}</span>
-                             - <span class="personButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span> <span style="color:#eff2f2"> (${searchLine.sear_type})</span>  </br >
+                             - <span class="personButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span> 
+                               </br >
                                 ${searchLine.sear_moreinfo && searchLine.sear_moreinfo.length > 0 ? searchLine.sear_moreinfo : ''}
                                 </div > `;
                         break
@@ -207,7 +207,8 @@ export async function displaySearchContent(htlmPartId, searchString, multiCriter
 
                         output += `<div class= "col-12" >
                         <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Keyword found by keyword name" >${keyIcon} </span>
-                        - <span class="keywordButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span> <span style="color:#eff2f2"> (${searchLine.sear_type})</span>  </br >
+                        - <span class="keywordButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span> 
+                          </br >
                         ${searchLine.sear_moreinfo && searchLine.sear_moreinfo.length > 0 ? searchLine.sear_moreinfo : ''}
                         </div > `;
                         break

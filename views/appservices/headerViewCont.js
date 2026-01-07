@@ -51,12 +51,12 @@ export function headerViewDisplay(htlmPartId) {
     //     </nav>
     // </div>
     // <div id="leftMenu">
-    // </div>
+    // </div>background-color:#F7F7F3;
     // `;
 
     let menuString = `
     <div id="menuPart">
-        <nav class="navbar fixed-top navbar-light " style="background-color:#F7F7F3;border-bottom:solid 0.15rem #C0C0C0; padding:5px">
+        <nav class="navbar fixed-top  bg-body-tertiary" style="border-bottom:solid 0.15rem #C0C0C0; padding:5px">
             <div class="container-fluid">
                 <div class="navbar-brand" style="color:#8B2331" id="mainNav">${getTranslation("GLO_BRANDTITLE")}</div>
                 <div class="d-flex">
