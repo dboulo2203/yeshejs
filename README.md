@@ -25,7 +25,7 @@
 ## Releases notes
 
 ### 5.0.8
-- NEW : Search : affichage de la photo en grand
+- NEW : Search page, notice page, person page : affichage de la photo en grand
 - NEW : nouveau menu avec ...
 - NEW : limiter la taille des images à 100px
 - NEW : nom des champs plus foncés
