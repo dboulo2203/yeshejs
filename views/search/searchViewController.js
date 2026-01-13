@@ -38,12 +38,9 @@ export async function startSearchController() {
         if (searchParams.has('multiCritSearchStr'))
             displaySearchContent("mainActiveSection", searchParams.get('multiCritSearchStr'), true);
 
-
-
     } catch (error) {
         document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style = "margin-top:30px" role = "alert" > ${error}</div > `;
     }
-
 }
 
 /**
@@ -59,7 +56,6 @@ export async function displaySearchContent(htlmPartId, searchString, multiCriter
     try {
 
         // let test = searchString.indexOf(":");
-
         if (multiCriteriaSearch === true) {
             searchLines = await getSearch(searchString, "5");
         } else {
@@ -80,10 +76,6 @@ export async function displaySearchContent(htlmPartId, searchString, multiCriter
         </small>
         </span ><hr style="margin-top:0px"/>
         </div>`;
-
-        //     <div class="row row-cols-1 row-cols-xs-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 " id = "search-row" > `;
-        // <div class="alert alert-secondary " style="margin-top:10px" role="alert" >
-        // const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
         if (searchLines && searchLines.length > 0) {
             searchLines.map((searchLine, index) => {
@@ -293,7 +285,7 @@ export async function displaySearchContent(htlmPartId, searchString, multiCriter
         // *** Display search content
         document.querySelector("#" + htlmPartId).innerHTML = output;
 
-        $('[data-bs-toggle="tooltip"]').tooltip();
+        //  $('[data-bs-toggle="tooltip"]').tooltip();
         // document.querySelectorAll('[data-bs-toggle="tooltip"]').tootip();
 
         // *** Add actions 

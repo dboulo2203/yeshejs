@@ -5,9 +5,9 @@ export async function getConfigurationFromJson() {
     var wsUrl = `${getAppPath()}/shared/services/configuration.json`;
     let responsefr = await fetch(wsUrl);
     if (responsefr.ok) {
-        // *** Get the data and save in the localstorage
+        // *** Get the data and save in the sessionStorage
         const data = await responsefr.json();
-        localStorage.setItem("configuration", JSON.stringify(data));
+        sessionStorage.setItem("configuration", JSON.stringify(data));
 
         // console.log("getLogin  await ok ");
         return true;
@@ -23,7 +23,7 @@ export async function getConfigurationFromJson() {
 export function getwsUrlformel() {
 
     // *** Get the database according to the current language in the browser
-    let frBase = localStorage.getItem("configuration");
+    let frBase = sessionStorage.getItem("configuration");
     let base = JSON.parse(frBase);
 
     let foundIndex = Object.keys(base).indexOf("wsUrlformel");
@@ -37,7 +37,7 @@ export function getwsUrlformel() {
 
 export function getimagePath() {
     // *** Get the database according to the current language in the browser
-    let frBase = localStorage.getItem("configuration");
+    let frBase = sessionStorage.getItem("configuration");
     let base = JSON.parse(frBase);
 
     let foundIndex = Object.keys(base).indexOf("imagePath");

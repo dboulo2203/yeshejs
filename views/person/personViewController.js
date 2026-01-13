@@ -1,5 +1,5 @@
 // *** Component ressources
-import { getPerson, getPersonAliases, getlinkedNotices, getPersonFromAliasID } from './personService.js'
+import { getPerson, getPersonAliases, getlinkedNotices, getPersonFromAliasID } from '../../shared/yesheServices/yeshePersonService.js'
 import { personEditModalDisplay } from './editModal/personEditModalViewController.js'
 import { personNewModalDisplay } from './editModal/personNewModalViewController.js'
 import { displayimageViewDisplay } from './displayImage/displayimageViewCont.js'

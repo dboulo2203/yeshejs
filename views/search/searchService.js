@@ -13,7 +13,7 @@ export async function getSearch(searchString, mode) {
     let responseWS = await fetch(wsUrl);
 
     if (responseWS.ok) {
-        // *** Get the data and save in the localstorage
+        // *** Get the data and save in the sessionStorage
         if (responseWS.status === 500)
             throw new Error("Trop de résultats, raffinez votre recherche");
         const data = await responseWS.json();

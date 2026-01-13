@@ -108,7 +108,7 @@ export async function loadFileFetch(filePath) {
     let responsefr = await fetch(filePath);
 
     if (responsefr.ok) {
-        // *** Get the data and save in the localstorage
+        // *** Get the data and save in the sessionStorage
         const data = await responsefr.text();
 
         return (data);

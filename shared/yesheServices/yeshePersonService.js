@@ -1,7 +1,7 @@
-import { getwsUrlformel } from '../../shared/services/configurationService.js';
+import { getwsUrlformel } from '../services/configurationService.js';
 /**
  * Load a person from the database, 
- * the person is saved in the localStorage
+ * the person is saved in the sessionStorage
  * @param { } personId 
  * @param {*} callback 
  * @returns notice in JSON 
@@ -13,9 +13,9 @@ export async function getPerson(personId) {
     var wsUrl = getwsUrlformel() + `person/${personId}`;
     let responsefr = await fetch(wsUrl);
     if (responsefr.ok) {
-        // *** Get the data and save in the localstorage
+        // *** Get the data and save in the sessionStorage
         const data = await responsefr.json();
-        localStorage.setItem("person", JSON.stringify(data.content));
+        sessionStorage.setItem("person", JSON.stringify(data.content));
 
         // console.log("getPerson  await ok ");
         return (data.content);
@@ -28,7 +28,7 @@ export async function getPerson(personId) {
 
 /**
  * Load a person from the database, 
- * the person is saved in the localStorage
+ * the person is saved in the sessionStorage
  * @param { } personId 
  * @param {*} callback 
  * @returns notice in JSON 
@@ -38,9 +38,9 @@ export async function getPersonFromAliasID(personAliasId, callback) {
     var wsUrl = getwsUrlformel() + `person/${personAliasId}/getByAlias`;
     let responsefr = await fetch(wsUrl);
     if (responsefr.ok) {
-        // *** Get the data and save in the localstorage
+        // *** Get the data and save in the sessionStorage
         const data = await responsefr.json();
-        // localStorage.setItem("person", JSON.stringify(data.content));
+        // sessionStorage.setItem("person", JSON.stringify(data.content));
 
         return (data.content);
 
@@ -52,11 +52,11 @@ export async function getPersonFromAliasID(personAliasId, callback) {
 
 }
 /**
- * Returns the person in the localStorage
+ * Returns the person in the sessionStorage
  * @returns person
  */
 export function getCurrentPerson() {
-    let personJson = localStorage.getItem("person");
+    let personJson = sessionStorage.getItem("person");
 
     // *** Teste if person is null
     if (personJson)
@@ -78,9 +78,9 @@ export async function getPersonAliases(personId) {
     let responsefr = await fetch(wsUrl);
 
     if (responsefr.ok) {
-        // *** Get the data and save in the localstorage
+        // *** Get the data and save in the sessionStorage
         const data = await responsefr.json();
-        // localStorage.setItem("person", JSON.stringify(data.content));
+        // sessionStorage.setItem("person", JSON.stringify(data.content));
 
         return (data.content);
 
@@ -103,9 +103,9 @@ export async function getlinkedNotices(personId) {
     let responsefr = await fetch(wsUrl);
 
     if (responsefr.ok) {
-        // *** Get the data and save in the localstorage
+        // *** Get the data and save in the sessionStorage
         const data = await responsefr.json();
-        // localStorage.setItem("person", JSON.stringify(data.content));
+        // sessionStorage.setItem("person", JSON.stringify(data.content));
 
         return (data.content);
 
@@ -167,5 +167,31 @@ export async function createPerson(person) {
         console.log(`createPerson Service Error : ${JSON.stringify(response)}`);
         throw new Error("createPerson Service Error message : " + response.status + " " + response.statusText);
     }
+}
+
+/**
+ * Load a person from the database, 
+ * the person is saved in the sessionStorage
+ * @param { } personId 
+ * @param {*} callback 
+ * @returns notice in JSON 
+ */
+export async function getPersonsFromAliasName(searchName) {
+
+    var wsUrl = getwsUrlformel() + `personAliases/${searchName}?searchType=coal_name`;
+    let responsefr = await fetch(wsUrl);
+    if (responsefr.ok) {
+        // *** Get the data and save in the sessionStorage
+        const data = await responsefr.json();
+        // sessionStorage.setItem("person", JSON.stringify(data.content));
+
+        return (data.content);
+
+    } else {
+        console.log(`getPersonsFromname Error : ${JSON.stringify(responsefr)}`);
+        throw new Error("getPersonsFromname Error message : " + responsefr.status + " " + responsefr.statusText);
+    }
+
 
 }
+

@@ -129,9 +129,7 @@ export function getEntityLink(buttonType, entityName, withUnderline = true) {
     id="${buttonType}" onpointerenter="this.setAttribute('style', 'color: #8B2331;cursor:pointer')" onpointerleave="this.setAttribute('style', 'color: bs-body-color')">
         ${entityName === null ? '' : entityName}
     </span>`;
-
 }
-
 
 
 export function encodeHTML(str) {
@@ -144,6 +142,7 @@ export function encodeHTML(str) {
   };
   return str.replace(/[&<>"']/g, function (m) { return map[m]; });
 }
+
 export function getTibetanPart() {
 
   function isTibetanChar(charToAnalyse) {
@@ -152,6 +151,8 @@ export function getTibetanPart() {
     else
       return false;
   }
+
+
 
   return function (item) {
     // console.log('test makeUppercase');
@@ -191,3 +192,11 @@ export function getTibetanPart() {
     }
   }
 }
+
+export function initBootstrapTooltips() {
+  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+  })
+}
+

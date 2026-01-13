@@ -2,7 +2,7 @@ import { getwsUrlformel } from '../../shared/services/configurationService.js';
 
 /**
  * Load a person from the database, 
- * the person is saved in the localStorage
+ * the person is saved in the sessionStorage
  * @param { } personId 
  * @param {*} callback 
  * @returns notice in JSON 
@@ -14,9 +14,9 @@ export async function getKeyword(keywordId) {
     var wsUrl = getwsUrlformel() + `keyword/${keywordId}`;
     let responsefr = await fetch(wsUrl);
     if (responsefr.ok) {
-        // *** Get the data and save in the localstorage
+        // *** Get the data and save in the sessionStorage
         const data = await responsefr.json();
-        localStorage.setItem("keyword", JSON.stringify(data.content));
+        sessionStorage.setItem("keyword", JSON.stringify(data.content));
 
         //console.log("getKeyword  await ok ");
         return (data.content);
@@ -39,9 +39,9 @@ export async function getKeywordFromAliasID(keywordAliasId) {
     var wsUrl = getwsUrlformel() + `keyword/${keywordAliasId}/getByAlias`;
     let responsefr = await fetch(wsUrl);
     if (responsefr.ok) {
-        // *** Get the data and save in the localstorage
+        // *** Get the data and save in the sessionStorage
         const data = await responsefr.json();
-        // localStorage.setItem("keyword", JSON.stringify(data.content));
+        // sessionStorage.setItem("keyword", JSON.stringify(data.content));
 
         //   console.log("getKeywordFromAliasID  await ok ");
         return (data.content);
@@ -54,11 +54,11 @@ export async function getKeywordFromAliasID(keywordAliasId) {
 
 }
 /**
- * Returns the person in the localStorage
+ * Returns the person in the sessionStorage
  * @returns person
  */
 export function getCurrentKeyword() {
-    let keywordJson = localStorage.getItem("keyword");
+    let keywordJson = sessionStorage.getItem("keyword");
 
     // *** Teste if person is null
     if (keywordJson)
@@ -81,7 +81,7 @@ export async function getKeywordAliases(keywordID) {
     let responsefr = await fetch(wsUrl);
 
     if (responsefr.ok) {
-        // *** Get the data and save in the localstorage
+        // *** Get the data and save in the sessionStorage
         const data = await responsefr.json();
 
         console.log("getKeywordAliases  await ok ");
@@ -108,7 +108,7 @@ export async function getKeywordlinkedNotices(personId) {
     let responsefr = await fetch(wsUrl);
 
     if (responsefr.ok) {
-        // *** Get the data and save in the localstorage
+        // *** Get the data and save in the sessionStorage
         const data = await responsefr.json();
 
         console.log("getKeywordlinkedNotices  await ok ");
@@ -174,3 +174,19 @@ export async function getKeywordlinkedNotices(personId) {
 //     }
 
 // }
+
+
+
+export async function getKeywordsFromAliasName(searchName) {
+
+    var wsUrl = getwsUrlformel() + `keywordAliases/${searchName}?searchType=coal_name`;
+    let responsefr = await fetch(wsUrl);
+    if (responsefr.ok) {
+        const data = await responsefr.json();
+        return (data.content);
+
+    } else {
+        console.log(`getKeywordsFromAliasName Error : ${JSON.stringify(responsefr)}`);
+        throw new Error("getKeywordsFromAliasName Error message : " + responsefr.status + " " + responsefr.statusText);
+    }
+}

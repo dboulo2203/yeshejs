@@ -1,5 +1,5 @@
 // Component ressources
-import { getPerson, createPerson, getCurrentPerson } from '../personService.js'
+import { getPerson, createPerson, getCurrentPerson } from '../../../shared/yesheServices/yeshePersonService.js'
 import { getList } from '../../../shared/yesheServices/yesheListsService.js'
 // import { displayPersonContent } from './personViewController.js'
 

@@ -50,7 +50,7 @@
         const dataListId = input.getAttribute('list');
         datalist.id = dataListId;
 
-        let frBase = localStorage.getItem("bdd_genre_type");
+        let frBase = sessionStorage.getItem("bdd_genre_type");
         let base = JSON.parse(frBase);
 
         base.forEach((option) => {

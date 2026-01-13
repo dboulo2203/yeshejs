@@ -76,10 +76,10 @@ TODO : remplacement document.ready
 - DONE : Gérer les erreurs dans les fetch,
 - TODO : tester tous les types d'erreur.
 
-## Conservation des données avec localstorage (state)
+## Conservation des données avec sessionStorage (state)
 - NEW : Save person et disctionnaires: ok
 - TODO : Voir la conservation des données entre les pages de navigation, par exemple person
-- TODO : Faut-il vider le localstorage
+- TODO : Faut-il vider le sessionStorage
 - TODO : mofication personcontroller pour prise en compte du state
 
 - App.js
@@ -99,7 +99,7 @@ TODO : remplacement document.ready
 - Services 
     - YYYYYService : un service par objet géré 
         - un service peut ou non posséder un state
-        - les states sont sauvés dans le localstorage
+        - les states sont sauvés dans le sessionStorage
         - Le service gère les méthodes de l'objet  
 
     - commonFunctions.js : fonctions javascript communes.  

@@ -10,9 +10,9 @@ export async function getsubNotice(subNoticeId) {
     var wsUrl = getwsUrlformel() + `subnotice/${subNoticeId}`;
     let responsefr = await fetch(wsUrl);
     if (responsefr.ok) {
-        // *** Get the data and save in the localstorage
+        // *** Get the data and save in the sessionStorage
         const data = await responsefr.json();
-        localStorage.setItem("getsubNotice", JSON.stringify(data.content));
+        sessionStorage.setItem("getsubNotice", JSON.stringify(data.content));
 
         return (data.content);
 
@@ -31,7 +31,7 @@ export async function getNoticeExtract(noticeId) {
 
     var wsUrl = getwsUrlformel() + `noticeextract/${noticeId}`; let responsefr = await fetch(wsUrl);
     if (responsefr.ok) {
-        // *** Get the data and save in the localstorage
+        // *** Get the data and save in the sessionStorage
         const data = await responsefr.json();
         return (data.content);
 

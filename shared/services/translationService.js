@@ -2,7 +2,7 @@
 import { getAppPath } from '../services/commonFunctions.js'
 
 /**
- * Load the translation files in the localstorage
+ * Load the translation files in the sessionStorage
  * Load fr and en languages
  * 
  * TODO : the function can load translations from languages
@@ -13,7 +13,7 @@ export async function loadTranslations() {
     const responsefr = await fetch(`${getAppPath()}/shared/assets/locales/fr/translation.json`);
     const datafr = await responsefr.json();
     if (responsefr.ok) {
-        localStorage.setItem("frTranslation", JSON.stringify(datafr));
+        sessionStorage.setItem("frTranslation", JSON.stringify(datafr));
         console.log("LoadTranslations fr  ok ");
     } else {
         console.log(`loadTranslations fr Error : ${JSON.stringify(responsefr)}`);
@@ -25,8 +25,8 @@ export async function loadTranslations() {
     const dataen = await responseen.json();
 
     if (responsefr.ok) {
-        // *** Get the data and save in the localstorage
-        localStorage.setItem("enTranslation", JSON.stringify(dataen));
+        // *** Get the data and save in the sessionStorage
+        sessionStorage.setItem("enTranslation", JSON.stringify(dataen));
         console.log("LoadTranslations en  ok ");
     } else {
         console.log(`LoadTranslations en Error : ${JSON.stringify(responsefr)}`);
@@ -59,7 +59,7 @@ export function getCurrentLanguage() {
 export function getTranslation(wordToTranslate) {
 
     // *** Get the database according to the current language in the browser
-    let frBase = localStorage.getItem(getCurrentLanguage() + "Translation");
+    let frBase = sessionStorage.getItem(getCurrentLanguage() + "Translation");
     let base = JSON.parse(frBase);
 
     if (!base)

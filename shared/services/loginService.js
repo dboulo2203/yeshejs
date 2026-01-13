@@ -3,7 +3,7 @@ import { getwsUrlformel } from './configurationService.js';
 
 /**
  * Load a person from the database, 
- * the person is saved in the localStorage
+ * the person is saved in the sessionStorage
  * @param { } personId 
  * @param {*} callback 
  * @returns notice in JSON 
@@ -12,23 +12,23 @@ export async function getLogin(userEmail, userPassword) {
 
     // console.log("getLogin Service start : " + getwsUrlformel() + `user/${userEmail}?logUser=user_email&password=${userPassword}`);
 
-    localStorage.setItem("loggedUSer", "");
+    sessionStorage.setItem("loggedUSer", "");
 
     var wsUrl = getwsUrlformel() + `user/${userEmail}?logUser=user_email&password=${userPassword}`;
 
     let responsefr = await fetch(wsUrl);
 
     if (responsefr.ok) {
-        // *** Get the data and save in the localstorage
+        // *** Get the data and save in the sessionStorage
         const data = await responsefr.json();
-        localStorage.setItem("loggedUSer", JSON.stringify(data.content));
+        sessionStorage.setItem("loggedUSer", JSON.stringify(data.content));
 
         // console.log("getLogin  await ok ");
         return (data.content);
 
     } else {
         console.log(`getLogin Error : ${JSON.stringify(responsefr)}`);
-        localStorage.setItem("loggedUSer", "");
+        sessionStorage.setItem("loggedUSer", "");
         return (false);
         // throw new Error("getLogin Error message : " + responsefr.status + " " + responsefr.statusText);
     }
@@ -38,7 +38,7 @@ export async function getLogin(userEmail, userPassword) {
 
 export function logout() {
 
-    localStorage.setItem("loggedUSer", "");
+    sessionStorage.setItem("loggedUSer", "");
 
 }
 
@@ -48,7 +48,7 @@ export function logout() {
  */
 export function getLoggedUserPseudo() {
 
-    let loggedUser = localStorage.getItem("loggedUSer");
+    let loggedUser = sessionStorage.getItem("loggedUSer");
 
     if (loggedUser)
         return loggedUser.user_pseudo
@@ -64,7 +64,7 @@ export function getLoggedUserPseudo() {
  */
 export function getCurrentUSerRightLevel(requiredLevel) {
 
-    let loggedUser = localStorage.getItem("loggedUSer");
+    let loggedUser = sessionStorage.getItem("loggedUSer");
 
     if (loggedUser)
         if (loggedUser.urlt_level > requiredLevel)

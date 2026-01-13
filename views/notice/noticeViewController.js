@@ -1,9 +1,10 @@
 // *** Component ressources
 import { getNotice } from './noticeService.js'
 import { displayModaleAndFunctions } from './abstractModalViewController.js'
-import { displayimageViewDisplay } from './displayImage/displayimageViewCont.js'
+import { displayimageViewDisplay } from './displayImageModal/displayimageViewCont.js'
+import { displaynoticeMultimediaModalViewDisplay } from './noticeMultimediaModal/noticeMultimediaModalViewCont.js'
 // ** Shared ressoucres
-import { getArrayFromjson, addMultipleEnventListener, getEntityLinkClass, getLinkWithctrl } from '../../shared/services/commonFunctions.js'
+import { getArrayFromjson, addMultipleEnventListener, getEntityLinkClass, getLinkWithctrl, getTibetanPart } from '../../shared/services/commonFunctions.js'
 import { getEntityLink } from '../../shared/services/commonFunctions.js'
 import { languageIcon, questionIcon, questionIcon18, noteIcon, abstractIcon } from '../../shared/assets/constants.js'
 import { bookIcon, personIcon, keyIcon, copiesIcon, multimediaIcon, descriptionIcon, publicationIcon, titleIcon } from '../../shared/assets/constants.js'
@@ -93,6 +94,7 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
     // *** Notice titles
     output += `<div style=""><spanclass="fs-6" style="color:#8B2331">${titleIcon} ${getTranslation("NOT_TITLES")}</span></div>`;
     output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_MAINTITLE")}</span> : ${notice.noti_main_title}`;
+
     output += `</div>`
     //if (notice.noti_sub_title)
     output += `<div class="col-md-12 main"  > <span class="fw-light" >${getTranslation("NOT_SUBTITLE")}</span> : ${notice.noti_sub_title}</div>`;
@@ -230,7 +232,7 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
     let multimediasList = getArrayFromjson(notice.multimediasFunctionFor);
     output += `<div><span class="fs-6" style="color:#8B2331">${multimediaIcon} ${getTranslation("NOT_MULTIMEDIASTITLE")}</span></div>`;
     multimediasList.map((multimedia, index) => {
-        output += `${multimedia.mult_name}  : ${multimedia.multt_name} : ${multimedia.mult_file} </br> `;
+        output += `<span class="multimediaElem" style="cursor:pointer" multObject='${JSON.stringify(multimedia)}'>${multimedia.mult_name}  : ${multimedia.multt_name} : ${multimedia.mult_file} </span></br> `;
     });
     output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
 
@@ -305,6 +307,11 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
     addMultipleEnventListener(".imgsearch", function (event) {
         displayimageViewDisplay("modalSection", event.currentTarget.getAttribute('src'), event.ctrlKey)
     });
+
+    addMultipleEnventListener(".multimediaElem", function (event) {
+        displaynoticeMultimediaModalViewDisplay("modalSection", JSON.parse(event.currentTarget.attributes['multObject'].nodeValue))
+    });
+
 
 
 }

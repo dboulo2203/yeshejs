@@ -1,7 +1,7 @@
 import { getwsUrlformel } from '../services/configurationService.js';
 
 /**
- * Load a  list from the database and save it in the localStorage 
+ * Load a  list from the database and save it in the sessionStorage 
  */
 export async function loadList(listName) {
 
@@ -10,9 +10,9 @@ export async function loadList(listName) {
     let responseWS = await fetch(wsUrl);
 
     if (responseWS.ok) {
-        // *** Get the data and save in the localstorage
+        // *** Get the data and save in the sessionStorage
         const data = await responseWS.json();
-        localStorage.setItem(listName, JSON.stringify(data.content));
+        sessionStorage.setItem(listName, JSON.stringify(data.content));
         return true;
     } else {
         console.log(`loading ${listName} Error : }`);
@@ -25,7 +25,7 @@ export async function loadList(listName) {
  * @returns 
  */
 export function getList(listName) {
-    let frBase = localStorage.getItem(listName);
+    let frBase = sessionStorage.getItem(listName);
     if (frBase)
         return JSON.parse(frBase);
     else
@@ -33,9 +33,19 @@ export function getList(listName) {
 
 }
 
-
-export function getSelectFromDatabaseList(listName, entityID, entityName) {
+/**
+ * Return the options part of the HTML select, Filled with the list data
+ * @param {*} listName 
+ * @param {*} entityID 
+ * @param {*} entityName 
+ * @param {*} addZeroOption 
+ * @returns 
+ */
+export function getSelectFromDatabaseList(listName, entityID, entityName, addZeroOption) {
     let outpuStr = ``;
+    if (addZeroOption)
+        outpuStr += `<option value="0"></option>`;
+
     getList(listName).map((listentity, index) => {
         outpuStr += `<option value="${listentity[entityID]}">${listentity[entityName]}</option>`;
     });

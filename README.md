@@ -26,18 +26,12 @@
 ------------------------------------------------------------
 ## TODO V 5.1
 
-- Page Search : 
-    - Search predictive
-    - Search multi criteria
-
 - Page notice : 
-    - Rendre les multi media accessibles
     - Gérer les liens dans les notes
-
 - Page simple entity :
     - Détecter les sous-notices liées et afficher
-
 - agrandir les caractères tibétains
+- Voir les traductions
 
 ### TODO tech
 - Traduire les tooltips
@@ -45,7 +39,6 @@
 
 - Réécrire les url pour qu'elles soient compatbles avec #/bbb. Voir s'il convient de modifier toutes les URL
 - Sécuriser la recherche database en vérifiant les mots clés utilisés
-- Supprimer le $tooltip
 - Initialisation de l'application (faite à chaque page ou bien ). l'init est exécutée à chaque fois, on teste si l'entité est chargée ou non.
 - Tester Bootstrap troncate dans la page de search
 - Rendre la photo visible dans Whatssapp lorsqu'on colle le lien d'une notice
@@ -55,6 +48,10 @@
  
 ------------
 ## Releases notes
+### 5.0.9
+    - NEW : Multi criteria search
+    - NEW : Rendre les multi media accessibles
+    - NEW : Suppression de jquery.
 
 ### 5.0.8
 - NEW : Search page, notice page, person page : affichage de la photo en grand

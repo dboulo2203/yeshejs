@@ -1,9 +1,11 @@
 // *** Shared ressources
-import { getAppPath, getLinkWithctrl } from '../../shared/services/commonFunctions.js'
+import { getAppPath, getLinkWithctrl, initBootstrapTooltips } from '../../shared/services/commonFunctions.js'
 import { getSelectFromDatabaseList } from '../../shared/yesheServices/yesheListsService.js'
 import { predictiveIcon, searchIcon, multicritIcon } from '../../shared/assets/constants.js';
 import { getSearch } from '../../views/search/searchService.js'
-
+import { getPersonsFromAliasName } from '../../shared/yesheServices/yeshePersonService.js'
+import { getKeywordsFromAliasName } from '../../shared/yesheServices/yesheKeywordService.js'
+import { getPublishersFromName } from '../../shared/yesheServices/yeshePublisherService.js'
 /**
  * Display the menu bar of the appplication 
  * @param {*} htlmPartId 
@@ -44,67 +46,83 @@ export function searchViewDisplay(htlmPartId) {
                 <form>
                     <div class="row">
                         <div class="col-6">
-                            <div class="form-group row">
-                                <label for="inputTitles" class="col-sm-3 col-form-label"><small>Titles</small></label>
+                            <div class="form-group row" style="margin-bottom:5px">
+                                <label for="inputTitles" class="col-sm-3 col-form-label">Titles</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control form-control-sm" id="inputTitles" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" class="form-control " id="inputTitles" aria-describedby="emailHelp" placeholder="">
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label for="inputPerson" class="col-sm-3 col-form-label" ><small>Person</small></label>
+                            
+                            <div class="form-group row" style="margin-bottom:5px">
+                                <label for="inputPerson" class="col-sm-3 col-form-label" >Person</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control form-control-sm" id="inputPerson" placeholder="">
+                                    <input type="text" class="form-control " id="inputPerson" list="inputPersonList" placeholder="">
+                                    <span class="fs-sm" id="inputPerson_span"></span>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label for="inputKeyword" class="col-sm-3 col-form-label fs-6" ><small>Keyword</small></label>
+
+                            <div class="form-group row" style="margin-bottom:5px">
+                                <label for="inputKeyword" class="col-sm-3 col-form-label fs-6" >Keyword</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control form-control-sm" id="inputKeyword" placeholder="">
+                                    <input type="text" class="form-control " id="inputKeyword" list="inputKeywordList" placeholder="">
+                                    <span class="fs-sm" id="inputKeyword_span"></span>
+                                </div>
+
+                            </div>
+                            <div class="form-group row" style="margin-bottom:5px">
+                                <label for="inputPublisher" class="col-sm-3 col-form-label" >Publisher</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control " id="inputPublisher" list="inputPublisherList" placeholder="">
+                                      <span class="fs-sm" id="inputPublisher_span"></span>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label for="inputPublisher" class="col-sm-3 col-form-label" ><small>Publisher</small></label>
+                            <div class="form-group row" style="margin-bottom:5px">
+                                <label for="exampleInputPassword1" class="col-sm-3 col-form-label" >Owner</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control form-control-sm" id="inputPublisher" placeholder="">
-                                </div>
-                            </div>
- 
-                         </div>
-                        <div class="col-6">
-                            <div class="form-group row">
-                                <label for="exampleInputEmail1" class="col-sm-3 col-form-label"><small>Genre</small></label>
-                                <div class="col-sm-9">
-                                     <select class="form-select form-select-sm"  aria-label="Default select example" id="bdd_genre_type">
-                                    ${getSelectFromDatabaseList("bdd_genre_type", "genrt_id", "genrt_name")}
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                            <label for="exampleInputEmail1" class="col-sm-3 col-form-label"><small>Theme</small></label>
-                                 <div class="col-sm-9">
-                                     <select class="form-select form-select-sm"  aria-label="Default select example" id="bdd_theme_type">
-                                    ${getSelectFromDatabaseList("bdd_theme_type", "them_id", "them_name")}
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="exampleInputPassword1" class="col-sm-3 col-form-label" ><small>Mat type</small></label>
-                                <div class="col-sm-9">
-                                     <select class="form-select form-select-sm"  aria-label="Default select example" id="bdd_matt_type">
+                                     <select class="form-select form-select-sm"  aria-label="Default select example" id="bdd_exemplaire_owners">
+                                   ${getSelectFromDatabaseList("bdd_exemplaire_owners", "exow_id", "exow_name", true)}
                                      </select>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label for="exampleInputPassword1" class="col-sm-3 col-form-label" ><small>Language</small></label>
+
+ 
+                         </div>
+                        <div class="col-6">
+                            <div class="form-group row" style="margin-bottom:5px">
+                                <label for="exampleInputEmail1" class="col-sm-3 col-form-label">Genre</label>
+                                <div class="col-sm-9">
+                                     <select class="form-select form-select-sm"  aria-label="Default select example" id="bdd_genre_type">
+                                    ${getSelectFromDatabaseList("bdd_genre_type", "genrt_id", "genrt_name", true)}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row" style="margin-bottom:5px">
+                            <label for="exampleInputEmail1" class="col-sm-3 col-form-label">Theme</label>
+                                 <div class="col-sm-9">
+                                     <select class="form-select form-select-sm"  aria-label="Default select example" id="bdd_theme_type">
+                                    ${getSelectFromDatabaseList("bdd_theme_type", "them_id", "them_name", true)}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row" style="margin-bottom:5px">
+                                <label for="exampleInputPassword1" class="col-sm-3 col-form-label" >Mat type</label>
+                                <div class="col-sm-9">
+                                     <select class="form-select form-select-sm"  aria-label="Default select example" id="bdd_materiel_type">
+                                   ${getSelectFromDatabaseList("bdd_materiel_type", "matt_id", "matt_name", true)}
+                                     </select>
+                                </div>
+                            </div>
+                            <div class="form-group row" style="margin-bottom:5px">
+                                <label for="exampleInputPassword1" class="col-sm-3 col-form-label" >Language</label>
                                 <div class="col-sm-9">
                                      <select class="form-select form-select-sm"  aria-label="Default select example" id="bdd_language">
-                                    ${getSelectFromDatabaseList("bdd_language", "lang_id", "lang_name")}
+                                    ${getSelectFromDatabaseList("bdd_language", "lang_id", "lang_name", true)}
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group form-check row">                               
-                                <label class="form-check-label" for="exampleCheck1"><small>With multimedia</small></label>
-                                <input type="checkbox" class="form-check-input form-control-sm" id="exampleCheck1">
+                                <label class="form-check-label" for="exampleCheck1">With multimedia</label>
+                                <input type="checkbox" class="form-check-input form-control-sm" id="withMultimedia">
                             </div>
                             <div class="form-group form-check row">
                                 <div class="d-flex flex-row-reverse">                               
@@ -125,36 +143,14 @@ export function searchViewDisplay(htlmPartId) {
     </div>
  `;
 
-    //****
-    //               <!--  <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
-    // <ul class="dropdown-menu">
-    //     <li><a class="dropdown-item" href="#">Standard</a></li>
-    //     <!-- <li><a class="dropdown-item" href="#">Database</a></li> -->
-    //     <li><a class="dropdown-item" href="#">Predictive</a></li>
-    //     <li><hr class="dropdown-divider"></li>
-    //     <li><a class="dropdown-item" href="#">Multi-criteria</a></li>
-    // </ul>
-
-
-    // getSelectFromDatabaseList("bdd_genre_type", "genrt_id", "genrt_id", "genrt_name")
-    // *** Display the navbar
+    // *** Display the search area
     document.querySelector(htlmPartId).innerHTML = menuString;
 
-    //  $('[data-bs-toggle="tooltip"]').tooltip();
-
-    // let ElementWithTooltip = document.querySelector("span[data-bs-toggle='tooltip']");
-
-
-    // const exampleEl = document.getElementById('example')
-    // const tooltip = new bootstrap.Tooltip(ElementWithTooltip, {
-    //     boundary: document.body // or document.querySelector('#boundary')
-    // });
+    // *** Init tooltips, must be done after elements initialisation
+    initBootstrapTooltips();
 
 
-    // test.tooltip();
-    // *** Add the off canvas menu
-    //  leftMenuViewDisplay("leftMenu");
-
+    // *** Search natural and database
     document.querySelector("#searchInputString").addEventListener("keypress", function (event) {
         let searchString = document.querySelector("#searchInputString").value;
         if (event.keyCode === 13) {
@@ -170,50 +166,217 @@ export function searchViewDisplay(htlmPartId) {
         }
         let searchString = document.querySelector("#searchInputString").value;
         window.location.href = `${getAppPath()}/views/search/search.html?searchStr=` + searchString;
+
+
     };
 
-    // *** Actions Multi criteria search
+    // ******************* Multi criteria search 
     document.querySelector("#searchMultiBtn").onclick = function () {
         // let searchString = document.querySelector("#searchInputString").value;
-        let multiCriteriatri = 'titl:' + document.querySelector("#inputTitles").value;
+        //  let multiCriteriatri = 'titl:' + document.querySelector("#inputTitles").value;
+        let bdd_genre_type = document.querySelector("#bdd_genre_type").value;
 
-        window.location.href = `${getAppPath()}/views/search/search.html?multiCritSearchStr=` + multiCriteriatri;
+        let test = document.querySelector("#inputPerson_span");
+        var multictri = '';
+        if (document.querySelector("#inputTitles").value.length > 0)
+            multictri += 'titl:' + document.querySelector("#inputTitles").value;
+        if (document.querySelector("#inputPerson_span").getAttribute("idPerson") > 0)
+            multictri += '|pers:' + document.querySelector("#inputPerson_span").getAttribute("idPerson");
+
+        if (document.querySelector("#inputKeyword_span").getAttribute("idKeyword") > 0)
+            multictri += '|keyw:' + document.querySelector("#inputKeyword_span").getAttribute("idKeyword");
+
+        if (document.querySelector("#inputPublisher_span").getAttribute("idPublisher") > 0)
+            multictri += '|publ:' + document.querySelector("#inputPublisher_span").getAttribute("idPublisher");
+
+        // if ($scope.advancedSearch.publisher > 0)
+        //     multictri += '|publ:' + $scope.advancedSearch.publisher;
+
+        if (document.querySelector("#bdd_genre_type").value > 0)
+            multictri += '|genr:' + document.querySelector("#bdd_genre_type").value;
+
+        if (document.querySelector("#bdd_theme_type").value > 0)
+            multictri += '|them:' + document.querySelector("#bdd_theme_type").value;
+
+        if (document.querySelector("#bdd_materiel_type").value > 0)
+            multictri += '|matt:' + document.querySelector("#bdd_materiel_type").value;
+
+        if (document.querySelector("#bdd_language").value > 0)
+            multictri += '|lang:' + document.querySelector("#bdd_language").value;
+
+        if (document.querySelector("#bdd_exemplaire_owners").value > 0)
+            multictri += '|owne:' + document.querySelector("#bdd_exemplaire_owners").value;
+
+        if (document.querySelector('#withMultimedia').checked)
+            multictri += '|mult:' + document.querySelector('#withMultimedia').checked;
+
+        if (multictri.length < 4) {
+            throw new Error("Please select at least one criteria");
+        }
+
+        window.location.href = `${getAppPath()}/views/search/search.html?multiCritSearchStr=` + multictri;
     };
 
+    // *** Person predictive search 
+    document.querySelector("#inputPerson").addEventListener('input', async function (event) {
+        console.log("Input event  : " + event.target.value + " - " + event.target.id)
+        let inputElement = document.querySelector("#inputPerson");
+
+        if (event.target.value.length >= 3) {
+
+            // *** Get result from the database
+            let searchLines = await getPersonsFromAliasName(event.target.value);
+            if (searchLines && searchLines.length > 0) {
+                // *** Fill the datalist
+                const datalist = document.createElement('datalist');
+                const dataListId = inputElement.getAttribute('list');
+                datalist.id = dataListId;
+
+                searchLines.forEach((option) => {
+                    const optionElement = document.createElement('option');
+                    optionElement.id = option.conc_id;
+                    optionElement.text = option.concat_name;
+                    optionElement.conc_id = option.conc_id;
+
+                    datalist.appendChild(optionElement);
+                });
+                // *** remove the previous values
+                let listElement = document.getElementById(dataListId);
+                if (listElement)
+                    inputElement.removeChild(listElement);
+                let currentdatalist = inputElement.list;
+                // *** Put the nex values
+                inputElement.appendChild(datalist);
+            }
+        } else {
+            // *** Less than 3 characters, empty the datalist
+            console.log("moins 3 de caractères");
+            const dataListId = inputElement.getAttribute('list');
+            let listElement = document.getElementById(dataListId);
+            if (listElement)
+                inputElement.removeChild(listElement);
+        }
+    });
+
+    // *** Keyword predictive search 
+    document.querySelector("#inputKeyword").addEventListener('input', async function (event) {
+        console.log("Input event  : " + event.target.value + " - " + event.target.id)
+        let inputElement = document.querySelector("#inputKeyword");
+
+        if (event.target.value.length >= 3) {
+
+            // *** Get result from the database
+            let searchLines = await getKeywordsFromAliasName(event.target.value);
+            if (searchLines && searchLines.length > 0) {
+                // *** Fill the datalist
+                const datalist = document.createElement('datalist');
+                const dataListId = inputElement.getAttribute('list');
+                datalist.id = dataListId;
+
+                searchLines.forEach((option) => {
+                    const optionElement = document.createElement('option');
+                    optionElement.id = option.conc_id;
+                    optionElement.text = option.concat_name;
+                    optionElement.conc_id = option.conc_id;
+
+                    datalist.appendChild(optionElement);
+                });
+                // *** remove the previous values
+                let listElement = document.getElementById(dataListId);
+                if (listElement)
+                    inputElement.removeChild(listElement);
+                let currentdatalist = inputElement.list;
+                // *** Put the nex values
+                inputElement.appendChild(datalist);
+            }
+        } else {
+            // *** Less than 3 characters, empty the datalist
+            console.log("moins 3 de caractères");
+            const dataListId = inputElement.getAttribute('list');
+            let listElement = document.getElementById(dataListId);
+            if (listElement)
+                inputElement.removeChild(listElement);
+        }
+    });
 
 
-    // document.addEventListener('load', function () {
-    //     let input = document.querySelector("#predictive");
+    document.querySelector("#inputKeyword").addEventListener('change', function (event) {
 
-    //     // *** Load datalist
-    //     const datalist = document.createElement('datalist');
-    //     const dataListId = input.getAttribute('list');
-    //     datalist.id = dataListId;
+        // *** Get the value selected
+        let datalist = event.target.list;
+        const optionsArray = Array.from(datalist.options);
+        let optionFound = optionsArray.filter((option) => option.value === event.target.value);
+        let resultOption = optionFound[0];
 
-    //     //  inputs.forEach((input) => {
-    //     input.addEventListener('change', function () {
-    //         let optionFound = false,
-    // datalist = this.list;
-    //  datalist.options = datalist.options.filter((option) => option.value === this.value);
+        // *** Save the selected value
+        document.querySelector("#inputKeyword_span").innerHTML = resultOption.text;
+        document.querySelector("#inputKeyword_span").setAttribute("idKeyword", resultOption.conc_id);
+
+        // *** Reset search input
+        event.target.value = "";
+
+    });
+
+    // *** Publisher predictive search 
+    document.querySelector("#inputPublisher").addEventListener('input', async function (event) {
+        console.log("Input event  : " + event.target.value + " - " + event.target.id)
+        let inputElement = document.querySelector("#inputPublisher");
+
+        if (event.target.value.length >= 3) {
+
+            // *** Get result from the database
+            let searchLines = await getPublishersFromName(event.target.value);
+            if (searchLines && searchLines.length > 0) {
+                // *** Fill the datalist
+                const datalist = document.createElement('datalist');
+                const dataListId = inputElement.getAttribute('list');
+                datalist.id = dataListId;
+
+                searchLines.forEach((option) => {
+                    const optionElement = document.createElement('option');
+                    optionElement.id = option.publ_id;
+                    optionElement.text = option.publ_name;
+                    optionElement.conc_id = option.publ_id;
+
+                    datalist.appendChild(optionElement);
+                });
+                // *** remove the previous values
+                let listElement = document.getElementById(dataListId);
+                if (listElement)
+                    inputElement.removeChild(listElement);
+                let currentdatalist = inputElement.list;
+                // *** Put the nex values
+                inputElement.appendChild(datalist);
+            }
+        } else {
+            // *** Less than 3 characters, empty the datalist
+            console.log("moins 3 de caractères");
+            const dataListId = inputElement.getAttribute('list');
+            let listElement = document.getElementById(dataListId);
+            if (listElement)
+                inputElement.removeChild(listElement);
+        }
+    });
 
 
+    document.querySelector("#inputPublisher").addEventListener('change', function (event) {
 
-    // const optionElement = document.createElement('option');
-    // optionElement.id = "9990";
-    // optionElement.text = "Ajoute élément";;
+        // *** Get the value selected
+        let datalist = event.target.list;
+        const optionsArray = Array.from(datalist.options);
+        let optionFound = optionsArray.filter((option) => option.value === event.target.value);
+        let resultOption = optionFound[0];
 
-    // datalist.appendChild(optionElement);
+        // *** Save the selected value
+        document.querySelector("#inputPublisher_span").innerHTML = resultOption.text;
+        document.querySelector("#inputPublisher_span").setAttribute("idPublisher", resultOption.conc_id);
 
-    // const optionsArray = Array.from(datalist.options);
-    // optionFound = optionsArray.filter((option) => option.value === this.value);
+        // *** Reset search input
+        event.target.value = "";
 
-    // if (optionFound) {
-    //     this.setCustomValidity('');
-    // } else {
-    //     this.setCustomValidity('Please select a valid value.');
-    // }
-    //       });
+    });
 
+    // ******************* Predictive search
     document.querySelector("#predictive").addEventListener('change', function (event) {
         // datalist = this.list;
         // datalist.options = datalist.options.filter((option) => option.value === this.value);
@@ -254,11 +417,7 @@ export function searchViewDisplay(htlmPartId) {
             default:
                 throw new Error("Résultat incorrect");
         }
-
-
     });
-
-
 
     document.querySelector("#predictive").addEventListener('input', async function (e) {
         console.log("Input event  : " + e.target.value + " - " + e.target.id)
@@ -320,7 +479,7 @@ export function searchViewDisplay(htlmPartId) {
 //     const dataListId = input.getAttribute('list');
 //     datalist.id = dataListId;
 
-//     let frBase = localStorage.getItem("bdd_genre_type");
+//     let frBase = sessionStorage.getItem("bdd_genre_type");
 //     let base = JSON.parse(frBase);
 
 

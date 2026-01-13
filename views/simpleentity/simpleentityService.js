@@ -2,7 +2,7 @@ import { getwsUrlformel } from '../../shared/services/configurationService.js';
 
 /**
  * Load a person from the database, 
- * the person is saved in the localStorage
+ * the person is saved in the sessionStorage
  * @param { } personId 
  * @param {*} callback 
  * @returns notice in JSON 
@@ -12,9 +12,9 @@ export async function getSimpleEntity(simpleEntitydId, entityType) {
     var wsUrl = getwsUrlformel() + `${entityType}/${simpleEntitydId}`;
     let responsefr = await fetch(wsUrl);
     if (responsefr.ok) {
-        // *** Get the data and save in the localstorage
+        // *** Get the data and save in the sessionStorage
         const data = await responsefr.json();
-        // localStorage.setItem("printerd", JSON.stringify(data.content));
+        // sessionStorage.setItem("printerd", JSON.stringify(data.content));
 
         return (data.content);
 
@@ -36,7 +36,7 @@ export async function getSimpleEntitylinkedNotices(simpleEntitydId, entityType) 
     let responsefr = await fetch(wsUrl);
 
     if (responsefr.ok) {
-        // *** Get the data and save in the localstorage
+        // *** Get the data and save in the sessionStorage
         const data = await responsefr.json();
         return (data.content);
 

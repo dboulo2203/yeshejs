@@ -12,7 +12,7 @@ export async function getNotice(noticeId) {
     if (responsefr.ok) {
         // *** Get the data and save in the localstorage
         const data = await responsefr.json();
-        localStorage.setItem("notice", JSON.stringify(data.content));
+        sessionStorage.setItem("notice", JSON.stringify(data.content));
         return (data.content);
 
     } else {
@@ -38,9 +38,7 @@ export async function getNoticeExtract(noticeId) {
         console.log(`getNoticeExtract Error : ${JSON.stringify(responsefr)}`);
         throw new Error("getNoticeExtract Error message : " + responsefr.status + " " + responsefr.statusText);
     }
-
 }
-
 
 export async function getAbstractFile(noticeId) {
     var wsUrl = getwsUrlformel() + `noticeextract/${noticeId}/sendfile`;

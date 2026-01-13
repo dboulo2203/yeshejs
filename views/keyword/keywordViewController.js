@@ -1,5 +1,5 @@
 // *** Component ressources
-import { getKeyword, getKeywordAliases, getKeywordlinkedNotices, getKeywordFromAliasID } from './keywordService.js' // , getKeywordFromAliasID 
+import { getKeyword, getKeywordAliases, getKeywordlinkedNotices, getKeywordFromAliasID } from '../../shared/yesheServices/yesheKeywordService.js' // , getKeywordFromAliasID 
 // import { personEditModalDisplay } from './personEditModalViewController.js'
 // import { personNewModalDisplay } from './personNewModalViewController.js'
 

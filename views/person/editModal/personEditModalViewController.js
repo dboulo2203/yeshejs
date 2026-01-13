@@ -1,5 +1,5 @@
 // Component ressources
-import { getPerson, updatePerson, getCurrentPerson } from '../personService.js'
+import { getPerson, updatePerson, getCurrentPerson } from '../../../shared/yesheServices/yeshePersonService.js'
 import { displayPersonContent } from '../personViewController.js'
 const editModaleString = `
 <div class="container">

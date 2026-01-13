@@ -2,17 +2,17 @@
 export function toogleTheme() {
     if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
         document.documentElement.setAttribute('data-bs-theme', 'light')
-        localStorage.setItem("theme", 'light');
+        sessionStorage.setItem("theme", 'light');
 
     }
     else {
-        localStorage.setItem("theme", 'dark');
+        sessionStorage.setItem("theme", 'dark');
         document.documentElement.setAttribute('data-bs-theme', 'dark')
     }
 }
 
 export function setTheme() {
-    let them = localStorage.getItem("theme");
+    let them = sessionStorage.getItem("theme");
     if (them)
         document.documentElement.setAttribute('data-bs-theme', them)
 
