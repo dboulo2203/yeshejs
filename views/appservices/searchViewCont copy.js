@@ -54,50 +54,40 @@ export function searchViewDisplay(htlmPartId) {
                             </div>
                             
                             <div class="form-group row" style="margin-bottom:5px">
-                                <label for="inputPersonDrop" class="col-sm-3 col-form-label fs-6" >Person</label>
-                                <div class="dropdown col-sm-9 " id="inputPersonDrop">
-                                    <span class="dropdown-toggle" type="button" id="PersonSpan" selectedid="0" style="width:100%;border-bottom:solid 0.05rem #e9e8e8" data-bs-toggle="dropdown" aria-expanded="false">
-                                    </span>
-                                    <ul class="dropdown-menu pt-0" aria-labelledby="dropdownMenuButton1" id="dropdown-menuPerson">
-                                        <input type="text" class="form-control border-0 border-bottom shadow-none mb-2" placeholder="Search..." id="searchPerson">
-                                    </ul>
+                                <label for="inputPerson" class="col-sm-3 col-form-label" >Person</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control " id="inputPerson" list="inputPersonList" placeholder="">
+                                    <span class="fs-sm" id="inputPerson_span"></span>
                                 </div>
                             </div>
 
                             <div class="form-group row" style="margin-bottom:5px">
-                                <label for="inputKeywordDrop" class="col-sm-3 col-form-label fs-6" >Keyword</label>
-                                <div class="dropdown col-sm-9 " id="inputKeywordDrop">
-                                    <span class="dropdown-toggle" type="button" id="KeywordSpan" selectedid="0" style="width:100%;border-bottom:solid 0.05rem #e9e8e8" data-bs-toggle="dropdown" aria-expanded="false">
-                                    </span>
-                                    <ul class="dropdown-menu pt-0" aria-labelledby="dropdownMenuButton1" id="dropdown-menuKeyword">
-                                        <input type="text" class="form-control border-0 border-bottom shadow-none mb-2" placeholder="Search..." id="searchKeyword">
-                                    </ul>
+                                <label for="inputKeyword" class="col-sm-3 col-form-label fs-6" >Keyword</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control " id="inputKeyword" list="inputKeywordList" placeholder="">
+                                    <span class="fs-sm" id="inputKeyword_span"></span>
                                 </div>
-                            </div>
 
+                            </div>
                             <div class="form-group row" style="margin-bottom:5px">
-                                <label for="inputPublisherDrop" class="col-sm-3 col-form-label fs-6" >Publisher</label>
-                                <div class="dropdown col-sm-9 " id="inputPublisherDrop">
-                                    <span class="dropdown-toggle" type="button" id="PublisherSpan" selectedid="0"  style="width:100%;border-bottom:solid 0.05rem #e9e8e8" data-bs-toggle="dropdown" aria-expanded="false">
-                                    </span>
-                                    <ul class="dropdown-menu pt-0" aria-labelledby="dropdownMenuButton1" id="dropdown-menuPublisher">
-                                        <input type="text" class="form-control border-0 border-bottom shadow-none mb-2" placeholder="Search..." id="searchPublisher">
-                                    </ul>
+                                <label for="inputPublisher" class="col-sm-3 col-form-label" >Publisher</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control " id="inputPublisher" list="inputPublisherList" placeholder="">
+                                      <span class="fs-sm" id="inputPublisher_span"></span>
                                 </div>
                             </div>
-
-
                             <div class="form-group row" style="margin-bottom:5px">
                                 <label for="exampleInputPassword1" class="col-sm-3 col-form-label" >Owner</label>
                                 <div class="col-sm-9 ">
                                     <span class="dropdown-toggle" type="button" style="width:100%;border-bottom:solid 0.05rem #e9e8e8" type="button" data-bs-toggle="dropdown" id="inputOwner_span" selectedId=""> </span>
                                     <ul class="dropdown-menu" id="">
-                                        ${getSelectFromDatabaseListDropdown("bdd_exemplaire_owners", "exow_id", "exow_name", true)}                                   
-                                     </ul>                             
+                                        ${getSelectFromDatabaseListDropdown("bdd_exemplaire_owners", "exow_id", "exow_name", true)}
+                                    </ul>                             
                                 </div>                            
                             </div>
-                         </div>
 
+ 
+                         </div>
                         <div class="col-md-6">
                             <div class="form-group row" style="margin-bottom:5px">
                                 <label for="exampleInputEmail1" class="col-sm-3 col-form-label">Genre</label>
@@ -107,7 +97,8 @@ export function searchViewDisplay(htlmPartId) {
                                     <ul class="dropdown-menu" id="">
                                         ${getSelectFromDatabaseListDropdown("bdd_genre_type", "genrt_id", "genrt_name", true)}
                                     </ul>                             
-                                </div>                                                        
+                                </div> 
+                                                        
                             </div>
 
                             <div class="form-group row" style="margin-bottom:5px">
@@ -119,7 +110,6 @@ export function searchViewDisplay(htlmPartId) {
                                     </ul>                             
                                 </div>                            
                             </div>
-
                             <div class="form-group row" style="margin-bottom:5px">
                                 <label for="exampleInputPassword1" class="col-sm-3 col-form-label" >Mat type</label>
                                 <div class="col-sm-9 ">
@@ -204,15 +194,14 @@ export function searchViewDisplay(htlmPartId) {
         var multictri = '';
         if (document.querySelector("#inputTitles").value.length > 0)
             multictri += 'titl:' + document.querySelector("#inputTitles").value;
+        if (document.querySelector("#inputPerson_span").getAttribute("idPerson") > 0)
+            multictri += '|pers:' + document.querySelector("#inputPerson_span").getAttribute("idPerson");
 
-        if (document.querySelector("#PersonSpan").selectedIi > 0)
-            multictri += '|pers:' + document.querySelector("#PersonSpan").selectedid;
+        if (document.querySelector("#inputKeyword_span").getAttribute("idKeyword") > 0)
+            multictri += '|keyw:' + document.querySelector("#inputKeyword_span").getAttribute("idKeyword");
 
-        if (document.querySelector("#KeywordSpan").selectedid > 0)
-            multictri += '|keyw:' + document.querySelector("#KeywordSpan").selectedid;
-
-        if (document.querySelector("#PublisherSpan").selectedid > 0)
-            multictri += '|publ:' + document.querySelector("#PublisherSpan").selectedid;
+        if (document.querySelector("#inputPublisher_span").getAttribute("idPublisher") > 0)
+            multictri += '|publ:' + document.querySelector("#inputPublisher_span").getAttribute("idPublisher");
 
         // if ($scope.advancedSearch.publisher > 0)
         //     multictri += '|publ:' + $scope.advancedSearch.publisher;
@@ -266,161 +255,173 @@ export function searchViewDisplay(htlmPartId) {
         document.querySelector("#inputLanguage_span").innerHTML = event.target.attributes['selectedName'].nodeValue;
         document.querySelector("#inputLanguage_span").setAttribute("selectedId", event.target.attributes['selectedId'].nodeValue);
     })
+    // document.querySelector("#bdd_genre_typedd").addEventListener('hide.bs.dropdown', () => {
+    //     console.log('hide instance method called');
+    // })
+
+    // document.querySelector("#bdd_genre_typedd").addEventListener('hidden.bs.dropdown', () => {
+    //     console.log('dropdown completely hidden');
+    // })
 
 
+    //********************************************************************************* */
     // *** Person predictive search 
-    document.querySelector("#searchPerson").addEventListener('input', async function (event) {
+    document.querySelector("#inputPerson").addEventListener('input', async function (event) {
         console.log("Input event  : " + event.target.value + " - " + event.target.id)
-        // let inputElement = document.querySelector("#inputKeyword");
-
-        // const parentElement = document.querySelector(".dropdown-menu");
-        const parentElement = document.querySelector("#dropdown-menuPerson");
-        // *** Remove old values
-        const elementsToRemove = document.querySelectorAll(".dropdown-LIitemPerson");
-        elementsToRemove.forEach(element => {
-            element.remove();
-        });
+        let inputElement = document.querySelector("#inputPerson");
 
         if (event.target.value.length >= 3) {
+
             // *** Get result from the database
             let searchLines = await getPersonsFromAliasName(event.target.value);
             if (searchLines && searchLines.length > 0) {
-                searchLines.forEach(person => {
-                    const listItem = document.createElement("li");
-                    listItem.classList.add("dropdown-LIitemPerson");
-                    const link = document.createElement("a");
-                    link.classList.add("dropdown-item");
-                    link.classList.add("dropdown-AitemPerson");
-                    link.href = "#";
-                    link.textContent = person.coal_name;
-                    link.id = person.conc_id;
-                    listItem.appendChild(link);
-                    parentElement.appendChild(listItem);
+                // *** Fill the datalist
+                const datalist = document.createElement('datalist');
+                const dataListId = inputElement.getAttribute('list');
+                datalist.id = dataListId;
+
+                searchLines.forEach((option) => {
+                    const optionElement = document.createElement('option');
+                    optionElement.id = option.conc_id;
+                    optionElement.text = option.concat_name;
+                    optionElement.conc_id = option.conc_id;
+
+                    datalist.appendChild(optionElement);
                 });
-                if (searchLines.length == 0) {
-                    const listItem =
-                        document.createElement('li');
-                    listItem.textContent = "No Item";
-                    listItem.classList.add('dropdown-LIitemPerson');
-                    parentElement.appendChild(listItem);
-                }
+                // *** remove the previous values
+                let listElement = document.getElementById(dataListId);
+                if (listElement)
+                    inputElement.removeChild(listElement);
+                let currentdatalist = inputElement.list;
+                // *** Put the nex values
+                inputElement.appendChild(datalist);
             }
         } else {
             // *** Less than 3 characters, empty the datalist
+            console.log("moins 3 de caractères");
+            const dataListId = inputElement.getAttribute('list');
+            let listElement = document.getElementById(dataListId);
+            if (listElement)
+                inputElement.removeChild(listElement);
         }
-
-        addMultipleEnventListener(".dropdown-AitemPerson", function (event) {
-            // document.querySelector("#inputLanguage_span").innerHTML = event.target.attributes['selectedName'].nodeValue;
-            // document.querySelector("#inputLanguage_span").setAttribute("selectedId", event.target.attributes['selectedId'].nodeValue);
-            let test = 1;
-            document.querySelector("#PersonSpan").innerHTML = event.target.text;
-            document.querySelector("#PersonSpan").selectedid = event.target.id;
-        })
     });
 
     // *** Keyword predictive search 
-    document.querySelector("#searchKeyword").addEventListener('input', async function (event) {
+    document.querySelector("#inputKeyword").addEventListener('input', async function (event) {
         console.log("Input event  : " + event.target.value + " - " + event.target.id)
-        // let inputElement = document.querySelector("#inputKeyword");
-
-        // const parentElement = document.querySelector(".dropdown-menu");
-        const parentElement = document.querySelector("#dropdown-menuKeyword");
-        // *** Remove old values
-        const elementsToRemove = document.querySelectorAll(".dropdown-LIitemKeyword");
-        elementsToRemove.forEach(element => {
-            element.remove();
-        });
+        let inputElement = document.querySelector("#inputKeyword");
 
         if (event.target.value.length >= 3) {
-
-
 
             // *** Get result from the database
             let searchLines = await getKeywordsFromAliasName(event.target.value);
             if (searchLines && searchLines.length > 0) {
-                searchLines.forEach(keyword => {
-                    const listItem = document.createElement("li");
-                    listItem.classList.add("dropdown-LIitemKeyword");
-                    const link = document.createElement("a");
-                    link.classList.add("dropdown-item");
-                    link.classList.add("dropdown-AitemKeyword");
-                    link.href = "#";
-                    link.textContent = keyword.coal_name;
-                    link.id = keyword.conc_id;
-                    listItem.appendChild(link);
-                    parentElement.appendChild(listItem);
+                // *** Fill the datalist
+                const datalist = document.createElement('datalist');
+                const dataListId = inputElement.getAttribute('list');
+                datalist.id = dataListId;
+
+                searchLines.forEach((option) => {
+                    const optionElement = document.createElement('option');
+                    optionElement.id = option.conc_id;
+                    optionElement.text = option.concat_name;
+                    optionElement.conc_id = option.conc_id;
+
+                    datalist.appendChild(optionElement);
                 });
-                if (searchLines.length == 0) {
-                    const listItem =
-                        document.createElement('li');
-                    listItem.textContent = "No Item";
-                    listItem.classList.add('dropdown-LIitemKeyword');
-                    parentElement.appendChild(listItem);
-                }
+                // *** remove the previous values
+                let listElement = document.getElementById(dataListId);
+                if (listElement)
+                    inputElement.removeChild(listElement);
+                let currentdatalist = inputElement.list;
+                // *** Put the nex values
+                inputElement.appendChild(datalist);
             }
         } else {
             // *** Less than 3 characters, empty the datalist
+            console.log("moins 3 de caractères");
+            const dataListId = inputElement.getAttribute('list');
+            let listElement = document.getElementById(dataListId);
+            if (listElement)
+                inputElement.removeChild(listElement);
         }
-
-        addMultipleEnventListener(".dropdown-AitemKeyword", function (event) {
-            // document.querySelector("#inputLanguage_span").innerHTML = event.target.attributes['selectedName'].nodeValue;
-            // document.querySelector("#inputLanguage_span").setAttribute("selectedId", event.target.attributes['selectedId'].nodeValue);
-            let test = 1;
-            document.querySelector("#KeywordSpan").innerHTML = event.target.text;
-            document.querySelector("#KeywordSpan").selectedid = event.target.id;
-        })
     });
 
 
+    document.querySelector("#inputKeyword").addEventListener('change', function (event) {
+
+        // *** Get the value selected
+        let datalist = event.target.list;
+        const optionsArray = Array.from(datalist.options);
+        let optionFound = optionsArray.filter((option) => option.value === event.target.value);
+        let resultOption = optionFound[0];
+
+        // *** Save the selected value
+        document.querySelector("#inputKeyword_span").innerHTML = resultOption.text;
+        document.querySelector("#inputKeyword_span").setAttribute("idKeyword", resultOption.conc_id);
+
+        // *** Reset search input
+        event.target.value = "";
+
+    });
 
     // *** Publisher predictive search 
-    document.querySelector("#searchPublisher").addEventListener('input', async function (event) {
+    document.querySelector("#inputPublisher").addEventListener('input', async function (event) {
         console.log("Input event  : " + event.target.value + " - " + event.target.id)
-        // let inputElement = document.querySelector("#inputKeyword");
-
-        // const parentElement = document.querySelector(".dropdown-menu");
-        const parentElement = document.querySelector("#dropdown-menuPublisher");
-        // *** Remove old values
-        const elementsToRemove = document.querySelectorAll(".dropdown-LIitemPublisher");
-        elementsToRemove.forEach(element => {
-            element.remove();
-        });
+        let inputElement = document.querySelector("#inputPublisher");
 
         if (event.target.value.length >= 3) {
+
             // *** Get result from the database
             let searchLines = await getPublishersFromName(event.target.value);
             if (searchLines && searchLines.length > 0) {
-                searchLines.forEach(publisher => {
-                    const listItem = document.createElement("li");
-                    listItem.classList.add("dropdown-LIitemPublisher");
-                    const link = document.createElement("a");
-                    link.classList.add("dropdown-item");
-                    link.classList.add("dropdown-AitemPublisher");
-                    link.href = "#";
-                    link.textContent = publisher.publ_name;
-                    link.id = publisher.publ_id;
-                    listItem.appendChild(link);
-                    parentElement.appendChild(listItem);
+                // *** Fill the datalist
+                const datalist = document.createElement('datalist');
+                const dataListId = inputElement.getAttribute('list');
+                datalist.id = dataListId;
+
+                searchLines.forEach((option) => {
+                    const optionElement = document.createElement('option');
+                    optionElement.id = option.publ_id;
+                    optionElement.text = option.publ_name;
+                    optionElement.conc_id = option.publ_id;
+
+                    datalist.appendChild(optionElement);
                 });
-                if (searchLines.length == 0) {
-                    const listItem =
-                        document.createElement('li');
-                    listItem.textContent = "No Item";
-                    listItem.classList.add('dropdown-LIitemPublisher');
-                    parentElement.appendChild(listItem);
-                }
+                // *** remove the previous values
+                let listElement = document.getElementById(dataListId);
+                if (listElement)
+                    inputElement.removeChild(listElement);
+                let currentdatalist = inputElement.list;
+                // *** Put the nex values
+                inputElement.appendChild(datalist);
             }
         } else {
             // *** Less than 3 characters, empty the datalist
+            console.log("moins 3 de caractères");
+            const dataListId = inputElement.getAttribute('list');
+            let listElement = document.getElementById(dataListId);
+            if (listElement)
+                inputElement.removeChild(listElement);
         }
+    });
 
-        addMultipleEnventListener(".dropdown-AitemPublisher", function (event) {
-            // document.querySelector("#inputLanguage_span").innerHTML = event.target.attributes['selectedName'].nodeValue;
-            // document.querySelector("#inputLanguage_span").setAttribute("selectedId", event.target.attributes['selectedId'].nodeValue);
-            let test = 1;
-            document.querySelector("#PublisherSpan").innerHTML = event.target.text;
-            document.querySelector("#PublisherSpan").selectedid = event.target.id;
-        })
+
+    document.querySelector("#inputPublisher").addEventListener('change', function (event) {
+
+        // *** Get the value selected
+        let datalist = event.target.list;
+        const optionsArray = Array.from(datalist.options);
+        let optionFound = optionsArray.filter((option) => option.value === event.target.value);
+        let resultOption = optionFound[0];
+
+        // *** Save the selected value
+        document.querySelector("#inputPublisher_span").innerHTML = resultOption.text;
+        document.querySelector("#inputPublisher_span").setAttribute("idPublisher", resultOption.conc_id);
+
+        // *** Reset search input
+        event.target.value = "";
+
     });
 
     // ******************* Predictive search

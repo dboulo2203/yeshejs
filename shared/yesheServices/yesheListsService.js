@@ -51,6 +51,17 @@ export function getSelectFromDatabaseList(listName, entityID, entityName, addZer
     });
     return outpuStr;
 }
+
+export function getSelectFromDatabaseListDropdown(listName, entityID, entityName, addZeroOption) {
+    let outpuStr = ``;
+    if (addZeroOption)
+        outpuStr += `<li><a class="dropdown-item ${listName}_item" selectedId="0" selectedName=""> --- </a> </li>`;
+
+    getList(listName).map((listentity, index) => {
+        outpuStr += `<li><a class="dropdown-item ${listName}_item" selectedId="${listentity[entityID]}" selectedName="${listentity[entityName]}">${listentity[entityName]}</a></li>`;
+    });
+    return outpuStr;
+}
 // export function getSelectFromDatabaseList(listName, selectID, entityID, entityName) {
 //     let outpuStr = `
 //       <div class="col" style="margin:2px">
