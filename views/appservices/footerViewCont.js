@@ -8,7 +8,7 @@ export function footerViewDisplay(htlmPartId) {
     <div id="footerPart" style="margin-top:40px">
         <hr style="color:grey"></hr>
         <div class="d-flex justify-content-center" style="">
-            <small>Powered by Dhagpo Kagyu Librairies - Yeshe App - v 5.0.9  - 13/01/2026</small>
+            <small>Powered by Dhagpo Kagyu Librairies - Yeshe App - v 5.0.9  - 15/01/2026</small>
         </div>
         <hr style="color:grey"></hr>
     </div>

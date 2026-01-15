@@ -1,4 +1,4 @@
-import { getwsUrlformel } from '../services/initialisationService.js';
+import { getConfigurationValue } from '../services/initialisationService.js';
 
 /**
  * Load the language list from the database
@@ -6,7 +6,7 @@ import { getwsUrlformel } from '../services/initialisationService.js';
  */
 export async function getLanguages() {
 
-    var wsUrl = getwsUrlformel() + `list/bdd_language`;
+    var wsUrl = getConfigurationValue("wsUrlformel") + `list/bdd_language`;
 
     let responseWS = await fetch(wsUrl);
 

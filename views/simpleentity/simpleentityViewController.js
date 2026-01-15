@@ -2,11 +2,11 @@
 import { getSimpleEntity, getSimpleEntitylinkedNotices } from './simpleEntityService.js'
 
 // *** Shared ressources
-import { getAppPath, getEntityLink, getLinkWithctrl, getEntityLinkClass } from '../../shared/services/commonFunctions.js'
+import { getAppPath, getLinkWithctrl, getEntityLinkClass } from '../../shared/services/commonFunctions.js'
 import { bookIcon, personIcon, keyIcon, printerIcon, publisherIcon, questionIcon, languageIcon, mattIcon, subnoticeIcon, genreIcon, themIcon } from '../../shared/assets/constants.js'
 import { getTranslation } from '../../shared/services/translationService.js'
-import { getimagePath } from '../../shared/services/configurationService.js'
-import { addMultipleEnventListener } from '../../shared/services/commonFunctions.js'
+import { getConfigurationValue } from '../../shared/services/configurationService.js'
+import { addMultipleEnventListener, findTibetanChars } from '../../shared/services/commonFunctions.js'
 import { launchInitialisation } from '../appservices/initialisationService.js';
 import { headerViewDisplay } from '../appservices/headerViewCont.js'
 
@@ -144,15 +144,15 @@ export async function getSimpleEntityContent(simpleEntityID, entityType, varname
 
             if (linkedNotice.noti_main_image && linkedNotice.noti_main_image.length > 0) {
                 output += ` <div class="col-3" align = "center" > `;
-                output += ` <img src = '${getimagePath()}/img/books/${linkedNotice.noti_main_image}' width = "80px" /> `;
+                output += ` <img src = '${getConfigurationValue("imagePath")}/img/books/${linkedNotice.noti_main_image}' width = "80px" /> `;
                 output += `</div > `;
 
                 if (linkedNotice.noti_hierarchical_level && linkedNotice.noti_hierarchical_level === '2') {
                     output += `<div class="col-9" >`;
-                    output += getEntityLinkClass("subnoticeButtons", linkedNotice.noti_main_title, linkedNotice.noti_id, false);
+                    output += getEntityLinkClass("subnoticeButtons", findTibetanChars(linkedNotice.noti_main_title), linkedNotice.noti_id, false);
                 } else {
                     output += `<div class="col-9" >`;
-                    output += getEntityLinkClass("noticeButtons", bookIcon + " " + linkedNotice.noti_main_title, linkedNotice.noti_id, false);
+                    output += getEntityLinkClass("noticeButtons", bookIcon + " " + findTibetanChars(linkedNotice.noti_main_title), linkedNotice.noti_id, false);
                 }
                 output += `</div > `
 
@@ -162,10 +162,10 @@ export async function getSimpleEntityContent(simpleEntityID, entityType, varname
 
                 if (linkedNotice.noti_hierarchical_level && linkedNotice.noti_hierarchical_level === '2') {
                     output += `<div class="col-9" > `;
-                    output += getEntityLinkClass("subnoticeButtons", subnoticeIcon + " " + linkedNotice.noti_main_title, linkedNotice.noti_id, false);
+                    output += getEntityLinkClass("subnoticeButtons", subnoticeIcon + " " + findTibetanChars(linkedNotice.noti_main_title), linkedNotice.noti_id, false);
                 } else
                     output += `<div class="col-9" >`;
-                output += getEntityLinkClass("noticeButtons", bookIcon + " " + linkedNotice.noti_main_title, linkedNotice.noti_id, false);
+                output += getEntityLinkClass("noticeButtons", bookIcon + " " + findTibetanChars(linkedNotice.noti_main_title), linkedNotice.noti_id, false);
 
                 output += `</div > `;
             }

@@ -1,5 +1,5 @@
 //import { wsUrlformel } from '../../assets/constants.js';
-import { getwsUrlformel } from './configurationService.js';
+import { getConfigurationValue } from './configurationService.js';
 
 /**
  * Load a person from the database, 
@@ -10,11 +10,11 @@ import { getwsUrlformel } from './configurationService.js';
  */
 export async function getLogin(userEmail, userPassword) {
 
-    // console.log("getLogin Service start : " + getwsUrlformel() + `user/${userEmail}?logUser=user_email&password=${userPassword}`);
+    // console.log("getLogin Service start : " + getConfigurationValue("wsUrlformel") + `user/${userEmail}?logUser=user_email&password=${userPassword}`);
 
     sessionStorage.setItem("loggedUSer", "");
 
-    var wsUrl = getwsUrlformel() + `user/${userEmail}?logUser=user_email&password=${userPassword}`;
+    var wsUrl = getConfigurationValue("wsUrlformel") + `user/${userEmail}?logUser=user_email&password=${userPassword}`;
 
     let responsefr = await fetch(wsUrl);
 
@@ -39,7 +39,6 @@ export async function getLogin(userEmail, userPassword) {
 export function logout() {
 
     sessionStorage.setItem("loggedUSer", "");
-
 }
 
 /**
@@ -58,7 +57,8 @@ export function getLoggedUserPseudo() {
 
 
 /**
- * returns if the user is allowed for the required level 
+ * returns '' if the useer is allowed 
+ * or return 'hidden' if not allowed
  * @param {*} requiredLevel 
  * @returns 
  */
@@ -76,4 +76,41 @@ export function getCurrentUSerRightLevel(requiredLevel) {
 
 }
 
+
+/**
+ * returns if the user is allowed for the required level 
+ * @param {*} requiredLevel 
+ * @returns 
+ */
+export function getCurrentUSerName() {
+
+    let loggedUserJSON = sessionStorage.getItem("loggedUSer");
+
+    if (loggedUserJSON) {
+        let loggedUser = JSON.parse(loggedUserJSON);
+        return loggedUser.user_pseudo;
+    } else
+        return "";
+
+}
 // https://catalogue.bibliotheque-dhagpo-kagyu.org/yeshe/api/user/d.boulore@vipassana.fr?logUser=user_email&password=thomas4
+
+/**
+ * returns if the user is allowed for the required level 
+ * @param {*} requiredLevel 
+ * @returns 
+ */
+export function isCurrentUSerLogged() {
+
+    let loggedUserJSON = sessionStorage.getItem("loggedUSer");
+    if (loggedUserJSON !== "") {
+        // let loggedUser = JSON.parse(loggedUserJSON);
+        // if (loggedUser && loggedUser.code === 200 && loggedUser.token.length > 0)
+        return true;
+        // else
+        //  return false;
+    } else {
+        return false;
+    }
+
+}

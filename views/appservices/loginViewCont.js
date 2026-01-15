@@ -1,8 +1,8 @@
 
 // import { getLogin } from '../../shared/services/loginService.js'
-import { getLogin } from './loginService.js'
-
-import { getAppPath } from '../../services/commonFunctions.js'
+import { getLogin } from '../../shared/services/loginService.js'
+import { loginIcon, logoutIcon } from '../../shared/assets/constants.js'
+import { getAppPath } from '../../shared/services/commonFunctions.js'
 const loginContainer = `<div id="modalPlace"></div>`;
 const editModaleString = `
 <div class="container">
@@ -13,7 +13,7 @@ const editModaleString = `
             <div class="modal-content">
                 <div class="modal-header">
                     <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-                    <h4 class="modal-title" style="color:#8B2331">Login</h4>
+                    <h4 class="modal-title" style="color:#8B2331">${loginIcon} Login</h4>
                 </div>
                 <div class="row modal-body" id="modalbodyLOgin">
                     <div id="modalmessage"></div>
@@ -27,7 +27,7 @@ const editModaleString = `
                     <div class="row">
                         <label for="userPasswordInput" class="form-label col-2">Password </label>
                         <div class="col" style="margin:2px">
-                            <input type="text" class="form-control  col-sm-10 " name="userPasswordInput" id="userPasswordInput" placeholder=""
+                            <input type="password" class="form-control  col-sm-10 " name="userPasswordInput" id="userPasswordInput" placeholder=""
                                 value=""/>
                         </div>
                     </div>
@@ -41,7 +41,6 @@ const editModaleString = `
     </div>
 </div>`;
 
-// TODO : Manage callback
 export function loginViewDisplay(htlmPartId) {
 
     // *** Variable that keeps the modal object
@@ -84,17 +83,19 @@ export function loginViewDisplay(htlmPartId) {
 
 }
 
+/**
+ * 
+ * @param {Get the } event 
+ */
 async function logUser(event) {
 
-    console.log("Save clicked");
     let userEmail = document.querySelector("#userEmailInput").value;
     let userPassword = document.querySelector("#userPasswordInput").value;
 
-    // try {
     let retour = await getLogin(userEmail, userPassword)
 
     if (!retour)
         document.querySelector("#modalmessage").innerHTML = `<div class="alert alert-danger" style = "margin-top:30px" role = "alert" >Nom, password invalides</div> `;
     else
-        document.querySelector("#modalmessage").innerHTML = `<div class="alert alert-success" style = "margin-top:30px" role = "alert" >Bienvenue ${retour.user_pseudo}</div> `;
+        window.location.href = `${getAppPath()}/views/mainpage/mainpage.html`
 }

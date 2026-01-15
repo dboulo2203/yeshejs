@@ -1,4 +1,4 @@
-import { getwsUrlformel } from '../../shared/services/configurationService.js';
+import { getConfigurationValue } from '../../shared/services/configurationService.js';
 
 /**
  * 
@@ -7,7 +7,7 @@ import { getwsUrlformel } from '../../shared/services/configurationService.js';
  */
 export async function getNotice(noticeId) {
 
-    var wsUrl = getwsUrlformel() + `notice/${noticeId}`;
+    var wsUrl = getConfigurationValue("wsUrlformel") + `notice/${noticeId}`;
     let responsefr = await fetch(wsUrl);
     if (responsefr.ok) {
         // *** Get the data and save in the localstorage
@@ -28,7 +28,7 @@ export async function getNotice(noticeId) {
  */
 export async function getNoticeExtract(noticeId) {
 
-    var wsUrl = getwsUrlformel() + `noticeextract/${noticeId}`; let responsefr = await fetch(wsUrl);
+    var wsUrl = getConfigurationValue("wsUrlformel") + `noticeextract/${noticeId}`; let responsefr = await fetch(wsUrl);
     if (responsefr.ok) {
         // *** Get the data and save in the localstorage
         const data = await responsefr.json();
@@ -41,7 +41,7 @@ export async function getNoticeExtract(noticeId) {
 }
 
 export async function getAbstractFile(noticeId) {
-    var wsUrl = getwsUrlformel() + `noticeextract/${noticeId}/sendfile`;
+    var wsUrl = getConfigurationValue("wsUrlformel") + `noticeextract/${noticeId}/sendfile`;
     let responsefr = await fetch(wsUrl);
     if (responsefr.ok) {
         // *** Get the data and save in the localstorage
@@ -56,7 +56,7 @@ export async function getAbstractFile(noticeId) {
 
 
 export async function sendAbstractMail(noticeId, mail) {
-    var wsUrl = getwsUrlformel() + `noticeextract/${noticeId}/sendmail/${mail}`;
+    var wsUrl = getConfigurationValue("wsUrlformel") + `noticeextract/${noticeId}/sendmail/${mail}`;
     let responsefr = await fetch(wsUrl);
     if (responsefr.ok) {
         // *** Get the data and save in the localstorage

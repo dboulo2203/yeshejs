@@ -1,4 +1,4 @@
-import { getwsUrlformel } from '../../shared/services/initialisationService.js';
+import { getConfigurationValue } from '../../shared/services/configurationService.js';
 
 /**
  * 
@@ -7,7 +7,7 @@ import { getwsUrlformel } from '../../shared/services/initialisationService.js';
  */
 export async function getsubNotice(subNoticeId) {
 
-    var wsUrl = getwsUrlformel() + `subnotice/${subNoticeId}`;
+    var wsUrl = getConfigurationValue("wsUrlformel") + `subnotice/${subNoticeId}`;
     let responsefr = await fetch(wsUrl);
     if (responsefr.ok) {
         // *** Get the data and save in the sessionStorage
@@ -29,7 +29,7 @@ export async function getsubNotice(subNoticeId) {
  */
 export async function getNoticeExtract(noticeId) {
 
-    var wsUrl = getwsUrlformel() + `noticeextract/${noticeId}`; let responsefr = await fetch(wsUrl);
+    var wsUrl = getConfigurationValue("wsUrlformel") + `noticeextract/${noticeId}`; let responsefr = await fetch(wsUrl);
     if (responsefr.ok) {
         // *** Get the data and save in the sessionStorage
         const data = await responsefr.json();

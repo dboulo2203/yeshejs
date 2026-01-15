@@ -7,7 +7,7 @@ import { displayimageViewDisplay } from './displayImage/displayimageViewCont.js'
 import { getTranslation } from '../../shared/services/translationService.js'
 import { getArrayFromjson } from '../../shared/services/commonFunctions.js'
 import { pencilsquare, plussquare } from '../../shared/assets/constants.js'
-import { getimagePath } from '../../shared/services/configurationService.js'
+import { getConfigurationValue } from '../../shared/services/configurationService.js'
 import { getAppPath } from '../../shared/services/commonFunctions.js'
 import { getCurrentUSerRightLevel } from '../../shared/services/loginService.js'
 import { addMultipleEnventListener } from '../../shared/services/commonFunctions.js'
@@ -105,7 +105,7 @@ export async function displayPersonContent(mainDisplay, personID) {
         if (person.conc_image && person.conc_image.length > 0)
             personScreen += ` 
                 <div class="col-3" align="center">
-                    <img src="${getimagePath()}/img/persons/${person.conc_image}" width="100%"   style="width:100%;max-width:150px;cursor:pointer" class="imgsearch" />
+                    <img src="${getConfigurationValue("imagePath")}/img/persons/${person.conc_image}" width="100%"   style="width:100%;max-width:150px;cursor:pointer" class="imgsearch" />
                 </div >
             
                 <div class="col-9" >
@@ -202,7 +202,7 @@ function getLinkedNoticesHtml(linkedNotices) {
 
         if (linkedNotice.noti_main_image && linkedNotice.noti_main_image.length > 0) {
             outputln += ` <div class="col-3" align = "center" > `;
-            outputln += ` <img src = '${getimagePath()}/img/books/${linkedNotice.noti_main_image}' width = "80px" /> `;
+            outputln += ` <img src = '${getConfigurationValue("imagePath")}/img/books/${linkedNotice.noti_main_image}' width = "80px" /> `;
             outputln += `</div > `;
             if (linkedNotice.noti_hierarchical_level && linkedNotice.noti_hierarchical_level === 2)
                 outputln += `<div class="col-9" > <span style="cursor: pointer" class="subnoticeButtons" searid="${linkedNotice.noti_id}" > ${subnoticeIcon} ${linkedNotice.noti_main_title} </span >`;

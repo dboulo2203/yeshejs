@@ -1,7 +1,10 @@
 
 import { getAppPath } from '../../shared/services/commonFunctions.js'
-import { loginIcon } from '../../shared/assets/constants.js'
+import { loginIcon, logoutIcon, themeIcon, bookIcon, personIcon, printerIcon, publisherIcon, keyIcon, customersIcon, pencilsquareIcon, lendIcon } from '../../shared/assets/constants.js'
 import { toogleTheme } from '../../shared/services/bootstrapTheme.js'
+import { loginViewDisplay } from './loginViewCont.js'
+import { isCurrentUSerLogged, getCurrentUSerName } from '../../shared/services/loginService.js'
+import { logout } from '../../shared/services/loginService.js'
 //***
 // catalog
 //  -> categories
@@ -14,24 +17,26 @@ import { toogleTheme } from '../../shared/services/bootstrapTheme.js'
 const leftmenuString = ` 
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasExampleLabel" style="color:#8B2331">Yeshe 5</h5>
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel" style="color:#8B2331">Yeshe version 5</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <hr/>
         <div class="offcanvas-body">
-            <div id="newNoticeButton">Login</div>
-           <div  style="margin-bottom:10px;cursor:pointer"  ><span class="fs-6" id="btnSwitch" >${loginIcon} Theme</span></div>        
+            ${!isCurrentUSerLogged() ? `<div  style="margin-bottom:2px;cursor:pointer"  ><span class="fs-6" id="loginButton" >${loginIcon} Login</span></div>` : ``}
+            ${isCurrentUSerLogged() ? `<div  style="margin-bottom:2px;cursor:pointer"  ><span class="fs-6" id="logoutButton">${logoutIcon} Logout : ${getCurrentUSerName()}</span ></div > ` : ``}
+ 
+            <div style="margin-bottom:2px;cursor:pointer"  ><span " id="btnSwitch" >${themeIcon} Theme</span></div>        
             <hr/>
-            <div id="newNoticeButton">New Notice</div>
-            <div id="newPersonButton">New Person</div>            
-            <div id="newKeywordButton">New Keyword</div>
-            <div id="newPublisherButton">New Publisher</div>
-            <div id="newPrinterButton">New Printer</div>
+            <div id="newNoticeButton" style="margin-bottom:2px"> ${bookIcon} Notice</div>
+            <div id="newPersonButton" style="margin-bottom:2px"> ${personIcon} Person</div>            
+            <div id="newKeywordButton" style="margin-bottom:2px"> ${keyIcon} Keyword</div>
+            <div id="newPublisherButton" style="margin-bottom:2px"> ${publisherIcon} Publisher</div>
+            <div id="newPrinterButton" style="margin-bottom:2px"> ${printerIcon} Printer</div>
             <hr/>
-            <div id="newPrinterButton">Utilisateurs</div>
-            <div id="newPrinterButton">Prêts</div>
+            <div id="newPrinterButton"> ${customersIcon} Utilisateurs</div>
+            <div id="newPrinterButton"> ${lendIcon} Prêts</div>
             <hr/>
-            <div id="documentation" style="cursor:pointer"><span style="cursor:pointer">Documentation</span></div>
+            <div id="documentation" style="cursor:pointer"><span style="cursor:pointer">${pencilsquareIcon}Documentation</span></div>
 
         </div>
     </div>
@@ -52,8 +57,6 @@ export function leftMenuViewDisplay(htlmPartId) {
         window.location.href = `${getAppPath()}/views/person/person.html`;
     };
 
-
-
     document.querySelector("#documentation").onclick = function () {
         window.location.href = `${getAppPath()}/views/docu/docu.html`;
     };
@@ -61,6 +64,19 @@ export function leftMenuViewDisplay(htlmPartId) {
     document.querySelector("#btnSwitch").onclick = function () {
         toogleTheme();
     }
+
+    if (!isCurrentUSerLogged())
+        document.querySelector("#loginButton").onclick = async function () {
+            loginViewDisplay("mainActiveSection")
+        };
+
+    if (isCurrentUSerLogged())
+        document.querySelector("#logoutButton").onclick = async function () {
+            logout();
+            window.location.href = `${getAppPath()}/views/mainpage/mainpage.html`
+
+        };
+
 
     // document.querySelector("#btnSwitchDys").onclick = function () {
     //     // document.getElementById('#btnSwitch').addEventListener('click', () => {

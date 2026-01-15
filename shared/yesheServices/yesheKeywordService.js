@@ -1,4 +1,4 @@
-import { getwsUrlformel } from '../../shared/services/configurationService.js';
+import { getConfigurationValue } from '../../shared/services/configurationService.js';
 
 /**
  * Load a person from the database, 
@@ -11,7 +11,7 @@ export async function getKeyword(keywordId) {
 
     //console.log("getKeyword Service start");
 
-    var wsUrl = getwsUrlformel() + `keyword/${keywordId}`;
+    var wsUrl = getConfigurationValue("wsUrlformel") + `keyword/${keywordId}`;
     let responsefr = await fetch(wsUrl);
     if (responsefr.ok) {
         // *** Get the data and save in the sessionStorage
@@ -36,7 +36,7 @@ export async function getKeyword(keywordId) {
 export async function getKeywordFromAliasID(keywordAliasId) {
 
     // console.log("getKeywordFromAliasID Service start");
-    var wsUrl = getwsUrlformel() + `keyword/${keywordAliasId}/getByAlias`;
+    var wsUrl = getConfigurationValue("wsUrlformel") + `keyword/${keywordAliasId}/getByAlias`;
     let responsefr = await fetch(wsUrl);
     if (responsefr.ok) {
         // *** Get the data and save in the sessionStorage
@@ -76,7 +76,7 @@ export async function getKeywordAliases(keywordID) {
 
     console.log("getKeywordAliases Service start");
 
-    var wsUrl = getwsUrlformel() + `keyword/${keywordID}/getAliases`;
+    var wsUrl = getConfigurationValue("wsUrlformel") + `keyword/${keywordID}/getAliases`;
 
     let responsefr = await fetch(wsUrl);
 
@@ -103,7 +103,7 @@ export async function getKeywordlinkedNotices(personId) {
 
     console.log("getKeywordlinkedNotices Service start");
 
-    var wsUrl = getwsUrlformel() + `keyword/${personId}/linkednotices`;
+    var wsUrl = getConfigurationValue("wsUrlformel") + `keyword/${personId}/linkednotices`;
 
     let responsefr = await fetch(wsUrl);
 
@@ -179,7 +179,7 @@ export async function getKeywordlinkedNotices(personId) {
 
 export async function getKeywordsFromAliasName(searchName) {
 
-    var wsUrl = getwsUrlformel() + `keywordAliases/${searchName}?searchType=coal_name`;
+    var wsUrl = getConfigurationValue("wsUrlformel") + `keywordAliases/${searchName}?searchType=coal_name`;
     let responsefr = await fetch(wsUrl);
     if (responsefr.ok) {
         const data = await responsefr.json();

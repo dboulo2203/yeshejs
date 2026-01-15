@@ -3,55 +3,31 @@ import { getNotice } from './noticeService.js'
 import { displayModaleAndFunctions } from './abstractModalViewController.js'
 import { displayimageViewDisplay } from './displayImageModal/displayimageViewCont.js'
 import { displaynoticeMultimediaModalViewDisplay } from './noticeMultimediaModal/noticeMultimediaModalViewCont.js'
-// ** Shared ressoucres
-import { getArrayFromjson, addMultipleEnventListener, getEntityLinkClass, getLinkWithctrl, getTibetanPart } from '../../shared/services/commonFunctions.js'
-import { getEntityLink } from '../../shared/services/commonFunctions.js'
-import { languageIcon, questionIcon, questionIcon18, noteIcon, abstractIcon } from '../../shared/assets/constants.js'
-import { bookIcon, personIcon, keyIcon, copiesIcon, multimediaIcon, descriptionIcon, publicationIcon, titleIcon } from '../../shared/assets/constants.js'
 
-import { getimagePath } from '../../shared/services/configurationService.js'
+// *** App services
 import { launchInitialisation } from '../appservices/initialisationService.js'
-import { getAppPath } from '../../shared/services/commonFunctions.js'
-import { getTranslation } from '../../shared/services/translationService.js'
-
 import { headerViewDisplay } from '../appservices/headerViewCont.js'
+
+// ** Shared ressoucres
+import { getArrayFromjson, addMultipleEnventListener, getEntityLinkClass, getLinkWithctrl, findTibetanChars, getEntityLink } from '../../shared/services/commonFunctions.js'
+import { languageIcon, noteIcon, abstractIcon, toDKLLibraryIcon } from '../../shared/assets/constants.js'
+import { bookIcon, personIcon, keyIcon, copiesIcon, multimediaIcon, descriptionIcon, publicationIcon, titleIcon } from '../../shared/assets/constants.js'
+import { getConfigurationValue } from '../../shared/services/configurationService.js'
+import { getTranslation } from '../../shared/services/translationService.js'
 
 /**
  * Start script 
  */
-export function startNoticeController() {
-
-    // console.log("Start noticeViewController");
+export async function startNoticeController() {
     const searchParams = new URLSearchParams(window.location.search);
-    //console.log(searchParams);
 
+    await launchInitialisation();
     headerViewDisplay("#menuSection");
 
     if (searchParams.has('noticeID'))
-        launchNoticeController('mainActiveSection', searchParams.get('noticeID'));
+        displayNoticeContent('mainActiveSection', searchParams.get('noticeID'));
     else
-        document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style="margin-top:20px" role="alert">Erreur, pas de noticeID</div>`;
-}
-/**
- * Main basket view function
- * - Display categories
- * - Display basket content
- *  
- * @param {*} htlmPartId 
- */
-export async function launchNoticeController(htlmPartId, noticeID) {
-
-    try {
-        // *** Initialisations
-        await launchInitialisation();
-        headerViewDisplay("#menuSection");
-
-    } catch (error) {
-        document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style = "margin-top:30px" role = "alert" > ${error}</div > `;
-    }
-    // *** Display basket component
-    displayNoticeContent(htlmPartId, noticeID);
-
+        document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style="margin-top:60px" role="alert">Erreur, pas de noticeID</div>`;
 }
 
 /**
@@ -63,13 +39,77 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
 
     let output = '';
     let notice = await getNotice(noticeID);
-    output += `
-        <div class="d-flex  justify-content-between" style="padding-top:60px" >          
-                <span class="fs-5" style="color:#8B2331">${bookIcon} ${getTranslation("NOT_TITLE")} : ${notice.noti_main_title}</span>
-                <span id="extractButton" style="cursor: pointer">   ${abstractIcon}</span> 
-       
-        </div > 
-        
+
+
+
+    // *** Display string
+    document.querySelector("#" + mainDisplay).innerHTML = displayNotice(notice);
+
+    // ************** Actions
+    document.querySelector("#extractButton").onclick = function () {
+        displayModaleAndFunctions("#modaldisplay", notice.noti_id, function (status) {
+        });
+    };
+    document.querySelector("#toDKLLibraryButton").onclick = function () {
+        getLinkWithctrl(`${getConfigurationValue('dklLibraryPath')}notice/${notice.noti_id}`, true)
+    };
+
+    addMultipleEnventListener(".personButtons", function (event) {
+        getLinkWithctrl(`${getAppPath()}/views/person/person.html?personAliasID=` + event.currentTarget.getAttribute('searid'), event.ctrlKey);
+    });
+
+    addMultipleEnventListener(".keywordButtons", function (event) {
+        getLinkWithctrl(`${getAppPath()}/views/keyword/keyword.html?keywordAliasID=` + event.currentTarget.getAttribute('searid'), event.ctrlKey);;
+    });
+
+    addMultipleEnventListener(".languageButtons", function (event) {
+        getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=${event.currentTarget.getAttribute('searid')}&simpleEntitytype=24`, event.ctrlKey);
+    });
+
+    document.querySelector("#publisherButton").onclick = function (event) {
+        getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=${notice.publ_id}&simpleEntitytype=13`, event.ctrlKey);
+    };
+
+    document.querySelector("#printerButton").onclick = function (event) {
+        getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=${notice.prin_id}&simpleEntitytype=12`, event.ctrlKey);;
+    };
+
+    document.querySelector("#genreButton").onclick = function (event) {
+        getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=${notice.genrt_id}&simpleEntitytype=34`, event.ctrlKey);;
+    };
+
+    document.querySelector("#themeButton").onclick = function (event) {
+        getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=${notice.them_id}&simpleEntitytype=33`, event.ctrlKey);;
+    };
+    document.querySelector("#doctButton").onclick = function (event) {
+        getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=${notice.doct_id}&simpleEntitytype=35`, event.ctrlKey);;
+    };
+
+    document.querySelector("#mattButton").onclick = function (event) {
+        getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=${notice.matt_id}&simpleEntitytype=36`, event.ctrlKey);;
+    };
+
+    document.querySelector("#collectionButton").onclick = function (event) {
+        getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=${notice.coll_id}&simpleEntitytype=37`, event.ctrlKey);;
+    };
+
+    addMultipleEnventListener(".imgsearch", function (event) {
+        displayimageViewDisplay("modalSection", event.currentTarget.getAttribute('src'), event.ctrlKey)
+    });
+
+    addMultipleEnventListener(".multimediaElem", function (event) {
+        displaynoticeMultimediaModalViewDisplay("modalSection", JSON.parse(event.currentTarget.attributes['multObject'].nodeValue))
+    });
+}
+
+function displayNotice(notice) {
+
+    let output = `
+        <div class="d-flex" style="margin-top:60px">
+             <div class="p-2 flex-grow-1"><span class="fs-5" style="color:#8B2331">${bookIcon} ${getTranslation("NOT_TITLE")} : ${findTibetanChars(notice.noti_main_title)}</span></div>
+            <div class="p-2"><span id="extractButton" style="cursor: pointer">   ${abstractIcon} </span></div>
+            <div class="p-2"><span id="toDKLLibraryButton" style="cursor: pointer">   ${toDKLLibraryIcon}</span></div>
+        </div>        
         <hr />`;
 
     // console.log(JSON.stringify(notice));
@@ -77,15 +117,15 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
     output += `<div class="row " > `;
     if (notice.noti_main_image && notice.noti_main_image.length > 0) {
         output += ` <div class="col-3" align="center" > `;
-        output += ` <img src = '${getimagePath()}/img/books/${notice.noti_main_image}' style = "width:100%;max-width:150px;cursor:pointer" class="imgsearch" /> `;
+        output += ` <img src = '${getConfigurationValue("imagePath")}/img/books/${notice.noti_main_image}' style = "width:100%;max-width:150px;cursor:pointer" class="imgsearch" /> `;
         output += `</div > `;
 
-        output += `<div class="col-9 " style = "" > ${notice.noticeCatalogDescription} `;
+        output += `<div class="col-9 " style = "" > ${findTibetanChars(notice.noticeCatalogDescription)} `;
         output += `</div > `
 
     } else {
 
-        output += `<div class="col-md-12 main" style = "" > ${notice.noticeCatalogDescription} `;
+        output += `<div class="col-md-12 main" style = "" > ${findTibetanChars(notice.noticeCatalogDescription)} `;
         output += `</div > `
 
     }
@@ -93,7 +133,7 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
 
     // *** Notice titles
     output += `<div style=""><spanclass="fs-6" style="color:#8B2331">${titleIcon} ${getTranslation("NOT_TITLES")}</span></div>`;
-    output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_MAINTITLE")}</span> : ${notice.noti_main_title}`;
+    output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_MAINTITLE")}</span> : ${findTibetanChars(notice.noti_main_title)}`;
 
     output += `</div>`
     //if (notice.noti_sub_title)
@@ -136,7 +176,7 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
     output += `<div class="col-md-12 main" " > <span class="fw-light" ></div>`;
     output += `<div class="col-md-12 main" " > <span class="fw-light">${getTranslation("NOT_MATERIALDESCRIPTION")}</span> ${notice.noti_col_mat_description === null ? '' : notice.noti_col_mat_description}</div>`;
     output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_MATERIALCHARACTERISTIC")}</span> : ${notice.noti_col_car_description === null ? '' : notice.noti_col_car_description}</div>`;
-    output += `<div class="col-md-12 main" " > <span class="fw-light""${getTranslation("NOT_MATERIALFORMAT")}</span> : ${notice.noti_col_format === null ? '' : notice.noti_col_format}</div>`;
+    output += `<div class="col-md-12 main" " > <span class="fw-light">${getTranslation("NOT_MATERIALFORMAT")}</span> : ${notice.noti_col_format === null ? '' : notice.noti_col_format}</div>`;
     output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_OTHEMATERIAL")}</span> : ${notice.noti_col_other_material === null ? '' : notice.noti_col_other_material}</div>`;
     output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_TRANSLITERATION")}</span> : ${notice.noti_transliteration === null || notice.noti_transliteration <= 0 ? '' : notice.noti_transliteration}</div>`;
     // ** output += NOT_CHECKINSTATE, chek_name
@@ -169,7 +209,7 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
     output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_YEAROFPUBLICATION")}</span> : ${notice.noti_year_of_publication === null ? '' : notice.noti_year_of_publication}</div>`;
     output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_PLACEOFPUBLICATION")}</span> : ${notice.noti_place_of_publication === null ? '' : notice.noti_place_of_publication}</div>`;
     output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_TYPEOFPUBLICATION")}</span> : ${notice.noti_type_of_publication === null ? '' : notice.noti_type_of_publication}</div>`;
-    output += `<div class="col-md-12 main" " > <span class="fw-light" ${getTranslation("NOT_ISBN")}</span> : ${notice.noti_basenumber === null ? '' : notice.noti_basenumber}</div>`;
+    output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_ISBN")}</span> : ${notice.noti_basenumber === null ? '' : notice.noti_basenumber}</div>`;
     output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_EAN")} </span> : ${notice.noti_codedouchette === null ? '' : notice.noti_codedouchette}</div>`;
     output += `</div>`
     output += `</div>`
@@ -257,70 +297,8 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
     output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
     output += `</br></br>`;
 
-    // *** Display string
-    document.querySelector("#" + mainDisplay).innerHTML = output;
 
-    // ************** Actions
-    document.querySelector("#extractButton").onclick = function () {
-        displayModaleAndFunctions("#modaldisplay", notice.noti_id, function (status) {
-        });
-    };
-    addMultipleEnventListener(".personButtons", function (event) {
-        getLinkWithctrl(`${getAppPath()}/views/person/person.html?personAliasID=` + event.currentTarget.getAttribute('searid'), event.ctrlKey);
-    });
-
-    addMultipleEnventListener(".keywordButtons", function (event) {
-        getLinkWithctrl(`${getAppPath()}/views/keyword/keyword.html?keywordAliasID=` + event.currentTarget.getAttribute('searid'), event.ctrlKey);;
-    });
-
-    addMultipleEnventListener(".languageButtons", function (event) {
-        getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=${event.currentTarget.getAttribute('searid')}&simpleEntitytype=24`, event.ctrlKey);
-    });
-
-    document.querySelector("#publisherButton").onclick = function (event) {
-        getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=${notice.publ_id}&simpleEntitytype=13`, event.ctrlKey);
-    };
-
-    document.querySelector("#printerButton").onclick = function (event) {
-        getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=${notice.prin_id}&simpleEntitytype=12`, event.ctrlKey);;
-    };
-
-    document.querySelector("#genreButton").onclick = function (event) {
-        getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=${notice.genrt_id}&simpleEntitytype=34`, event.ctrlKey);;
-    };
-
-    document.querySelector("#themeButton").onclick = function (event) {
-        getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=${notice.them_id}&simpleEntitytype=33`, event.ctrlKey);;
-    };
-    document.querySelector("#doctButton").onclick = function (event) {
-        getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=${notice.doct_id}&simpleEntitytype=35`, event.ctrlKey);;
-    };
-
-    document.querySelector("#mattButton").onclick = function (event) {
-        getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=${notice.matt_id}&simpleEntitytype=36`, event.ctrlKey);;
-    };
-
-    document.querySelector("#collectionButton").onclick = function (event) {
-        getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=${notice.coll_id}&simpleEntitytype=37`, event.ctrlKey);;
-    };
-
-    addMultipleEnventListener(".imgsearch", function (event) {
-        displayimageViewDisplay("modalSection", event.currentTarget.getAttribute('src'), event.ctrlKey)
-    });
-
-    addMultipleEnventListener(".multimediaElem", function (event) {
-        displaynoticeMultimediaModalViewDisplay("modalSection", JSON.parse(event.currentTarget.attributes['multObject'].nodeValue))
-    });
-
-
-
+    return output;
 }
 
-// function getEntityLink(buttonType, entityName) {
-//     return `<span style="cursor: pointer; border-bottom: 0.1em solid #dddbdbff"
-//     id="${buttonType}" onpointerenter="this.setAttribute('style', 'color: #8B2331;border-bottom: 0.1em solid #8B2331;cursor:pointer')" onpointerleave="this.setAttribute('style', 'color: bs-body-color;border-bottom: 0.1em solid #dddbdbff')">
-//         ${entityName === null ? '' : entityName}
-//     </span>`;
-
-// }
 

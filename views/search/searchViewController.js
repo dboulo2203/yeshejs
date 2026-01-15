@@ -3,7 +3,7 @@ import { getSearch } from './searchService.js';
 import { displayimageViewDisplay } from './displayImage/displayimageViewCont.js'
 //***  shared ressources
 import { getLinkWithctrl, getAppPath } from '../../shared/services/commonFunctions.js'
-import { getimagePath, } from '../../shared/services/configurationService.js'
+import { getConfigurationValue } from '../../shared/services/configurationService.js'
 import {
     bookIcon, personIcon, keyIcon, printerIcon, publisherIcon, questionIcon, mattIcon, subnoticeIcon,
     genreIcon, themIcon, languageIcon, noteIcon
@@ -89,7 +89,7 @@ export async function displaySearchContent(htlmPartId, searchString, multiCriter
                     case 10: // person images are in the persons directory
                         if (searchLine.sear_image && searchLine.sear_image.length > 0) {
                             output += ` <div class="col-3 " align = "center" > `;
-                            output += ` <img src = '${getimagePath()}/img/persons/${searchLine.sear_image}' style = "width:100%;max-width:100px;cursor:pointer" class="imgsearch"/> `;
+                            output += ` <img src = '${getConfigurationValue("imagePath")}/img/persons/${searchLine.sear_image}' style = "width:100%;max-width:100px;cursor:pointer" class="imgsearch"/> `;
                             output += `</div > `;
                             output += `<div class="col-9" > `;
                         } else {
@@ -101,7 +101,7 @@ export async function displaySearchContent(htlmPartId, searchString, multiCriter
                     default: // other images are in the book directory
                         if (searchLine.sear_image && searchLine.sear_image.length > 0) {
                             output += ` <div class="col-3 " align = "center" > `;
-                            output += ` <img src = '${getimagePath()}/img/books/${searchLine.sear_image}' style = "width:100%;max-width:100px;cursor:pointer" class="imgsearch"/> `;
+                            output += ` <img src = '${getConfigurationValue("imagePath")}/img/books/${searchLine.sear_image}' style = "width:100%;max-width:100px;cursor:pointer" class="imgsearch"/> `;
                             output += `</div > `;
                             output += `<div class="col-9" > `;
                         } else {

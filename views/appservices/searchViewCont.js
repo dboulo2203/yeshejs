@@ -121,7 +121,7 @@ export function searchViewDisplay(htlmPartId) {
                             </div>
 
                             <div class="form-group row" style="margin-bottom:5px">
-                                <label for="exampleInputPassword1" class="col-sm-3 col-form-label" >Mat type</label>
+                                <label for="exampleInputPassword1" class="col-sm-3 col-form-label" >Material type</label>
                                 <div class="col-sm-9 ">
                                     <span class="dropdown-toggle" type="button" style="width:100%;border-bottom:solid 0.05rem #e9e8e8" type="button" data-bs-toggle="dropdown" id="inputMateriel_span" selectedId=""> </span>
                                     <ul class="dropdown-menu" id="">
@@ -205,7 +205,7 @@ export function searchViewDisplay(htlmPartId) {
         if (document.querySelector("#inputTitles").value.length > 0)
             multictri += 'titl:' + document.querySelector("#inputTitles").value;
 
-        if (document.querySelector("#PersonSpan").selectedIi > 0)
+        if (document.querySelector("#PersonSpan").selectedid > 0)
             multictri += '|pers:' + document.querySelector("#PersonSpan").selectedid;
 
         if (document.querySelector("#KeywordSpan").selectedid > 0)

@@ -1,4 +1,4 @@
-import { getwsUrlformel } from '../services/configurationService.js';
+import { getConfigurationValue } from '../services/configurationService.js';
 // /**
 //  * Load a person from the database, 
 //  * the person is saved in the sessionStorage
@@ -10,7 +10,7 @@ import { getwsUrlformel } from '../services/configurationService.js';
 
 //     // console.log("getPerson Service start");
 
-//     var wsUrl = getwsUrlformel() + `person/${personId}`;
+//     var wsUrl = getConfigurationValue("wsUrlformel") + `person/${personId}`;
 //     let responsefr = await fetch(wsUrl);
 //     if (responsefr.ok) {
 //         // *** Get the data and save in the sessionStorage
@@ -35,7 +35,7 @@ import { getwsUrlformel } from '../services/configurationService.js';
  */
 export async function getPublishersFromName(searchName) {
 
-    var wsUrl = getwsUrlformel() + `publisher/${searchName}?searchType=publ_name`;
+    var wsUrl = getConfigurationValue("wsUrlformel") + `publisher/${searchName}?searchType=publ_name`;
     let responsefr = await fetch(wsUrl);
     if (responsefr.ok) {
         const data = await responsefr.json();

@@ -1,7 +1,3 @@
-
-// import { getLogin } from '../../shared/services/loginService.js'
-import { getimagePath } from '../../../shared/services/configurationService.js'
-
 const loginContainer = `<div id="modalPlace"></div>`;
 const editModaleString = `
 <div class="container">
@@ -47,23 +43,23 @@ export function displaynoticeMultimediaModalViewDisplay(htlmPartId, multimedia) 
     switch (multimedia.multt_id) {
         case 6:
             output += `<video width="500"  controls controlsList="nodownload" disable-right-click>
-                <source src="${getimagePath() + '/img/multimedia/' + multimedia.mult_file}" type='video/mp4'>              
+                <source src="${getConfigurationValue("imagePath") + '/img/multimedia/' + multimedia.mult_file}" type='video/mp4'>              
                 Your browser does not support the video tag.
             </video>`
             break;
         case 1:
             output += ` <audio  controls controlsList="nodownload">
-                <source src="${getimagePath() + '/img/multimedia/' + multimedia.mult_file}" type='audio/mp3'>               
+                <source src="${getConfigurationValue("imagePath") + '/img/multimedia/' + multimedia.mult_file}" type='audio/mp3'>               
                 Your browser does not support the audio tag.
             </audio> `
             break;
         case 3:
             output += `<object type="application/pdf"
-                    data="${getimagePath() + '/img/multimedia/' + multimedia.mult_file}#toolbar=0&navpanes=0&scrollbar=0"
+                    data="${getConfigurationValue("imagePath") + '/img/multimedia/' + multimedia.mult_file}#toolbar=0&navpanes=0&scrollbar=0"
                     width="100%" height="500" style="height: 85vh;" >No Support</object> `
             break;
         case 5:
-            output += `<img src="${getimagePath() + '/img/multimedia/' + multimedia.mult_file}" style='width:100%'>`
+            output += `<img src="${getConfigurationValue("imagePath") + '/img/multimedia/' + multimedia.mult_file}" style='width:100%'>`
             break;
         default:
             output += `Multimedia type non reconnu`

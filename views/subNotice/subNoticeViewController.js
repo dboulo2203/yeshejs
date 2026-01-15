@@ -1,17 +1,12 @@
 // *** Component ressources
 import { getsubNotice } from './subNoticeService.js'
-// import { displayModaleAndFunctions } from './abstractModalViewController.js'
-
 // ** Shared ressoucres
 import { getArrayFromjson, addMultipleEnventListener, getEntityLinkClass, getLinkWithctrl } from '../../shared/services/commonFunctions.js'
-import { questionIcon, questionIcon18, subbookIcon } from '../../shared/assets/constants.js'
-import { getimagePath } from '../../shared/services/initialisationService.js'
-import { getAppPath } from '../../shared/services/commonFunctions.js'
+import { questionIcon18, subnoticeIcon } from '../../shared/assets/constants.js'
+import { getAppPath, findTibetanChars } from '../../shared/services/commonFunctions.js'
 import { getTranslation } from '../../shared/services/translationService.js'
-
-import { bookfillIcon24 } from '../../shared/assets/constants.js'
-import { launchInitialisation } from '../../shared/services/initialisationService.js';
-import { headerViewDisplay } from '../../shared/services/headerViewCont.js'
+import { launchInitialisation } from '../appservices/initialisationService.js';
+import { headerViewDisplay } from '../appservices/headerViewCont.js'
 
 /**
  * Start script 
@@ -63,7 +58,7 @@ export async function displayNoticeContent(mainDisplay, subNoticeID) {
     console.log(JSON.stringify(subNotice));
     output += `
         <div class="d-flex  justify-content-between" style="padding-top:60px" >          
-                <span class="fs-5" style="color:#8B2331">${subbookIcon} ${getTranslation("NOT_SUBRECORDSTITLE")} : ${subNotice.noti_main_title}</span>
+                <span class="fs-5" style="color:#8B2331">${subnoticeIcon} ${getTranslation("NOT_SUBRECORDSTITLE")} : ${findTibetanChars(subNotice.noti_main_title)}</span>
                 <span id="extractButton" style="cursor: pointer">   ${questionIcon18}</span> 
        
         </div > 
@@ -75,7 +70,7 @@ export async function displayNoticeContent(mainDisplay, subNoticeID) {
 
     // *** Notice titles
     output += `<div style=""><spanclass="fs-6" style="color:#8B2331">Titles</span></div>`;
-    output += `<div class="col-md-12 main" " > <span class="fw - light" >${getTranslation("NOT_MAINTITLE")}</span> : ${subNotice.noti_main_title}`;
+    output += `<div class="col-md-12 main" " > <span class="fw - light" >${getTranslation("NOT_MAINTITLE")}</span> : ${findTibetanChars(subNotice.noti_main_title)}`;
     output += `</div>`
     if (subNotice.noti_other_title)
         output += `<div class="col-md-12 main"> <span class="fw-light" >${getTranslation("NOT_OTHERTITLE")}</span> :  ${subNotice.noti_other_title}</div>`;

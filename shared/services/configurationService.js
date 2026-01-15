@@ -1,4 +1,5 @@
 import { getAppPath } from './commonFunctions.js'
+
 //*** Application initialisation**************************** */
 export async function getConfigurationFromJson() {
 
@@ -19,32 +20,27 @@ export async function getConfigurationFromJson() {
     }
 }
 
+// export function getwsUrlformel() {
+//     return getConfigurationValue("wsUrlformel")
+// }
 
-export function getwsUrlformel() {
+// export function getimagePath() {
+//     return getConfigurationValue("imagePath")
+// }
 
+
+export function getConfigurationValue(configValueName) {
     // *** Get the database according to the current language in the browser
     let frBase = sessionStorage.getItem("configuration");
     let base = JSON.parse(frBase);
 
-    let foundIndex = Object.keys(base).indexOf("wsUrlformel");
+    let foundIndex = Object.keys(base).indexOf(configValueName);
 
     if (foundIndex >= 0)
         return (Object.values(base)[foundIndex]);
     else
-        throw new Error("configuration getwsUrlformel not found")
+        throw new Error("configuration value not found " + configValueName)
 
 }
 
-export function getimagePath() {
-    // *** Get the database according to the current language in the browser
-    let frBase = sessionStorage.getItem("configuration");
-    let base = JSON.parse(frBase);
 
-    let foundIndex = Object.keys(base).indexOf("imagePath");
-
-    if (foundIndex >= 0)
-        return (Object.values(base)[foundIndex]);
-    else
-        throw new Error("configuration getimagePath not found")
-
-}

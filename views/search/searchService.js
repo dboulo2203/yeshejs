@@ -1,4 +1,4 @@
-import { getwsUrlformel } from '../../shared/services/configurationService.js';
+import { getConfigurationValue } from '../../shared/services/configurationService.js';
 
 /**
  * 
@@ -9,7 +9,7 @@ import { getwsUrlformel } from '../../shared/services/configurationService.js';
  */
 export async function getSearch(searchString, mode) {
 
-    var wsUrl = getwsUrlformel() + `searchAdvanced/${mode}/${searchString}`;
+    var wsUrl = getConfigurationValue("wsUrlformel") + `searchAdvanced/${mode}/${searchString}`;
     let responseWS = await fetch(wsUrl);
 
     if (responseWS.ok) {

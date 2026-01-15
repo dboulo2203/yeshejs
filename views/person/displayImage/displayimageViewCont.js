@@ -1,7 +1,3 @@
-
-// import { getLogin } from '../../shared/services/loginService.js'
-import { getimagePath } from '../../../shared/services/configurationService.js'
-
 const loginContainer = `<div id="modalPlace"></div>`;
 const editModaleString = `
 <div class="container">

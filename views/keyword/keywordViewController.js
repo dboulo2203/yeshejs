@@ -8,7 +8,7 @@ import { getAppPath } from '../../shared/services/commonFunctions.js'
 import { keyIcon, bookIcon } from '../../shared/assets/constants.js';
 import { getTranslation } from '../../shared/services/translationService.js'
 import { getArrayFromjson } from '../../shared/services/commonFunctions.js'
-import { getimagePath } from '../../shared/services/configurationService.js'
+import { getConfigurationValue } from '../../shared/services/configurationService.js'
 import { pencilsquare, plussquare } from '../../shared/assets/constants.js'
 import { getCurrentUSerRightLevel } from '../../shared/services/loginService.js'
 import { addMultipleEnventListener } from '../../shared/services/commonFunctions.js'
@@ -178,7 +178,7 @@ function getLinkedNoticesHtml(linkedNotices) {
 
         if (linkedNotice.noti_main_image && linkedNotice.noti_main_image.length > 0) {
             outputln += ` <div class="col-3" align = "center" > `;
-            outputln += ` <img src = '${getimagePath()}/img/books/${linkedNotice.noti_main_image}' width = "80px" /> `;
+            outputln += ` <img src = '${getConfigurationValue("imagePath")}/img/books/${linkedNotice.noti_main_image}' width = "80px" /> `;
             outputln += `</div > `;
             outputln += `<div class="col-9" > <span style="cursor: pointer"  class="noticeButtons"
         searid="${linkedNotice.noti_id}" > ${bookIcon} ${linkedNotice.noti_main_title} </span > `;

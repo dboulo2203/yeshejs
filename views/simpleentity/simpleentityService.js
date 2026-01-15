@@ -1,4 +1,4 @@
-import { getwsUrlformel } from '../../shared/services/configurationService.js';
+import { getConfigurationValue } from '../../shared/services/configurationService.js';
 
 /**
  * Load a person from the database, 
@@ -9,7 +9,7 @@ import { getwsUrlformel } from '../../shared/services/configurationService.js';
  */
 export async function getSimpleEntity(simpleEntitydId, entityType) {
 
-    var wsUrl = getwsUrlformel() + `${entityType}/${simpleEntitydId}`;
+    var wsUrl = getConfigurationValue("wsUrlformel") + `${entityType}/${simpleEntitydId}`;
     let responsefr = await fetch(wsUrl);
     if (responsefr.ok) {
         // *** Get the data and save in the sessionStorage
@@ -31,7 +31,7 @@ export async function getSimpleEntity(simpleEntitydId, entityType) {
  */
 export async function getSimpleEntitylinkedNotices(simpleEntitydId, entityType) {
 
-    var wsUrl = getwsUrlformel() + `${entityType}/${simpleEntitydId}/linkednotices`;
+    var wsUrl = getConfigurationValue("wsUrlformel") + `${entityType}/${simpleEntitydId}/linkednotices`;
 
     let responsefr = await fetch(wsUrl);
 

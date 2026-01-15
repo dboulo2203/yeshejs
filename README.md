@@ -26,12 +26,7 @@
 ------------------------------------------------------------
 ## TODO V 5.1
 
-- Page notice : 
-    - Gérer les liens dans les notes
-- Page simple entity :
-    - Détecter les sous-notices liées et afficher
 - agrandir les caractères tibétains
-- Voir les traductions
 
 ### TODO tech
 - Traduire les tooltips
@@ -49,6 +44,13 @@
 ------------
 ## Releases notes
 ### 5.0.9
+    - NEW : augmenter taille police des caractères tibetains (dans notice)
+    - FIX : - Page simple entity :    - Détecter les sous-notices liées et afficher
+    - FIX : Gérer les liens dans les notes
+    - TECH : Remplace configurationService
+    - NEW : service de login (sans contrôle)
+    - NEW : button in notice page to edit the book on the Yeshe legacy app
+    - FIX : Bug affichage des titres iSBN et Format
     - NEW : Multi criteria search
     - NEW : Rendre les multi media accessibles
     - NEW : Suppression de jquery.

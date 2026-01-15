@@ -2,18 +2,18 @@ body {
     font-size: 1rem;
 }
 
-.fs-5 {
+/* .fs-5 {
     font-size: 1, 1rem !important;
-}
+} */
 
 .btn {
     font-size: 0.95rem;
 
 }
 
-h4 {
+/* h4 {
     font-size: calc(1.1rem + .3vw);
-}
+} */
 
 input {
     font-size: 0.95rem;
@@ -25,4 +25,8 @@ input {
 
 modal-title {
     font-size: 1, 1rem !important;
+}
+
+.tibetanChars {
+    font-size: 1.5rem !important;
 }
