@@ -1,3 +1,4 @@
+import { getConfigurationValue } from '../../../shared/services/configurationService.js'
 const loginContainer = `<div id="modalPlace"></div>`;
 const editModaleString = `
 <div class="container">
@@ -18,7 +19,7 @@ const editModaleString = `
                      </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="myBtnCancel">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="myBtnCancel">Close</button>
                  </div>
             </div>
         </div>

@@ -2,17 +2,7 @@
 import { getNoticeExtract, getAbstractFile, sendAbstractMail } from './noticeService.js'
 
 const modaleString = `
-<style>
-#myModalDom h3 {
-    color:black;
-    font-size:20px
-    }
-#myModalDom a {
-    color:black;
-    font-size:bs-body-font-size
-    }
 
-</style>
 <div class="container" >
 <div class="modal" id="myModalDom" role="dialog">
     <div class="modal-dialog">

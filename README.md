@@ -30,6 +30,7 @@
 - Multimedia search : conserver les choix entre 2 interrogations
 - [Test sur notice, à valider] GEneral : titre des blocs plus grands
 - Notice : affichage des sous notices
+- Predictive search à reprendre
 
 - Search : comment rechercher le wylie ('bar, 'jung)
 - Test image de background,

@@ -1,5 +1,6 @@
 // *** Component ressources
 import { getSimpleEntity, getSimpleEntitylinkedNotices } from './simpleEntityService.js'
+import { displayimageViewDisplay } from '../appservices/displayImageModal/displayimageViewCont.js'
 
 // *** Shared ressources
 import { getAppPath, getLinkWithctrl, getEntityLinkClass } from '../../shared/services/commonFunctions.js'
@@ -90,6 +91,10 @@ export async function displaysimpleEntityContent(htlmPartId, simpleEntityID, sim
         getLinkWithctrl(`${getAppPath()}/views/subNotice/subNotice.html?subNoticeID=` + event.currentTarget.getAttribute('searid'), event.ctrlKey);;;
     });
 
+    addMultipleEnventListener(".imgsearch", function (event) {
+        displayimageViewDisplay("modalSection", event.currentTarget.getAttribute('src'), event.ctrlKey)
+    });
+
 }
 /**
  * 
@@ -144,7 +149,7 @@ export async function getSimpleEntityContent(simpleEntityID, entityType, varname
 
             if (linkedNotice.noti_main_image && linkedNotice.noti_main_image.length > 0) {
                 output += ` <div class="col-3" align = "center" > `;
-                output += ` <img src = '${getConfigurationValue("imagePath")}/img/books/${linkedNotice.noti_main_image}' width = "80px" /> `;
+                output += ` <img src = '${getConfigurationValue("imagePath")}/img/books/${linkedNotice.noti_main_image}' width = "100px" class="imgsearch" style="cursor:pointer"/> `;
                 output += `</div > `;
 
                 if (linkedNotice.noti_hierarchical_level && linkedNotice.noti_hierarchical_level === '2') {

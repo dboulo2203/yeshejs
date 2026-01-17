@@ -2,19 +2,18 @@
 import { getPerson, getPersonAliases, getlinkedNotices, getPersonFromAliasID } from '../../shared/yesheServices/yeshePersonService.js'
 import { personEditModalDisplay } from './editModal/personEditModalViewController.js'
 import { personNewModalDisplay } from './editModal/personNewModalViewController.js'
-import { displayimageViewDisplay } from './displayImage/displayimageViewCont.js'
+
+
+import { headerViewDisplay } from '../appservices/headerViewCont.js'
+import { displayimageViewDisplay } from '../appservices/displayImageModal/displayimageViewCont.js'
+
 // *** Shared ressources
 import { getTranslation } from '../../shared/services/translationService.js'
-import { getArrayFromjson } from '../../shared/services/commonFunctions.js'
-import { pencilsquare, plussquare } from '../../shared/assets/constants.js'
+import { getArrayFromjson, findTibetanChars, getAppPath, addMultipleEnventListener } from '../../shared/services/commonFunctions.js'
+import { pencilsquare, plussquare, personIcon24, bookIcon, subnoticeIcon } from '../../shared/assets/constants.js'
 import { getConfigurationValue } from '../../shared/services/configurationService.js'
-import { getAppPath } from '../../shared/services/commonFunctions.js'
 import { getCurrentUSerRightLevel } from '../../shared/services/loginService.js'
-import { addMultipleEnventListener } from '../../shared/services/commonFunctions.js'
-import { launchInitialisation } from '../appservices/initialisationService.js';
-import { headerViewDisplay } from '../appservices/headerViewCont.js'
-import { personIcon24, bookIcon, subnoticeIcon } from '../../shared/assets/constants.js'
-
+import { launchInitialisation } from '../appservices/initialisationService.js'
 /**
  * Start script 
  */
@@ -42,8 +41,6 @@ export async function startPersonController() {
     }
 
     // *** Get params
-
-    // *** Get URL params and launch display
     if (searchParams.has('personID'))
         displayPersonContent('mainActiveSection', searchParams.get('personID'));
     else if (searchParams.has('personAliasID'))
@@ -116,8 +113,7 @@ export async function displayPersonContent(mainDisplay, personID) {
                 <div class="col-12" >
                     <div><span class="fs-6" style="color:#8B2331">${getTranslation("PERS_NOTE")}</span></div>
                     <div id="concnote">${person.conc_note} </div>
-                </div >
-            
+                </div >            
         </div>
          `;
 
@@ -130,12 +126,10 @@ export async function displayPersonContent(mainDisplay, personID) {
 
         // <div class="col-6 " >
         personAliases.map((personAliase, index) => {
-            // if (index == 0 || index == halfAlias) {
-            //     personScreen += `<div class="col-6" >`
-            // }
+
             personScreen += `<div class="col-12" >`;
             personScreen += `
-                    <span class="fw-light" style = "color:grey" > ` + personAliase.lang_name + `</span > : ` + personAliase.coal_name + `</br > `
+                    <span class="fw-light" style = "color:grey" > ` + personAliase.lang_name + `</span > : ` + findTibetanChars(personAliase.coal_name) + `</br > `
         });
 
         personScreen += `</div >
@@ -172,16 +166,6 @@ export async function displayPersonContent(mainDisplay, personID) {
         addMultipleEnventListener(".imgsearch", function (event) {
             displayimageViewDisplay("modalSection", event.currentTarget.getAttribute('src'), event.ctrlKey)
         });
-
-
-        // const cbox = document.querySelectorAll(".noticeButtons");
-        // for (let i = 0; i < cbox.length; i++) {
-        //     cbox[i].addEventListener("click", function () {
-        //         console.log(cbox[i]);
-        //         // console.log("click span" + cbox[i].attributes.getNamedItem('sera_id').value);
-        //         window.location.href = `${ currentApplicationPath } /views/notice / notice.html ? noticeID = ` + cbox[i].attributes.getNamedItem('searid').value;
-        //     });
-        // }
 
     } catch (error) {
         document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style = "margin-top:30px" role = "alert" > ${error}</div > `;

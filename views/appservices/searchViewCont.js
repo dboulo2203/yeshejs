@@ -1,5 +1,5 @@
 // *** Shared ressources
-import { getAppPath, getLinkWithctrl, initBootstrapTooltips, addMultipleEnventListener } from '../../shared/services/commonFunctions.js'
+import { getAppPath, getLinkWithctrl, initBootstrapTooltips, addMultipleEnventListener, findTibetanChars } from '../../shared/services/commonFunctions.js'
 import { getSelectFromDatabaseList, getSelectFromDatabaseListDropdown } from '../../shared/yesheServices/yesheListsService.js'
 import { predictiveIcon, searchIcon, multicritIcon } from '../../shared/assets/constants.js';
 import { getSearch } from '../../views/search/searchService.js'
@@ -11,8 +11,7 @@ import { getPublishersFromName } from '../../shared/yesheServices/yeshePublisher
  * @param {*} htlmPartId 
  */
 export function searchViewDisplay(htlmPartId) {
-    // <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="bibliographic sub-record found by id" >
-    let menuString = `
+    let searchBarString = `
     <div id="menuPart" style="margin-top:60px; margin-bottom:20px">
         <div class="flex justify-content-center " style="padding:0px">
         <div id="messagebox"></div>
@@ -138,12 +137,12 @@ export function searchViewDisplay(htlmPartId) {
                                     </ul>                             
                                 </div>                            
                             </div>
-                            <div class="form-group form-check row">                               
+                            <div class="form-check form-check-reverse">                               
                                 <label class="form-check-label" for="exampleCheck1">With multimedia</label>
-                                <input type="checkbox" class="form-check-input form-control-sm" id="withMultimedia">
+                                <input type="checkbox" class="form-check-input form-control-sm btn-secondary" id="withMultimedia">
                             </div>
                             <div class="form-group form-check row">
-                                <div class="d-flex flex-row-reverse">                               
+                                <div class="d-flex flex-row">                               
                                     <button class="btn btn-outline-secondary" type="button" id="searchMultiBtn">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
@@ -160,16 +159,19 @@ export function searchViewDisplay(htlmPartId) {
         </div>
     </div>
  `;
-    //                                    <ul class="dropdown-menu" id="bdd_genre_type">
-    //                              < !-- < select class="form-select form-select-sm"  aria - label="Default select example" id = "bdd_genre_type" > -->
-    // ${ getSelectFromDatabaseListDropDown("bdd_genre_type", "genrt_id", "genrt_name", true) }
-    //                             < !-- </select > -->
-    //                             </ul >
-
 
     // *** Display the search area
-    document.querySelector(htlmPartId).innerHTML = menuString;
+    document.querySelector(htlmPartId).innerHTML = searchBarString;
 
+    // *** Get the search params to display in the input part
+    const searchParams = new URLSearchParams(window.location.search);
+    if (searchParams.has('multiCritSearchStr'))
+        document.querySelector("#searchInputString").value = searchParams.get('multiCritSearchStr');
+
+    // searchStr
+    if (searchParams.has('searchStr')) {
+        document.querySelector("#searchInputString").value = searchParams.get('searchStr');
+    }
     // *** Init tooltips, must be done after elements initialisation
     initBootstrapTooltips();
 
@@ -196,9 +198,6 @@ export function searchViewDisplay(htlmPartId) {
 
     // ******************* Multi criteria search 
     document.querySelector("#searchMultiBtn").onclick = function () {
-        // let searchString = document.querySelector("#searchInputString").value;
-        //  let multiCriteriatri = 'titl:' + document.querySelector("#inputTitles").value;
-        // let bdd_genre_type = document.querySelector("#bdd_genre_type").value;
 
         let test = document.querySelector("#inputPerson_span");
         var multictri = '';
