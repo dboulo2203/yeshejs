@@ -26,23 +26,48 @@
 ------------------------------------------------------------
 ## TODO V 5.1
 
-- agrandir les caractères tibétains
+- Multimedia search : ajouter un bouton reset des choix
+- Multimedia search : conserver les choix entre 2 interrogations
+- [Test sur notice, à valider] GEneral : titre des blocs plus grands
+- Notice : affichage des sous notices
 
-### TODO tech
-- Traduire les tooltips
-- notice : publiqher et printer nd
+- Search : comment rechercher le wylie ('bar, 'jung)
+- Test image de background,
+- Voir pour la migration des notes
+- Expliquer le natural language
+- BUG : affichage de la notice Karmapa'words dans search)
 
-- Réécrire les url pour qu'elles soient compatbles avec #/bbb. Voir s'il convient de modifier toutes les URL
+
+### TOTO tech et Bugs
+- Affichage de la note dans 'karmapa word' BUg
+- Tester la validité des chaines HTML saisies/affichées
+
 - Sécuriser la recherche database en vérifiant les mots clés utilisés
 - Initialisation de l'application (faite à chaque page ou bien ). l'init est exécutée à chaque fois, on teste si l'entité est chargée ou non.
 - Tester Bootstrap troncate dans la page de search
-- Rendre la photo visible dans Whatssapp lorsqu'on colle le lien d'une notice
+- Rendre la photo visible dans Whatssapp lorsqu'on colle le lien d'une noti
 
-### TOTO Bugs
-- Affichage de la note dans 'karmapa word' BUg
- 
 ------------
 ## Releases notes
+### 5.0.10
+- [Done] BUG : Ouvrir les pdf dans les multimedia
+- [?] Notice : Voir la taille des pdf (taille des caractères)
+- [Done] Notice extract : Drak mode n'est pas correct
+- [Done] images dans modale : Remplacer le bouton des images dans modale par close (notice, search, person)
+- [Done] Mutlimedia search : with multimedia, chekbox à droite
+- [?]  Search : image  close 
+- [Done]  General : mettre des tooltips dans la partie publique
+-  [Done] General : agrandir les caractères tibetains dans : 
+    - [Done]  notice, tous les titres
+    - [Done] Notes : toutes (Voir about content et about catalogue)
+    - [Done] Search
+    - [Done]  Persons (dans notice et person)
+    - [Done] sub notice 
+- [Done] Search : image à 150 px
+- [Done] Notice : titre des notes en fs-light
+- [Done] General : notices linked : permettre image dans modale
+- [Done] Créér une icone sur un mobile 
+
 ### 5.0.9
     - NEW : augmenter taille police des caractères tibetains (dans notice)
     - FIX : - Page simple entity :    - Détecter les sous-notices liées et afficher
