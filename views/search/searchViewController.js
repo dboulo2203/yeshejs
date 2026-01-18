@@ -1,7 +1,11 @@
 // *** Component ressources
 import { getSearch } from './searchService.js';
 import { displayimageViewDisplay } from '../appservices/displayImageModal/displayimageViewCont.js'
-//***  shared ressources
+
+import { headerViewDisplay } from '../appservices/headerViewCont.js'
+import { launchInitialisation } from '../appservices/initialisationService.js'
+import { searchViewDisplay } from '../appservices/searchViewCont.js'
+
 import { getLinkWithctrl, getAppPath, findTibetanChars, initBootstrapTooltips } from '../../shared/services/commonFunctions.js'
 import { getConfigurationValue } from '../../shared/services/configurationService.js'
 import {
@@ -10,23 +14,23 @@ import {
 } from '../../shared/assets/constants.js'
 import { addMultipleEnventListener } from '../../shared/services/commonFunctions.js'
 import { getTranslation } from '../../shared/services/translationService.js'
-import { headerViewDisplay } from '../appservices/headerViewCont.js'
-import { launchInitialisation } from '../appservices/initialisationService.js'
-import { searchViewDisplay } from '../appservices/searchViewCont.js'
+
 
 export const searchPart = `
               <div class="col-md-12 main" style="padding:10px" id="resultDisplay">
      </div >
     `;
 
+/**
+ * Starting function
+ */
 export async function startSearchController() {
 
     try {
         // *** Initialisations
         await launchInitialisation();
-
         headerViewDisplay("#menuSection");
-        searchViewDisplay("#searchSection");
+        await searchViewDisplay("#searchSection");
 
         // *** Get URL params
         const searchParams = new URLSearchParams(window.location.search);
@@ -34,42 +38,49 @@ export async function startSearchController() {
 
         // *** launch render
         if (searchParams.has('searchStr'))
-            displaySearchContent("mainActiveSection", searchParams.get('searchStr'), false);
+            await displaySearchResults("mainActiveSection", searchParams.get('searchStr'), false);
         if (searchParams.has('multiCritSearchStr'))
-            displaySearchContent("mainActiveSection", searchParams.get('multiCritSearchStr'), true);
+            await displaySearchResults("mainActiveSection", searchParams.get('multiCritSearchStr'), true);
+
 
     } catch (error) {
         document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style = "margin-top:30px" role = "alert" > ${error}</div > `;
     }
 }
+
+// /**
+//  * Main function of the component 
+//  * @param {*} htlmPartId : part of the html to display the result 
+//  * @param {*} searchString 
+//  * @param {*} multiCriteriaSearch : true if multicriteri search
+//  */
+// export async function displaySearchContent(htlmPartId, searchString, multiCriteriaSearch) {
+
+//     // *** Build the html string 
+//     try {
+
+//         await displaySearchResults(htlmPartId, searchString, multiCriteriaSearch);
+
+//     } catch (exception) {
+//         document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style = "margin-top:30px" role = "alert" > ${exception}</div > `;
+//     }
+// }
 
 /**
- * Display a search result
+ * 
  * @param {*} htlmPartId 
- * @param {*} searchString : the string to searched in the database 
+ * @param {*} searchString 
+ * @param {*} multiCriteriaSearch 
+ * @returns 
  */
-export async function displaySearchContent(htlmPartId, searchString, multiCriteriaSearch) {
-
-    // *** Build the html string 
-    try {
-
-
-        displaySearchResults(htlmPartId, searchString, multiCriteriaSearch);
-
-
-    } catch (error) {
-        document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style = "margin-top:30px" role = "alert" > ${error}</div > `;
-    }
-
-}
-
-
 async function displaySearchResults(htlmPartId, searchString, multiCriteriaSearch) {
-    // let test = searchString.indexOf(":");
     let output = '';
     let searchLines = null;
 
 
+    // *** Search results
+    if (!searchString.length > 0)
+        throw ("Veuillez saisir un critère de recherche");
 
     if (multiCriteriaSearch === true) {
         searchLines = await getSearch(searchString, "5");
@@ -81,7 +92,11 @@ async function displaySearchResults(htlmPartId, searchString, multiCriteriaSearc
             searchLines = await getSearch(searchString, "3");
         }
     }
-    // ** Display data   
+
+    if (searchLines.length === 0)
+        throw ("Pas de résultat pour cette recherche");
+
+    // *** Prepare and fill display area
     output += `<div style="margin-bottom:20px">
         <span class="fs-5" style="color:#8B2331" style="margin-bottom:0px; margin-top:0px">
           ${getTranslation("SEA_TITLE")} - ${searchString} : 
@@ -116,7 +131,7 @@ async function displaySearchResults(htlmPartId, searchString, multiCriteriaSearc
                 default: // other images are in the book directory
                     if (searchLine.sear_image && searchLine.sear_image.length > 0) {
                         output += ` <div class="col-3 " align = "center" > `;
-                        output += ` <img src = '${getConfigurationValue("imagePath")}/img/books/${searchLine.sear_image}' style = "width:100%;max-width:150px;cursor:pointer" class="imgsearch"/> `;
+                        output += ` <img src = '${getConfigurationValue("imagePath")}img/books/${searchLine.sear_image}' style = "width:100%;max-width:150px;cursor:pointer" class="imgsearch"/> `;
                         output += `</div > `;
                         output += `<div class="col-9" > `;
                     } else {
@@ -127,7 +142,7 @@ async function displaySearchResults(htlmPartId, searchString, multiCriteriaSearc
                     break;
             }
 
-            // *** Select icon text and dependding on the search type 
+            // Select icon text and dependding on the search type 
             switch (searchLine.sear_type) {
                 case 1: // bibliographic record found by bibliographic record id
                     output += `<span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="bibliographic record found by bibliographic record id" >
@@ -138,7 +153,6 @@ async function displaySearchResults(htlmPartId, searchString, multiCriteriaSearc
                             ${searchLine.sear_moreinfo && searchLine.sear_moreinfo.length > 0 ? findTibetanChars(searchLine.sear_moreinfo) : ''}
                             </div > `;
                     break
-
                 case 2: // bibliographic record found by bibliographic record cote
                     output += `<span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="bibliographic record found by bibliographic record cote" >
                             ${bookIcon}
@@ -148,7 +162,6 @@ async function displaySearchResults(htlmPartId, searchString, multiCriteriaSearc
                             ${searchLine.sear_moreinfo && searchLine.sear_moreinfo.length > 0 ? findTibetanChars(searchLine.sear_moreinfo) : ''}
                             </div > `;
                     break
-
                 case 3: // bibliographic record found by bibliographic record ISBN/EAN
                     output += `<span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="bibliographic record found by bibliographic record ISBN/EAN" >
                             ${bookIcon} searchLine.sear_type
@@ -158,7 +171,6 @@ async function displaySearchResults(htlmPartId, searchString, multiCriteriaSearc
                             ${searchLine.sear_moreinfo && searchLine.sear_moreinfo.length > 0 ? findTibetanChars(searchLine.sear_moreinfo) : ''}
                             </div > `;
                     break
-
                 case 4: // bibliographic record found by bibliographic record note
                     output += `<span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="bibliographic record found by bibliographic record note" >
                             ${noteIcon} 
@@ -168,7 +180,6 @@ async function displaySearchResults(htlmPartId, searchString, multiCriteriaSearc
                             ${searchLine.sear_moreinfo && searchLine.sear_moreinfo.length > 0 ? findTibetanChars(searchLine.sear_moreinfo) : ''}
                             </div > `;
                     break
-
                 case 5: // bibliographic record found by bibliographic record title
                     output += `<span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="bibliographic record found by bibliographic record title" >
                             ${bookIcon} 
@@ -178,7 +189,6 @@ async function displaySearchResults(htlmPartId, searchString, multiCriteriaSearc
                             ${searchLine.sear_moreinfo && searchLine.sear_moreinfo.length > 0 ? findTibetanChars(searchLine.sear_moreinfo) : ''}
                             </div > `;
                     break
-
                 case 6: // subnotice //  
                     output += `<span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="bibliographic sub-record found by title" >
                             ${subnoticeIcon} 
@@ -188,7 +198,6 @@ async function displaySearchResults(htlmPartId, searchString, multiCriteriaSearc
                             ${searchLine.sear_moreinfo && searchLine.sear_moreinfo.length > 0 ? findTibetanChars(searchLine.sear_moreinfo) : ''}
                             </div > `;
                     break
-
                 case 7: // Book // bibliographic sub-record found by id
                     output += `<span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="bibliographic sub-record found by id" >
                             ${subnoticeIcon} 
@@ -197,8 +206,6 @@ async function displaySearchResults(htlmPartId, searchString, multiCriteriaSearc
                         <span style="color:#eff2f2"> (${searchLine.sear_type})</span> </br >
                             ${searchLine.sear_moreinfo && searchLine.sear_moreinfo.length > 0 ? findTibetanChars(searchLine.sear_moreinfo) : ''}
                             </div > `;
-                    break
-
                     break
                 case 10: // Person // 
                     output += `
@@ -217,12 +224,10 @@ async function displaySearchResults(htlmPartId, searchString, multiCriteriaSearc
                         </div > `;
                     break
                 case 12: // printer // Printer
-
                     output += `
                         <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Printer" >${printerIcon}</span>
                          - <span class="printerButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span> - <span style="color:#eff2f2"> (${searchLine.sear_type})</span>  </br >
                         ${searchLine.sear_moreinfo && searchLine.sear_moreinfo.length > 0 ? searchLine.sear_moreinfo : ''}
-
                         </div > `;
                     break
                 case 13: // Publisher // Publisher
@@ -239,7 +244,6 @@ async function displaySearchResults(htlmPartId, searchString, multiCriteriaSearc
                        ${searchLine.sear_moreinfo && searchLine.sear_moreinfo.length > 0 ? searchLine.sear_moreinfo : ''}
                         </div > `;
                     break
-
                 case 33: // theme
                     output += `
                         <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Theme" >${themIcon}</span>
@@ -247,7 +251,6 @@ async function displaySearchResults(htlmPartId, searchString, multiCriteriaSearc
                         ${searchLine.sear_moreinfo && searchLine.sear_moreinfo.length > 0 ? searchLine.sear_moreinfo : ''}
                         </div > `;
                     break
-
                 case 34: // genre
                     output += `
                         <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Genre" >${genreIcon}</span>
@@ -255,21 +258,18 @@ async function displaySearchResults(htlmPartId, searchString, multiCriteriaSearc
                        ${searchLine.sear_moreinfo && searchLine.sear_moreinfo.length > 0 ? searchLine.sear_moreinfo : ''}
                         </div > `;
                     break
-
                 case 35: // doctype
                     output += `
                         <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Document type" >${questionIcon} </span>- <span class="doctypeButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span>  <span style="color:#eff2f2"> (${searchLine.sear_type})</span>  </br >
                         ${searchLine.sear_moreinfo && searchLine.sear_moreinfo.length > 0 ? searchLine.sear_moreinfo : ''}
                         </div > `;
                     break
-
                 case 36: // matt type
                     output += `
                         <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Material type" >${mattIcon} </span>- <span class="mattypeButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${searchLine.sear_label}</b></span>  <span style="color:#eff2f2"> (${searchLine.sear_type})</span>  </br >
                         ${searchLine.sear_moreinfo && searchLine.sear_moreinfo.length > 0 ? searchLine.sear_moreinfo : ''}
                         </div > `;
                     break
-
                 case 37: // collection
                     output += `
                         <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Collection" >${questionIcon}</span>
@@ -282,32 +282,20 @@ async function displaySearchResults(htlmPartId, searchString, multiCriteriaSearc
                         ${questionIcon} - <span>${searchLine.sear_label}</span> - (${searchLine.sear_type}) </br >
                         ${searchLine.sear_moreinfo && searchLine.sear_moreinfo.length > 0 ? searchLine.sear_moreinfo : ''}
                         </div > `;
-
-
-
             }
-            output += `</div > <hr />`;
+            output += `</div > <hr />`; // end row
         });
         output += '</div>';
 
     }
+
     // *** Display search content
     document.querySelector("#" + htlmPartId).innerHTML = output;
-
-    //  $('[data-bs-toggle="tooltip"]').tooltip();
-    // document.querySelectorAll('[data-bs-toggle="tooltip"]').tootip();
 
     // *** Add actions 
     addMultipleEnventListener(".bookButtons", function (event) {
         getLinkWithctrl(`${getAppPath()}/views/notice/notice.html?noticeID=` + event.currentTarget.getAttribute('searid'), event.ctrlKey)
     });
-
-    // addMultipleEnventListener(".imgsearch", function (event) {
-    //     // getLinkWithctrl(`${getAppPath()}/views/notice/notice.html?noticeID=` + event.currentTarget.getAttribute('searid'), event.ctrlKey)
-    //     console.log("imgSrach click");
-    // });
-
-
 
     addMultipleEnventListener(".subbookButtons", function (event) {
         getLinkWithctrl(`${getAppPath()}/views/subNotice/subNotice.html?subNoticeID=` + event.currentTarget.getAttribute('searid'), event.ctrlKey)
@@ -356,15 +344,8 @@ async function displaySearchResults(htlmPartId, searchString, multiCriteriaSearc
         displayimageViewDisplay("modalSection", event.currentTarget.getAttribute('src'), event.ctrlKey)
     });
 
+    // *** Enable Tooltips
     initBootstrapTooltips();
-
-    // *** try to manage image sizing by css
-    // document.querySelector("#imgbook").onclick = function (event) {
-    //     event.target.style.maxWidth = "300px";
-    //     event.target.style.width = "300px";
-    //     // window.location.href = `${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=${notice.prin_id}&simpleEntitytype=12`
-    // };
-
 
     return output;
 }

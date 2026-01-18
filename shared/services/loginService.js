@@ -103,7 +103,7 @@ export function getCurrentUSerName() {
 export function isCurrentUSerLogged() {
 
     let loggedUserJSON = sessionStorage.getItem("loggedUSer");
-    if (loggedUserJSON !== "") {
+    if (loggedUserJSON !== "" && loggedUserJSON !== null) {
         // let loggedUser = JSON.parse(loggedUserJSON);
         // if (loggedUser && loggedUser.code === 200 && loggedUser.token.length > 0)
         return true;

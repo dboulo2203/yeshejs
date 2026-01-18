@@ -13,37 +13,22 @@ import { headerViewDisplay } from '../appservices/headerViewCont.js'
  */
 export async function startsubNoticeController() {
 
-    // console.log("Start noticeViewController");
-    // console.log(searchParams);
-    // *** Initialisations
-    await launchInitialisation();
-    headerViewDisplay("#menuSection");
+    try {
+        // *** Initialisations
+        await launchInitialisation();
+        headerViewDisplay("#menuSection");
 
-    const searchParams = new URLSearchParams(window.location.search);
-    if (searchParams.has('subNoticeID'))
-        displaySubNoticeContent('mainActiveSection', searchParams.get('subNoticeID'));
-    else
-        document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style="margin-top:20px" role="alert">Erreur, pas de subNoticeID</div>`;
+        const searchParams = new URLSearchParams(window.location.search);
+        if (searchParams.has('subNoticeID') && searchParams.get('subNoticeID').length > 0)
+            await displaySubNoticeContent('mainActiveSection', searchParams.get('subNoticeID'));
+        else
+            throw new Error("Erreur, pas de sub notice ID");
+
+    } catch (error) {
+        document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style = "margin-top:60px" role = "alert" > ${error}</div > `;
+    }
+
 }
-// /**
-//  * Main basket view function
-//  * - Display categories
-//  * - Display basket content
-//  *  
-//  * @param {*} htlmPartId 
-//  */
-// export async function launchsubNoticeController(htlmPartId, noticeID) {
-
-//     try {
-
-//     } catch (error) {
-//         document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style = "margin-top:30px" role = "alert" > ${error}</div > `;
-//     }
-//     // *** Display basket component
-//     displayNoticeContent(htlmPartId, noticeID);
-
-// }
-
 /**
  * 
  * @param {*} mainDisplay 
@@ -51,9 +36,16 @@ export async function startsubNoticeController() {
  */
 export async function displaySubNoticeContent(mainDisplay, subNoticeID) {
 
-    let output = '';
+
     let subNotice = await getsubNotice(subNoticeID);
-    console.log(JSON.stringify(subNotice));
+    await displaySubNotice(mainDisplay, subNotice);
+
+}
+
+
+
+async function displaySubNotice(mainDisplay, subNotice) {
+    let output = '';
     output += `
         <div class="d-flex  justify-content-between" style="padding-top:60px" >          
                 <span class="fs-5" style="color:#8B2331">${subnoticeIcon} ${getTranslation("NOT_SUBRECORDSTITLE")} : ${findTibetanChars(subNotice.noti_main_title)}</span>
@@ -140,11 +132,6 @@ export async function displaySubNoticeContent(mainDisplay, subNoticeID) {
     document.querySelector("#" + mainDisplay).innerHTML = output;
 
     // ************** Actions
-    // document.querySelector("#extractButton").onclick = function () {
-    //     displayModaleAndFunctions("#modaldisplay", notice.noti_id, function (status) {
-    //     });
-    // };
-    // *** Add action to each notice linked - Action = open notice component and load the notice. 
     addMultipleEnventListener(".noticeButtons", function (event) {
         getLinkWithctrl(`${getAppPath()}/views/notice/notice.html?noticeID=` + event.currentTarget.getAttribute('searid'), event.ctrlKey);;
     });
@@ -157,13 +144,6 @@ export async function displaySubNoticeContent(mainDisplay, subNoticeID) {
         getLinkWithctrl(`${getAppPath()}/views/keyword/keyword.html?keywordAliasID=` + event.currentTarget.getAttribute('searid'), event.ctrlKey);
     });
 
-    // document.querySelector("#publisherButton").onclick = function () {
-    //     window.location.href = `${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=${notice.publ_id}&simpleEntitytype=13`
-    // };
-
-    // document.querySelector("#printerButton").onclick = function () {
-    //     window.location.href = `${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=${notice.prin_id}&simpleEntitytype=12`
-    // };
 
 }
 

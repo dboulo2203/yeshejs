@@ -13,8 +13,7 @@ import {
     getArrayFromjson, addMultipleEnventListener, getEntityLinkClass, getLinkWithctrl,
     findTibetanChars, getEntityLink, getAppPath, initBootstrapTooltips
 } from '../../shared/services/commonFunctions.js'
-import { languageIcon, noteIcon, abstractIcon, toDKLLibraryIcon } from '../../shared/assets/constants.js'
-import { bookIcon, personIcon, keyIcon, copiesIcon, multimediaIcon, descriptionIcon, publicationIcon, titleIcon } from '../../shared/assets/constants.js'
+import { languageIcon, noteIcon, abstractIcon, toDKLLibraryIcon, subnoticeIcon, bookIcon, personIcon, keyIcon, copiesIcon, multimediaIcon, descriptionIcon, publicationIcon, titleIcon } from '../../shared/assets/constants.js'
 import { getConfigurationValue } from '../../shared/services/configurationService.js'
 import { getTranslation } from '../../shared/services/translationService.js'
 
@@ -22,15 +21,22 @@ import { getTranslation } from '../../shared/services/translationService.js'
  * Start script 
  */
 export async function startNoticeController() {
-    const searchParams = new URLSearchParams(window.location.search);
 
-    await launchInitialisation();
-    headerViewDisplay("#menuSection");
+    try {
 
-    if (searchParams.has('noticeID'))
-        displayNoticeContent('mainActiveSection', searchParams.get('noticeID'));
-    else
-        document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style="margin-top:60px" role="alert">Erreur, pas de noticeID</div>`;
+        const searchParams = new URLSearchParams(window.location.search);
+
+        await launchInitialisation();
+        headerViewDisplay("#menuSection");
+
+        if (searchParams.has('noticeID') && searchParams.get('noticeID').length > 0)
+            await displayNoticeContent('mainActiveSection', searchParams.get('noticeID'));
+        else
+            throw new Error("Erreur, pas de notice ID");
+
+    } catch (error) {
+        document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style = "margin-top:60px" role = "alert" > ${error}</div > `;
+    }
 }
 
 /**
@@ -40,14 +46,20 @@ export async function startNoticeController() {
  */
 export async function displayNoticeContent(mainDisplay, noticeID) {
 
-    let output = '';
+    // let output = '';
     let notice = await getNotice(noticeID, mainDisplay);
+    console.log(JSON.stringify(notice));
 
     displayNotice(notice, mainDisplay);
 
-
+    initBootstrapTooltips();
 }
 
+/**
+ * Display the notice (html, events)
+ * @param {*} notice 
+ * @param {*} mainDisplay 
+ */
 function displayNotice(notice, mainDisplay) {
 
     let output = `
@@ -58,7 +70,6 @@ function displayNotice(notice, mainDisplay) {
         </div>        
         <hr />`;
 
-    // console.log(JSON.stringify(notice));
     // *** Notice image and noticeCatalogDescription
     output += `<div class="row " > `;
     if (notice.noti_main_image && notice.noti_main_image.length > 0) {
@@ -142,7 +153,6 @@ function displayNotice(notice, mainDisplay) {
        ${getEntityLink("publisherButton", notice.publ_name)}
       </div>`;
 
-
     output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("COLL_TITLE")}</span> : <span style="cursor: pointer; border-bottom: 0.1em solid #dddbdbff" id="collectionButton">${notice.coll_name === null || notice.coll_name === 'nd' ? '' : notice.coll_name}</span></div>`;
     output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_NUMBERINCOLLECTION")} </span> : 
     <span id="noti_num_in_col">${notice.noti_num_in_col}</span></div>`;
@@ -159,7 +169,6 @@ function displayNotice(notice, mainDisplay) {
     output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_EAN")} </span> : ${notice.noti_codedouchette === null ? '' : notice.noti_codedouchette}</div>`;
     output += `</div>`
     output += `</div>`
-
 
     // *** Persons
     // Note : the , and . have been deleted but we have kept the code  
@@ -212,7 +221,14 @@ function displayNotice(notice, mainDisplay) {
     output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
 
     // *** Sub Notices
-
+    let subNoticesFunctionFor = getArrayFromjson(notice.subNoticesFunctionFor);
+    output += `<div><span class="fs-5" style="color:#8B2331">${subnoticeIcon} ${getTranslation("NOT_SUBRECORDSTITLE")}</span></div>`;
+    subNoticesFunctionFor.map((subNoticeFunctionFor, index) => {
+        output += `<span class="subNoticeElem" style="cursor:pointer" 
+        multObject='${JSON.stringify(subNoticeFunctionFor)}'>   - ${subNoticeFunctionFor.noti_main_title}  (${subNoticeFunctionFor.sdoc_order})
+         </span></br> `;
+    });
+    output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
 
     // *** Multimedia
     let multimediasList = getArrayFromjson(notice.multimediasFunctionFor);
@@ -302,7 +318,7 @@ function displayNotice(notice, mainDisplay) {
         displaynoticeMultimediaModalViewDisplay("modalSection", JSON.parse(event.currentTarget.attributes['multObject'].nodeValue))
     });
 
-    initBootstrapTooltips();
+
 
 }
 

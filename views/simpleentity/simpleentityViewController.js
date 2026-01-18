@@ -14,23 +14,22 @@ import { headerViewDisplay } from '../appservices/headerViewCont.js'
 
 export async function startsimpleEntityController() {
 
-    const searchParams = new URLSearchParams(window.location.search);
-
     try {
+
         // *** Initialisations
         await launchInitialisation();
         headerViewDisplay("#menuSection");
 
-        if (searchParams.has('simpleEntityID') && searchParams.has('simpleEntitytype'))
-            displaysimpleEntityContent('mainActiveSection', searchParams.get('simpleEntityID'), searchParams.get('simpleEntitytype'));
+        let searchParams = new URLSearchParams(window.location.search);
+        if (searchParams.has('simpleEntityID') && searchParams.get('simpleEntityID').length > 0 && searchParams.has('simpleEntitytype') && searchParams.get('simpleEntitytype').length > 0)
+            await displaysimpleEntityContent('mainActiveSection', searchParams.get('simpleEntityID'), searchParams.get('simpleEntitytype'));
         else
-            document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style="margin-top:30px" role="alert">Erreur, pas d'ID</div>`;
+            throw new Error("Erreur, pas de notice ID");
 
 
     } catch (error) {
         document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style = "margin-top:30px" role = "alert" > ${error}</div > `;
     }
-
 }
 
 

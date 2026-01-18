@@ -25,32 +25,30 @@
 ### Fonctionalités
 ------------------------------------------------------------
 ## TODO V 5.1
-
-- Multimedia search : ajouter un bouton reset des choix
-- Multimedia search : conserver les choix entre 2 interrogations
-- [Test sur notice, à valider] GEneral : titre des blocs plus grands
-- Notice : affichage des sous notices
-- Predictive search à reprendre
-
-- Search : comment rechercher le wylie ('bar, 'jung)
+- [abandonné dans cette version] Multimedia search : conserver les choix entre 2 interrogations
 - Test image de background,
+- Note : ne pas afficher si la note contient du HTML
 - Voir pour la migration des notes
-- Expliquer le natural language
-- BUG : affichage de la notice Karmapa'words dans search)
-
+    - BUG : affichage de la notice Karmapa'words dans search)
 
 ### TOTO tech et Bugs
 - Affichage de la note dans 'karmapa word' BUg
 - Tester la validité des chaines HTML saisies/affichées
 
 - Sécuriser la recherche database en vérifiant les mots clés utilisés
-- Initialisation de l'application (faite à chaque page ou bien ). l'init est exécutée à chaque fois, on teste si l'entité est chargée ou non.
 - Tester Bootstrap troncate dans la page de search
-- Rendre la photo visible dans Whatssapp lorsqu'on colle le lien d'une noti
+- Rendre la photo visible dans Whatssapp lorsqu'on colle le lien d'une notice
+
 
 ------------
 ## Releases notes
 ### 5.0.10
+- NEW : predictive search
+- [Done] Multimedia search : ajouter un bouton reset des choix
+- [Test sur notice, à valider] GEneral : titre des blocs plus grands
+- [Done] Search : comment rechercher le wylie ('bar, 'jung)
+- [Done] Notice : affichage des sous notices
+
 - [Done] BUG : Ouvrir les pdf dans les multimedia
 - [?] Notice : Voir la taille des pdf (taille des caractères)
 - [Done] Notice extract : Drak mode n'est pas correct

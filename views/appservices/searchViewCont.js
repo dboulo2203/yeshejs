@@ -1,7 +1,7 @@
 // *** Shared ressources
 import { getAppPath, getLinkWithctrl, initBootstrapTooltips, addMultipleEnventListener, findTibetanChars } from '../../shared/services/commonFunctions.js'
 import { getSelectFromDatabaseList, getSelectFromDatabaseListDropdown } from '../../shared/yesheServices/yesheListsService.js'
-import { predictiveIcon, searchIcon, multicritIcon } from '../../shared/assets/constants.js';
+import { predictiveIcon, searchIcon, multicritIcon, deleteIcon } from '../../shared/assets/constants.js';
 import { getSearch } from '../../views/search/searchService.js'
 import { getPersonsFromAliasName } from '../../shared/yesheServices/yeshePersonService.js'
 import { getKeywordsFromAliasName } from '../../shared/yesheServices/yesheKeywordService.js'
@@ -10,7 +10,7 @@ import { getPublishersFromName } from '../../shared/yesheServices/yeshePublisher
  * Display the menu bar of the appplication 
  * @param {*} htlmPartId 
  */
-export function searchViewDisplay(htlmPartId) {
+export async function searchViewDisplay(htlmPartId) {
     let searchBarString = `
     <div id="menuPart" style="margin-top:60px; margin-bottom:20px">
         <div class="flex justify-content-center " style="padding:0px">
@@ -32,16 +32,27 @@ export function searchViewDisplay(htlmPartId) {
              <!-- <button class="btn btn-outline-secondary" type="button" id="searchBtn">Muti-criteria</button> -->
             </div>
         </div>
+
             <div class="collapse" id="collapsePredictive">
                 <div class="card card-body">
-                    <span class="fs-6" style="color:#8B2331">Predictive Search</span>
-                    <input type="text" class="form-control" placeholder="" id="predictive" aria-label="" list="domninique" aria-describedby="button-addon2">
+                    <span class="fs-5" style="color:#8B2331">Predictive Search</span>
+                   <!-- <input type="text" class="form-control" placeholder="" id="predictive" aria-label="" list="domninique" aria-describedby="button-addon2">
+                   -->
+                    <div class="dropdown col-sm-9 " id="inputPredictiveDrop" style="width:400px">
+                        <span class="dropdown-toggle" type="button" id="PredictiveSpan" selectedid="0" style="width:100%;border-bottom:solid 0.05rem #e9e8e8" data-bs-toggle="dropdown" aria-expanded="false">
+                        </span>
+                        <ul class="dropdown-menu pt-0" aria-labelledby="dropdownMenuButton1" id="dropdown-menuPredictive">
+                            <input type="text" style="width:400px" class="form-control border-0 border-bottom shadow-none mb-2" placeholder="Search..." id="searchPredictive">
+                        </ul>
+                    </div>
+
                 </div>
+
             </div>
 
         <div class="collapse" id="collapseMulti">
             <div class="card card-body">
-            <span class="fs-6" style="color:#8B2331">Multicriteria Search</span>
+            <span class="fs-5" style="color:#8B2331">Multicriteria Search</span>
                 <form>
                     <div class="row">
                         <div class="col-md-6">
@@ -53,7 +64,10 @@ export function searchViewDisplay(htlmPartId) {
                             </div>
                             
                             <div class="form-group row" style="margin-bottom:5px">
-                                <label for="inputPersonDrop" class="col-sm-3 col-form-label fs-6" >Person</label>
+                                <label for="inputPersonDrop" class="col-sm-3 col-form-label fs-6" >
+                                    <span id="deletePersonSelection" style="cursor: pointer" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove person selection"> ${deleteIcon}</span>
+                                    Person
+                                </label>
                                 <div class="dropdown col-sm-9 " id="inputPersonDrop">
                                     <span class="dropdown-toggle" type="button" id="PersonSpan" selectedid="0" style="width:100%;border-bottom:solid 0.05rem #e9e8e8" data-bs-toggle="dropdown" aria-expanded="false">
                                     </span>
@@ -64,18 +78,24 @@ export function searchViewDisplay(htlmPartId) {
                             </div>
 
                             <div class="form-group row" style="margin-bottom:5px">
-                                <label for="inputKeywordDrop" class="col-sm-3 col-form-label fs-6" >Keyword</label>
+                                <label for="inputKeywordDrop" class="col-sm-3 col-form-label fs-6" >
+                                    <span id="deleteKeywordSelection" style="cursor: pointer" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove keyword selection"> ${deleteIcon}</span> 
+                                    Keyword
+                                </label>
                                 <div class="dropdown col-sm-9 " id="inputKeywordDrop">
                                     <span class="dropdown-toggle" type="button" id="KeywordSpan" selectedid="0" style="width:100%;border-bottom:solid 0.05rem #e9e8e8" data-bs-toggle="dropdown" aria-expanded="false">
-                                    </span>
+                                   </span>
                                     <ul class="dropdown-menu pt-0" aria-labelledby="dropdownMenuButton1" id="dropdown-menuKeyword">
                                         <input type="text" class="form-control border-0 border-bottom shadow-none mb-2" placeholder="Search..." id="searchKeyword">
-                                    </ul>
+                                    </ul> 
                                 </div>
                             </div>
 
                             <div class="form-group row" style="margin-bottom:5px">
-                                <label for="inputPublisherDrop" class="col-sm-3 col-form-label fs-6" >Publisher</label>
+                                <label for="inputPublisherDrop" class="col-sm-3 col-form-label fs-6" >
+                                    <span id="deletePublisherSelection" style="cursor: pointer" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove publisher selection"> ${deleteIcon}</span>
+                                    Publisher
+                                </label>
                                 <div class="dropdown col-sm-9 " id="inputPublisherDrop">
                                     <span class="dropdown-toggle" type="button" id="PublisherSpan" selectedid="0"  style="width:100%;border-bottom:solid 0.05rem #e9e8e8" data-bs-toggle="dropdown" aria-expanded="false">
                                     </span>
@@ -87,10 +107,13 @@ export function searchViewDisplay(htlmPartId) {
 
 
                             <div class="form-group row" style="margin-bottom:5px">
-                                <label for="exampleInputPassword1" class="col-sm-3 col-form-label" >Owner</label>
+                                <label for="exampleInputPassword1" class="col-sm-3 col-form-label" >
+                                    <span id="deleteOwnerSelection" style="cursor: pointer" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove owner selection"> ${deleteIcon}</span>
+                                    Owner
+                                </label>
                                 <div class="col-sm-9 ">
                                     <span class="dropdown-toggle" type="button" style="width:100%;border-bottom:solid 0.05rem #e9e8e8" type="button" data-bs-toggle="dropdown" id="inputOwner_span" selectedId=""> </span>
-                                    <ul class="dropdown-menu" id="">
+                                    <ul class="dropdown-menu" id="bdd_exemplaire_ownersdd">
                                         ${getSelectFromDatabaseListDropdown("bdd_exemplaire_owners", "exow_id", "exow_name", true)}                                   
                                      </ul>                             
                                 </div>                            
@@ -99,7 +122,10 @@ export function searchViewDisplay(htlmPartId) {
 
                         <div class="col-md-6">
                             <div class="form-group row" style="margin-bottom:5px">
-                                <label for="exampleInputEmail1" class="col-sm-3 col-form-label">Genre</label>
+                                <label for="exampleInputEmail1" class="col-sm-3 col-form-label">
+                                    <span id="deleteGenreSelection" style="cursor: pointer" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove Genre selection"> ${deleteIcon}</span>
+                                    Genre
+                                </label>
                                 
                                <div class="col-sm-9 ">
                                     <span class="dropdown-toggle" type="button" style="width:100%;border-bottom:solid 0.05rem #e9e8e8" type="button" data-bs-toggle="dropdown" id="inputGenre_span" selectedId=""> </span>
@@ -110,7 +136,10 @@ export function searchViewDisplay(htlmPartId) {
                             </div>
 
                             <div class="form-group row" style="margin-bottom:5px">
-                                <label for="exampleInputEmail1" class="col-sm-3 col-form-label">Theme</label>
+                                <label for="exampleInputEmail1" class="col-sm-3 col-form-label">
+                                    <span id="deleteThemeSelection" style="cursor: pointer" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove Theme selection"> ${deleteIcon}</span>
+                                    Theme
+                                </label>
                                 <div class="col-sm-9 ">
                                     <span class="dropdown-toggle" type="button" style="width:100%;border-bottom:solid 0.05rem #e9e8e8" type="button" data-bs-toggle="dropdown" id="inputTheme_span" selectedId=""> </span>
                                     <ul class="dropdown-menu" id="">
@@ -120,7 +149,10 @@ export function searchViewDisplay(htlmPartId) {
                             </div>
 
                             <div class="form-group row" style="margin-bottom:5px">
-                                <label for="exampleInputPassword1" class="col-sm-3 col-form-label" >Material type</label>
+                                <label for="exampleInputPassword1" class="col-sm-3 col-form-label" >
+                                    <span id="deleteMaterielSelection" style="cursor: pointer" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove Materiel selection"> ${deleteIcon}</span>
+                                    Material type
+                                </label>
                                 <div class="col-sm-9 ">
                                     <span class="dropdown-toggle" type="button" style="width:100%;border-bottom:solid 0.05rem #e9e8e8" type="button" data-bs-toggle="dropdown" id="inputMateriel_span" selectedId=""> </span>
                                     <ul class="dropdown-menu" id="">
@@ -129,7 +161,10 @@ export function searchViewDisplay(htlmPartId) {
                                 </div>                            
                             </div>
                             <div class="form-group row" style="margin-bottom:5px">
-                                <label for="exampleInputPassword1" class="col-sm-3 col-form-label" >Language</label>
+                                <label for="exampleInputPassword1" class="col-sm-3 col-form-label" >
+                                    <span id="deleteLanguageSelection" style="cursor: pointer" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove language selection"> ${deleteIcon}</span>
+                                    Language
+                                </label>
                                 <div class="col-sm-9 ">
                                     <span class="dropdown-toggle" type="button" style="width:100%;border-bottom:solid 0.05rem #e9e8e8" type="button" data-bs-toggle="dropdown" id="inputLanguage_span" selectedId=""> </span>
                                     <ul class="dropdown-menu" id="">
@@ -168,6 +203,10 @@ export function searchViewDisplay(htlmPartId) {
     if (searchParams.has('multiCritSearchStr'))
         document.querySelector("#searchInputString").value = searchParams.get('multiCritSearchStr');
 
+
+    // let exow_dropdown = new bootstrap.Dropdown(document.querySelector("#bdd_exemplaire_ownersdd"))
+    // exow_dropdown.clearMenus()
+
     // searchStr
     if (searchParams.has('searchStr')) {
         document.querySelector("#searchInputString").value = searchParams.get('searchStr');
@@ -175,6 +214,8 @@ export function searchViewDisplay(htlmPartId) {
     // *** Init tooltips, must be done after elements initialisation
     initBootstrapTooltips();
 
+
+    // *******************  natural language search ****************************************************************************************************
 
     // *** Search natural and database
     document.querySelector("#searchInputString").addEventListener("keypress", function (event) {
@@ -185,18 +226,95 @@ export function searchViewDisplay(htlmPartId) {
     });
 
     // *** Actions Natural language search or datbase search
-    document.querySelector("#searchBtn").onclick = function () {
-        if (!document.querySelector("#searchInputString").value.length > 0) {
-            document.querySelector("#messagebox").innerHTML = `<div class="alert alert-danger" style = "margin-top:30px" role = "alert" > Veuillez saisir un critère de recherche</div > `;
-            return;
-        }
+    document.querySelector("#searchBtn").onclick = async function () {
+        // if (!document.querySelector("#searchInputString").value.length > 0) {
+        // document.querySelector("#messagebox").innerHTML = `<div class="alert alert-danger" style = "margin-top:30px" role = "alert" > Veuillez saisir un critère de recherche</div > `;
+        // return;
+        //  throw new Error("Veuillez saisir un critère de recherche1")
+        // }
         let searchString = document.querySelector("#searchInputString").value;
         window.location.href = `${getAppPath()}/views/search/search.html?searchStr=` + searchString;
-
-
     };
 
-    // ******************* Multi criteria search 
+    // *******************  Predictive search ****************************************************************************************************
+    document.querySelector("#searchPredictive").addEventListener('input', async function (event) {
+        console.log("Input event  : " + event.target.value + " - " + event.target.id)
+        // let inputElement = document.querySelector("#inputKeyword");
+
+        // const parentElement = document.querySelector(".dropdown-menu");
+        const parentElement = document.querySelector("#dropdown-menuPredictive");
+        // *** Remove old values
+        const elementsToRemove = document.querySelectorAll(".dropdown-LIitemPredictive");
+        elementsToRemove.forEach(element => {
+            element.remove();
+        });
+
+        if (event.target.value.length >= 3) {
+            // *** Get result from the database
+            let searchLines = await getSearch(event.target.value, "6");
+            if (searchLines && searchLines.length > 0) {
+                searchLines.forEach(searchLine => {
+                    const listItem = document.createElement("li");
+                    listItem.classList.add("dropdown-LIitemPredictive");
+                    const link = document.createElement("a");
+                    link.classList.add("dropdown-item");
+                    link.classList.add("dropdown-AitemPredictive");
+                    link.href = "#";
+                    link.textContent = searchLine.sear_type + " - " + searchLine.sear_display.substr(0, 100);
+                    link.id = searchLine.sear_id;
+                    link.sear_type = searchLine.sear_type;
+                    listItem.appendChild(link);
+                    parentElement.appendChild(listItem);
+                });
+                if (searchLines.length == 0) {
+                    const listItem =
+                        document.createElement('li');
+                    listItem.textContent = "No Item";
+                    listItem.classList.add('dropdown-LIitemPredictive');
+                    parentElement.appendChild(listItem);
+                }
+            }
+        } else {
+            // *** Less than 3 characters, empty the datalist
+        }
+
+        // *** predictive item selection
+        addMultipleEnventListener(".dropdown-AitemPredictive", function (event) {
+            let sear_type = event.target.sear_type;
+            let sear_id = event.target.id;
+            switch (sear_type) {
+
+                case 1, 2, 3, 4, 5:
+                    getLinkWithctrl(`${getAppPath()}/views/notice/notice.html?noticeID=` + sear_id)
+                    break;
+                case 6:
+                    getLinkWithctrl(`${getAppPath()}/views/subNotice/subNotice.html?subNoticeID=` + sear_id)
+                    break;
+                case 10:
+                    getLinkWithctrl(`${getAppPath()}/views/person/person.html?personID=` + sear_id)
+                    break;
+                case 11:
+                    getLinkWithctrl(`${getAppPath()}/views/keyword/keyword.html?keywordID=` + sear_id)
+                    break;
+                case 12:
+                    getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=` + sear_id + `&simpleEntitytype=12`, event.ctrlKey)
+                    break;
+                case 13:
+                    getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=` + sear_id + `&simpleEntitytype=13`, event.ctrlKey)
+                    break;
+                case 24:
+                case 33:
+                case 34:
+                case 35:
+                case 36:
+                case 37:
+                default:
+                    throw new Error("Résultat incorrect");
+            }
+        })
+    });
+
+    // ******************* Multi criteria search ****************************************************************************************************
     document.querySelector("#searchMultiBtn").onclick = function () {
 
         let test = document.querySelector("#inputPerson_span");
@@ -246,26 +364,50 @@ export function searchViewDisplay(htlmPartId) {
         document.querySelector("#inputOwner_span").setAttribute("selectedId", event.target.attributes['selectedId'].nodeValue);
     })
 
+    document.querySelector("#deleteOwnerSelection").onclick = function () {
+        document.querySelector("#inputOwner_span").innerHTML = "";
+        document.querySelector("#inputOwner_span").setAttribute("selectedId", "")
+    }
+
     addMultipleEnventListener(".bdd_genre_type_item", function (event) {
         document.querySelector("#inputGenre_span").innerHTML = event.target.attributes['selectedName'].nodeValue;
         document.querySelector("#inputGenre_span").setAttribute("selectedId", event.target.attributes['selectedId'].nodeValue);
     })
+
+    document.querySelector("#deleteGenreSelection").onclick = function () {
+        document.querySelector("#inputGenre_span").innerHTML = "";
+        document.querySelector("#inputGenre_span").setAttribute("selectedId", "")
+    }
 
     addMultipleEnventListener(".bdd_theme_type_item", function (event) {
         document.querySelector("#inputTheme_span").innerHTML = event.target.attributes['selectedName'].nodeValue;
         document.querySelector("#inputTheme_span").setAttribute("selectedId", event.target.attributes['selectedId'].nodeValue);
     })
 
+    document.querySelector("#deleteThemeSelection").onclick = function () {
+        document.querySelector("#inputTheme_span").innerHTML = "";
+        document.querySelector("#inputTheme_span").setAttribute("selectedId", "")
+    }
+
     addMultipleEnventListener(".bdd_materiel_type_item", function (event) {
         document.querySelector("#inputMateriel_span").innerHTML = event.target.attributes['selectedName'].nodeValue;
         document.querySelector("#inputMateriel_span").setAttribute("selectedId", event.target.attributes['selectedId'].nodeValue);
     })
+
+    document.querySelector("#deleteMaterielSelection").onclick = function () {
+        document.querySelector("#inputMateriel_span").innerHTML = "";
+        document.querySelector("#inputMateriel_span").setAttribute("selectedId", "")
+    }
 
     addMultipleEnventListener(".bdd_language_item", function (event) {
         document.querySelector("#inputLanguage_span").innerHTML = event.target.attributes['selectedName'].nodeValue;
         document.querySelector("#inputLanguage_span").setAttribute("selectedId", event.target.attributes['selectedId'].nodeValue);
     })
 
+    document.querySelector("#deleteLanguageSelection").onclick = function () {
+        document.querySelector("#inputLanguage_span").innerHTML = "";
+        document.querySelector("#inputLanguage_span").setAttribute("selectedId", "")
+    }
 
     // *** Person predictive search 
     document.querySelector("#searchPerson").addEventListener('input', async function (event) {
@@ -316,6 +458,13 @@ export function searchViewDisplay(htlmPartId) {
             document.querySelector("#PersonSpan").selectedid = event.target.id;
         })
     });
+
+    document.querySelector("#deletePersonSelection").onclick = function () {
+        document.querySelector("#PersonSpan").innerHTML = "";
+        document.querySelector("#PersonSpan").selectedid = "";
+    }
+
+
 
     // *** Keyword predictive search 
     document.querySelector("#searchKeyword").addEventListener('input', async function (event) {
@@ -371,6 +520,12 @@ export function searchViewDisplay(htlmPartId) {
     });
 
 
+    document.querySelector("#deleteKeywordSelection").onclick = function () {
+        document.querySelector("#KeywordSpan").innerHTML = "";
+        document.querySelector("#KeywordSpan").selectedid = "";
+    }
+
+
 
     // *** Publisher predictive search 
     document.querySelector("#searchPublisher").addEventListener('input', async function (event) {
@@ -414,146 +569,15 @@ export function searchViewDisplay(htlmPartId) {
         }
 
         addMultipleEnventListener(".dropdown-AitemPublisher", function (event) {
-            // document.querySelector("#inputLanguage_span").innerHTML = event.target.attributes['selectedName'].nodeValue;
-            // document.querySelector("#inputLanguage_span").setAttribute("selectedId", event.target.attributes['selectedId'].nodeValue);
             let test = 1;
             document.querySelector("#PublisherSpan").innerHTML = event.target.text;
             document.querySelector("#PublisherSpan").selectedid = event.target.id;
         })
     });
 
-    // ******************* Predictive search
-    document.querySelector("#predictive").addEventListener('change', function (event) {
-        // datalist = this.list;
-        // datalist.options = datalist.options.filter((option) => option.value === this.value);
-        let result = event.target.value;
-        let datalist = event.target.list;
-        const optionsArray = Array.from(datalist.options);
-        let optionFound = optionsArray.filter((option) => option.value === result);
+    document.querySelector("#deletePublisherSelection").onclick = function () {
+        document.querySelector("#PublisherSpan").innerHTML = "";
+        document.querySelector("#PublisherSpan").selectedid = "";
+    }
 
-        // if (optionFound[0] !== null)
-        //     throw new Error("Résultat incorrect")
-        let resultOption = optionFound[0];
-        switch (resultOption.asear_type) {
-
-            case 1, 2, 3, 4, 5:
-                getLinkWithctrl(`${getAppPath()}/views/notice/notice.html?noticeID=` + resultOption.asear_id)
-                break;
-            case 6:
-                getLinkWithctrl(`${getAppPath()}/views/subNotice/subNotice.html?subNoticeID=` + resultOption.asear_id)
-                break;
-            case 10:
-                getLinkWithctrl(`${getAppPath()}/views/person/person.html?personID=` + resultOption.asear_id)
-                break;
-            case 11:
-                getLinkWithctrl(`${getAppPath()}/views/keyword/keyword.html?keywordID=` + resultOption.asear_id)
-                break;
-            case 12:
-                getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=` + resultOption.asear_id + `&simpleEntitytype=12`, event.ctrlKey)
-                break;
-            case 13:
-                getLinkWithctrl(`${getAppPath()}/views/simpleEntity/simpleEntity.html?simpleEntityID=` + resultOption.asear_id + `&simpleEntitytype=13`, event.ctrlKey)
-                break;
-            case 24:
-            case 33:
-            case 34:
-            case 35:
-            case 36:
-            case 37:
-            default:
-                throw new Error("Résultat incorrect");
-        }
-    });
-
-    document.querySelector("#predictive").addEventListener('input', async function (e) {
-        console.log("Input event  : " + e.target.value + " - " + e.target.id)
-        let inputElement = document.querySelector("#predictive");
-
-        if (e.target.value.length >= 3) {
-            // *** Get result from the database
-            let searchLines = await getSearch(e.target.value, "6");
-            if (searchLines && searchLines.length > 0) {
-                // *** Fill the datalist
-                const datalist = document.createElement('datalist');
-                const dataListId = inputElement.getAttribute('list');
-                datalist.id = dataListId;
-
-                searchLines.forEach((option) => {
-                    const optionElement = document.createElement('option');
-                    optionElement.id = option.sear_id;
-                    optionElement.text = option.sear_display + " (" + option.sear_type + ")";
-                    optionElement.asear_id = option.sear_id;
-                    optionElement.asear_type = option.sear_type;
-
-                    datalist.appendChild(optionElement);
-                });
-                // *** remove the previous values
-                let listElement = document.getElementById(dataListId);
-                if (listElement)
-                    inputElement.removeChild(listElement);
-                let currentdatalist = inputElement.list;
-                // *** Put the nex values
-                inputElement.appendChild(datalist);
-            }
-        } else {
-            // *** Less than 3 characters, empty the datalist
-            console.log("moins 3 de caractères");
-            const dataListId = inputElement.getAttribute('list');
-            let listElement = document.getElementById(dataListId);
-            if (listElement)
-                inputElement.removeChild(listElement);
-        }
-
-
-    });
-    document.querySelector("#predictive").addEventListener('keypress', function (e) {
-        console.log("keypress event  : " + e.target.value + " - " + e.target.id)
-    });
-
-    // });
-    //   });
 }
-//     // document.addEventListener('DOMContentLoaded', function () {
-//     const inputs = document.querySelectorAll('input[list]');
-//     let input = document.querySelector("#dominique");
-//     // inputs.forEach((input) => {
-//     // const dataListId = input.getAttribute('list');
-//     // const dataOptions = input.dataset[dataListId];
-//     // const options = dataOptions.split(',').map((option) => option.trim());
-
-//     const datalist = document.createElement('datalist');
-//     const dataListId = input.getAttribute('list');
-//     datalist.id = dataListId;
-
-//     let frBase = sessionStorage.getItem("bdd_genre_type");
-//     let base = JSON.parse(frBase);
-
-
-//     base.forEach((option) => {
-//         const optionElement = document.createElement('option');
-//         optionElement.value = option.genrt_name;
-//         optionElement.id = option.genrt_id;
-//         optionElement.text = option.genrt_name;;
-//         datalist.appendChild(optionElement);
-//     });
-
-//     input.appendChild(datalist);
-//     // });
-
-//     //  inputs.forEach((input) => {
-//     input.addEventListener('change', function () {
-//         let optionFound = false,
-//             datalist = this.list;
-
-//         const optionsArray = Array.from(datalist.options);
-//         optionFound = optionsArray.some((option) => option.value === this.value);
-
-//         if (optionFound) {
-//             this.setCustomValidity('');
-//         } else {
-//             this.setCustomValidity('Please select a valid value.');
-//         }
-//     });
-//     // });
-// };
-

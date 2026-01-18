@@ -58,11 +58,11 @@ export function loginViewDisplay(htlmPartId) {
             editModal.hide();
         };
 
-        document.querySelector("#searchInputString").addEventListener("keypress", function (event) {
-            if (event.keyCode === 13) {
-                window.location.href = `${getAppPath()}/views/search/search.html?searchStr=` + $("#searchInputString").val();
-            }
-        });
+        // document.querySelector("#searchInputString").addEventListener("keypress", function (event) {
+        //     if (event.keyCode === 13) {
+        //         window.location.href = `${getAppPath()}/views/search/search.html?searchStr=` + $("#searchInputString").val();
+        //     }
+        // });
 
         document.querySelector("#modalbodyLOgin").addEventListener("keypress", async function (event) {
             if (event.keyCode === 13) {

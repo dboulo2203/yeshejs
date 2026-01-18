@@ -1,19 +1,18 @@
 // *** Component ressources
-import { getKeyword, getKeywordAliases, getKeywordlinkedNotices, getKeywordFromAliasID } from '../../shared/yesheServices/yesheKeywordService.js' // , getKeywordFromAliasID 
-// import { personEditModalDisplay } from './personEditModalViewController.js'
-// import { personNewModalDisplay } from './personNewModalViewController.js'
+import {
+    getKeyword, getKeywordAliases, getKeywordlinkedNotices,
+    getKeywordFromAliasID
+} from '../../shared/yesheServices/yesheKeywordService.js'
+
+import { headerViewDisplay } from '../appservices/headerViewCont.js'
 
 // *** Shared ressources
-import { getAppPath } from '../../shared/services/commonFunctions.js'
-import { keyIcon, bookIcon } from '../../shared/assets/constants.js';
+import { getAppPath, getArrayFromjson, addMultipleEnventListener } from '../../shared/services/commonFunctions.js'
+import { keyIcon, bookIcon, pencilsquare, plussquare } from '../../shared/assets/constants.js';
 import { getTranslation } from '../../shared/services/translationService.js'
-import { getArrayFromjson } from '../../shared/services/commonFunctions.js'
 import { getConfigurationValue } from '../../shared/services/configurationService.js'
-import { pencilsquare, plussquare } from '../../shared/assets/constants.js'
 import { getCurrentUSerRightLevel } from '../../shared/services/loginService.js'
-import { addMultipleEnventListener } from '../../shared/services/commonFunctions.js'
 import { launchInitialisation } from '../appservices/initialisationService.js';
-import { headerViewDisplay } from '../appservices/headerViewCont.js'
 
 /**
  * Start script 
@@ -24,68 +23,58 @@ export function componentIdentityPerson() {
 
 export async function startKeywordController() {
 
-    const searchParams = new URLSearchParams(window.location.search);
-
-    // *** Get URL params and launch display
-    if (searchParams.has('identity')) {
-        document.querySelector("#mainActiveSection").innerHTML = componentIdentity;
-        `   `
-        return
-    }
     try {
+        const searchParams = new URLSearchParams(window.location.search);
+
+        // *** Get URL params and launch display
+        if (searchParams.has('identity')) {
+            document.querySelector("#mainActiveSection").innerHTML = componentIdentity;
+            return
+        }
         // *** Initialisations
         await launchInitialisation();
         headerViewDisplay("#menuSection");
 
+
+        // *** Get params
+        if (searchParams.has('keywordID') && searchParams.get('keywordID').length > 0)
+            await displayKeywordContent('mainActiveSection', searchParams.get('keywordID'));
+        else if (searchParams.has('keywordAliasID') && searchParams.get('keywordAliasID').length > 0) {
+            let person = await getKeywordFromAliasID(searchParams.get('keywordAliasID'));
+            await displayKeywordContent('mainActiveSection', person.conc_id);
+        } else
+            throw new Error("Erreur, pas de keyword ID");
+
     } catch (error) {
         document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style = "margin-top:30px" role = "alert" > ${error}</div > `;
     }
-
-    // *** Get params
-    // searchParams = new URLSearchParams(window.location.search);
-
-    // *** Get URL params and launch display
-    if (searchParams.has('keywordID'))
-        displayKeywordContent('mainActiveSection', searchParams.get('keywordID'));
-    else if (searchParams.has('keywordAliasID'))
-        displayKeywordContentFromAlias('mainActiveSection', searchParams.get('keywordAliasID'));
-    else
-        document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style="margin-top:30px" role="alert">Erreur, pas d'ID</div>`;
 }
 
-/**
- * When the page is called from a notice page, we have the aliasID not the personID
- * @param {*} htlmPartId 
- * @param {*} personAliaID 
- */
-export async function displayKeywordContentFromAlias(htlmPartId, keywordAliaID) {
-
-    // *** Display main fixed part of the screen 
-    let keyword = await getKeywordFromAliasID(keywordAliaID);
-
-    // *** Display person component
-    displayKeywordContent(htlmPartId, keyword.conc_id);
-
-}
 /**
  * 
  * @param {*} mainDisplay 
  * @param {*} personID 
  */
-export async function displayKeywordContent(mainDisplay, keywordID) {
+async function displayKeywordContent(mainDisplay, keywordID) {
 
     let output = '';
     let testBoolean = false;
-    try {
+    // try {
 
-        // *** Load data from API
-        let keyword = await getKeyword(keywordID);
+    // *** Load data from API
+    let keyword = await getKeyword(keywordID);
 
-        let keywordAliases = getArrayFromjson(await getKeywordAliases(keywordID));
-        let keywordlinkedNotices = await getKeywordlinkedNotices(keywordID);
+    let keywordAliases = getArrayFromjson(await getKeywordAliases(keywordID));
+    let keywordlinkedNotices = await getKeywordlinkedNotices(keywordID);
 
-        // ** Main template
-        let keywordScreen = `<div class="d-flex  justify-content-between" style="margin-top:60px">
+    await displayKeyword(mainDisplay, keyword, keywordAliases, keywordlinkedNotices);
+}
+
+
+async function displayKeyword(mainDisplay, keyword, keywordAliases, keywordlinkedNotices) {
+
+    // ** Main template
+    let keywordScreen = `<div class="d-flex  justify-content-between" style="margin-top:60px">
                     <span class="fs-5" style="color:#8B2331">${keyIcon} ${getTranslation("KEY_TITLE")} : <span
                     id="concname">${keyword.conc_name}</span></span>
                    <div>
@@ -99,71 +88,54 @@ export async function displayKeywordContent(mainDisplay, keywordID) {
        <!-- Display image and note -->
         <div class="row ">
                  <div class="col-12" >
-                    <div><span class="fs-6" style="color:#8B2331">${getTranslation("PERS_NOTE")}</span></div>
+                    <div><span class="fs-5" style="color:#8B2331">${getTranslation("PERS_NOTE")}</span></div>
                    <div id="concnote">${keyword.conc_note} </div>
                 </div >
             
         </div>
          `;
 
-        // *** Display Aliases
-        keywordScreen += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/> `;
+    // *** Display Aliases
+    keywordScreen += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/> `;
 
-        keywordScreen += `
+    keywordScreen += `
         <div class="row justify-content-start" >
-            <div style=""> <spanclass="fs-6" style="color:#8B2331"> ${getTranslation("KEY_ALIASES")}</span></div >`;
+            <div style=""> <span class="fs-5" style="color:#8B2331"> ${getTranslation("KEY_ALIASES")}</span></div >`;
 
-        // <div class="col-6 " >
-        keywordAliases.map((keywordAliase, index) => {
-            // if (index == 0 || index == halfAlias) {
-            //     keywordScreen += `<div class="col-6" >` person
-            // }
-            keywordScreen += `<div class="col-12" >`;
-            keywordScreen += `
+    // <div class="col-6 " >
+    keywordAliases.map((keywordAliase, index) => {
+        keywordScreen += `<div class="col-12" >`;
+        keywordScreen += `
                     <span class="fw-light" style = "color:grey" > ` + keywordAliase.lang_name + `</span > : ` + keywordAliase.coal_name + `</br > `
-        });
+    });
 
-        keywordScreen += `</div >
+    keywordScreen += `</div >
         </div > `;
-        keywordScreen += `<hr style = "margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px" />
+    keywordScreen += `<hr style = "margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px" />
                     ${getLinkedNoticesHtml(keywordlinkedNotices)} `;
 
 
-        keywordScreen += `<div id="modalPlace"></div>`;
-        // *** Display template with variables
-        document.querySelector("#" + mainDisplay).innerHTML = keywordScreen;
+    keywordScreen += `<div id="modalPlace"></div>`;
+    // *** Display template with variables
+    document.querySelector("#" + mainDisplay).innerHTML = keywordScreen;
 
-        //***  Actions
-        // document.querySelector("#editButton").onclick = function () {
-        //     console.log("extractButton : ");
-        //     personEditModalDisplay(mainDisplay, person, function (status) {
-        //     });
-        // };
-        // document.querySelector("#addnewButton").onclick = function (event) {
-        //     console.log("addnewButton : ");
-        //     personNewModalDisplay(mainDisplay, person, function (status) {
-        //     });
+    //***  Actions
+    // document.querySelector("#editButton").onclick = function () {
+    //     console.log("extractButton : ");
+    //     personEditModalDisplay(mainDisplay, person, function (status) {
+    //     });
+    // };
+    // document.querySelector("#addnewButton").onclick = function (event) {
+    //     console.log("addnewButton : ");
+    //     personNewModalDisplay(mainDisplay, person, function (status) {
+    //     });
 
-        // };
+    // };
 
-        // *** Add action to each notice linked - Action = open notice component and load the notice. 
-        addMultipleEnventListener(".noticeButtons", function () {
-            window.location.href = `${getAppPath()}/views/notice/notice.html?noticeID=` + event.currentTarget.getAttribute('searid');
-        });
-
-
-        // const cbox = document.querySelectorAll(".noticeButtons");
-        // for (let i = 0; i < cbox.length; i++) {
-        //     cbox[i].addEventListener("click", function () {
-        //         console.log(cbox[i]);
-        //         // console.log("click span" + cbox[i].attributes.getNamedItem('sera_id').value);
-        //         window.location.href = `${currentApplicationPath}/views/notice/notice.html?noticeID=` + cbox[i].attributes.getNamedItem('searid').value;
-        //     });
-        // }
-
-    } catch (error) {
-        document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style = "margin-top:30px" role = "alert" > ${error}</div > `;
-    }
+    // *** Add action to each notice linked - Action = open notice component and load the notice. 
+    addMultipleEnventListener(".noticeButtons", function () {
+        window.location.href = `${getAppPath()}/views/notice/notice.html?noticeID=` + event.currentTarget.getAttribute('searid');
+    });
 }
 /**
  * Returns the list of the notices linked with the person
@@ -171,7 +143,7 @@ export async function displayKeywordContent(mainDisplay, keywordID) {
  * @returns 
  */
 function getLinkedNoticesHtml(linkedNotices) {
-    let outputln = `<div style="margin-bottom:20px"><span class="fs-6" style="color:#8B2331">${getTranslation("KEY_LINKED")} (${linkedNotices.length} notices)</span>  </div>`;
+    let outputln = `<div style="margin-bottom:20px"><span class="fs-5" style="color:#8B2331">${getTranslation("KEY_LINKED")} (${linkedNotices.length} notices)</span>  </div>`;
     linkedNotices.map((linkedNotice, index) => {
         outputln += `
         <div class="row " > `;

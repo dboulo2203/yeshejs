@@ -27,15 +27,15 @@ const leftmenuString = `
  
             <div style="margin-bottom:2px;cursor:pointer"  ><span " id="btnSwitch" >${themeIcon} Theme</span></div>        
             <hr/>
-            <div id="newNoticeButton" style="margin-bottom:2px"> ${bookIcon} Notice</div>
-            <div id="newPersonButton" style="margin-bottom:2px"> ${personIcon} Person</div>            
-            <div id="newKeywordButton" style="margin-bottom:2px"> ${keyIcon} Keyword</div>
-            <div id="newPublisherButton" style="margin-bottom:2px"> ${publisherIcon} Publisher</div>
-            <div id="newPrinterButton" style="margin-bottom:2px"> ${printerIcon} Printer</div>
-            <hr/>
-            <div id="newPrinterButton"> ${customersIcon} Utilisateurs</div>
-            <div id="newPrinterButton"> ${lendIcon} Prêts</div>
-            <hr/>
+             ${isCurrentUSerLogged() ? `<div id="newNoticeButton" style="margin-bottom:2px"> ${bookIcon} Notice</div>` : ``}
+             ${isCurrentUSerLogged() ? `<div id="newPersonButton" style="margin-bottom:2px"> ${personIcon} Person</div>  ` : ``}          
+             ${isCurrentUSerLogged() ? `<div id="newKeywordButton" style="margin-bottom:2px"> ${keyIcon} Keyword</div>` : ``}
+             ${isCurrentUSerLogged() ? `<div id="newPublisherButton" style="margin-bottom:2px"> ${publisherIcon} Publisher</div>` : ``}
+             ${isCurrentUSerLogged() ? `<div id="newPrinterButton" style="margin-bottom:2px"> ${printerIcon} Printer</div>` : ``}
+            ${isCurrentUSerLogged() ? `<hr/>` : ``}
+             ${isCurrentUSerLogged() ? `<div id="newPrinterButton"> ${customersIcon} Utilisateurs</div>` : ``}
+             ${isCurrentUSerLogged() ? `<div id="newPrinterButton"> ${lendIcon} Prêts</div>` : ``}
+            ${isCurrentUSerLogged() ? `<hr/>` : ``}
             <div id="documentation" style="cursor:pointer"><span style="cursor:pointer">${pencilsquareIcon}Documentation</span></div>
 
         </div>
@@ -52,10 +52,10 @@ export function leftMenuViewDisplay(htlmPartId) {
     // *** Display left menu
     document.querySelector("#" + htlmPartId).innerHTML = leftmenuString;
 
-
-    document.querySelector("#newPersonButton").onclick = function () {
-        window.location.href = `${getAppPath()}/views/person/person.html`;
-    };
+    if (isCurrentUSerLogged())
+        document.querySelector("#newPersonButton").onclick = function () {
+            window.location.href = `${getAppPath()}/views/person/person.html`;
+        };
 
     document.querySelector("#documentation").onclick = function () {
         window.location.href = `${getAppPath()}/views/docu/docu.html`;
