@@ -133,7 +133,10 @@ export async function searchViewDisplay(htlmPartId) {
                                         ${getSelectFromDatabaseListDropdown("bdd_genre_type", "genrt_id", "genrt_name", true)}
                                     </ul>                             
                                 </div>                                                        
-                            </div>
+                            </div> 
+                        
+                            
+
 
                             <div class="form-group row" style="margin-bottom:5px">
                                 <label for="exampleInputEmail1" class="col-sm-3 col-form-label">
@@ -190,6 +193,15 @@ export async function searchViewDisplay(htlmPartId) {
                         </div>
                     </div>
             </form>
+            <div class="form-floating">
+  <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+    <option selected>Open this select menu</option>
+    <option value="1">One</option>
+    <option value="2">Two</option>
+    <option value="3">Three</option>
+  </select>
+  <label for="floatingSelect">Works with selects</label>
+</div>
          </div>
         </div>
     </div>

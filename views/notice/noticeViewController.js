@@ -224,8 +224,8 @@ function displayNotice(notice, mainDisplay) {
     let subNoticesFunctionFor = getArrayFromjson(notice.subNoticesFunctionFor);
     output += `<div><span class="fs-5" style="color:#8B2331">${subnoticeIcon} ${getTranslation("NOT_SUBRECORDSTITLE")}</span></div>`;
     subNoticesFunctionFor.map((subNoticeFunctionFor, index) => {
-        output += `<span class="subNoticeElem" style="cursor:pointer" 
-        multObject='${JSON.stringify(subNoticeFunctionFor)}'>   - ${subNoticeFunctionFor.noti_main_title}  (${subNoticeFunctionFor.sdoc_order})
+        output += `<span class="subNoticeElem" style="cursor:pointer" subNoticeID="${subNoticeFunctionFor.noti_id}"
+        subNoticeObject='${JSON.stringify(subNoticeFunctionFor)}'>   - ${subNoticeFunctionFor.noti_main_title}  (${subNoticeFunctionFor.sdoc_order})
          </span></br> `;
     });
     output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
@@ -234,7 +234,11 @@ function displayNotice(notice, mainDisplay) {
     let multimediasList = getArrayFromjson(notice.multimediasFunctionFor);
     output += `<div><span class="fs-5" style="color:#8B2331">${multimediaIcon} ${getTranslation("NOT_MULTIMEDIASTITLE")}</span></div>`;
     multimediasList.map((multimedia, index) => {
-        output += `<span class="multimediaElem" style="cursor:pointer" multObject='${JSON.stringify(multimedia)}'>${multimedia.mult_name}  : ${multimedia.multt_name} : ${multimedia.mult_file} </span></br> `;
+        output += `<div class="row">
+        <div class="col-3"><span class="multimediaElem" style="cursor:pointer" multObject='${JSON.stringify(multimedia)}'> - ${multimedia.mult_name} </span></div>
+          <div class="col-3"><span >${multimedia.multt_name} </span></div>
+          <div class="col-6"><span > ${multimedia.mult_desc} </span></div>
+         </div>`;
     });
     output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
 
@@ -316,6 +320,10 @@ function displayNotice(notice, mainDisplay) {
 
     addMultipleEnventListener(".multimediaElem", function (event) {
         displaynoticeMultimediaModalViewDisplay("modalSection", JSON.parse(event.currentTarget.attributes['multObject'].nodeValue))
+    });
+
+    addMultipleEnventListener(".subNoticeElem", function (event) {
+        getLinkWithctrl(`${getAppPath()}/views/subnotice/subnotice.html?subNoticeID=` + event.currentTarget.getAttribute('subNoticeID'), event.ctrlKey);;
     });
 
 

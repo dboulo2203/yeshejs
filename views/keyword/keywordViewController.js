@@ -5,6 +5,8 @@ import {
 } from '../../shared/yesheServices/yesheKeywordService.js'
 
 import { headerViewDisplay } from '../appservices/headerViewCont.js'
+import { launchInitialisation } from '../appservices/initialisationService.js';
+import { displayimageViewDisplay } from '../appservices/displayImageModal/displayimageViewCont.js'
 
 // *** Shared ressources
 import { getAppPath, getArrayFromjson, addMultipleEnventListener } from '../../shared/services/commonFunctions.js'
@@ -12,7 +14,6 @@ import { keyIcon, bookIcon, pencilsquare, plussquare } from '../../shared/assets
 import { getTranslation } from '../../shared/services/translationService.js'
 import { getConfigurationValue } from '../../shared/services/configurationService.js'
 import { getCurrentUSerRightLevel } from '../../shared/services/loginService.js'
-import { launchInitialisation } from '../appservices/initialisationService.js';
 
 /**
  * Start script 
@@ -136,6 +137,11 @@ async function displayKeyword(mainDisplay, keyword, keywordAliases, keywordlinke
     addMultipleEnventListener(".noticeButtons", function () {
         window.location.href = `${getAppPath()}/views/notice/notice.html?noticeID=` + event.currentTarget.getAttribute('searid');
     });
+
+    addMultipleEnventListener(".imgsearch", function (event) {
+        displayimageViewDisplay("modalSection", event.currentTarget.getAttribute('src'), event.ctrlKey)
+    });
+
 }
 /**
  * Returns the list of the notices linked with the person
@@ -150,7 +156,7 @@ function getLinkedNoticesHtml(linkedNotices) {
 
         if (linkedNotice.noti_main_image && linkedNotice.noti_main_image.length > 0) {
             outputln += ` <div class="col-3" align = "center" > `;
-            outputln += ` <img src = '${getConfigurationValue("imagePath")}/img/books/${linkedNotice.noti_main_image}' width = "80px" /> `;
+            outputln += ` <img src = '${getConfigurationValue("imagePath")}/img/books/${linkedNotice.noti_main_image}' class="imgsearch" style="cursor:pointer" width = "80px" /> `;
             outputln += `</div > `;
             outputln += `<div class="col-9" > <span style="cursor: pointer"  class="noticeButtons"
         searid="${linkedNotice.noti_id}" > ${bookIcon} ${linkedNotice.noti_main_title} </span > `;

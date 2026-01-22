@@ -177,7 +177,7 @@ async function displaySearchResults(htlmPartId, searchString, multiCriteriaSearc
                             </span> -  
                             <span class="bookButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${findTibetanChars(searchLine.sear_label)}</b></span>
                          </br >
-                            ${searchLine.sear_moreinfo && searchLine.sear_moreinfo.length > 0 ? findTibetanChars(searchLine.sear_moreinfo) : ''}
+                            ${searchLine.sear_text && searchLine.sear_text.length > 0 ? findTibetanChars(searchLine.sear_text) : ''}
                             </div > `;
                     break
                 case 5: // bibliographic record found by bibliographic record title

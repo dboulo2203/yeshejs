@@ -191,7 +191,7 @@ async function getLinkedNoticesHtml(linkedNotices) {
 
         if (linkedNotice.noti_main_image && linkedNotice.noti_main_image.length > 0) {
             outputln += ` <div class="col-3" align = "center" > `;
-            outputln += ` <img src = '${getConfigurationValue("imagePath")}/img/books/${linkedNotice.noti_main_image}' width = "80px" /> `;
+            outputln += ` <img src = '${getConfigurationValue("imagePath")}/img/books/${linkedNotice.noti_main_image}' class="imgsearch" style="cursor:pointer" width = "80px" /> `;
             outputln += `</div > `;
             if (linkedNotice.noti_hierarchical_level && linkedNotice.noti_hierarchical_level === 2)
                 outputln += `<div class="col-9" > <span style="cursor: pointer" class="subnoticeButtons" searid="${linkedNotice.noti_id}" > ${subnoticeIcon} ${linkedNotice.noti_main_title} </span >`;

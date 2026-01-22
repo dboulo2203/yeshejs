@@ -27,9 +27,8 @@
 ## TODO V 5.1
 - [abandonné dans cette version] Multimedia search : conserver les choix entre 2 interrogations
 - Test image de background,
-- Note : ne pas afficher si la note contient du HTML
-- Voir pour la migration des notes
-    - BUG : affichage de la notice Karmapa'words dans search)
+- Search Note : ne pas afficher si la note contient du HTML
+- Caractères tibétains reste problème si plusieurs séquences 
 
 ### TOTO tech et Bugs
 - Affichage de la note dans 'karmapa word' BUg
@@ -39,9 +38,14 @@
 - Tester Bootstrap troncate dans la page de search
 - Rendre la photo visible dans Whatssapp lorsqu'on colle le lien d'une notice
 
-
 ------------
 ## Releases notes
+### 5.0.11
+- Notice : Présentation des multimedias : nom -> type -> note
+- Person : afficher l'image des linked notices dans une modale
+- Keyword : afficher l'image des linked notices dans une modale
+- [A décider] Search : bug karmapa's words : Affichage la totalité de la note
+
 ### 5.0.10
 - NEW : predictive search
 - [Done] Multimedia search : ajouter un bouton reset des choix
@@ -61,7 +65,7 @@
     - [Done] Notes : toutes (Voir about content et about catalogue)
     - [Done] Search
     - [Done]  Persons (dans notice et person)
-    - [Done] sub notice 
+    - [Done] sub notice (titre, titre notice pere)
 - [Done] Search : image à 150 px
 - [Done] Notice : titre des notes en fs-light
 - [Done] General : notices linked : permettre image dans modale
