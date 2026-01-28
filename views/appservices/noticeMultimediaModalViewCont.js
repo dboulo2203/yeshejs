@@ -1,4 +1,4 @@
-import { getConfigurationValue } from '../../../shared/services/configurationService.js'
+import { getConfigurationValue } from '../../shared/services/configurationService.js'
 const loginContainer = `<div id="modalPlace"></div>`;
 const editModaleString = `
 <div class="container">

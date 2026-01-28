@@ -32,6 +32,90 @@ export function getList(listName) {
         return null;
 }
 
+
+// export function getDropdownList(listName, entityID, entityName, addZeroOption, selectedId) {
+//     let outpuStr = ``;
+//     // if (addZeroOption)
+//     //     outpuStr += `<li><a class="dropdown-item ${listName}_item" selectedId="0" selectedName=""> --- </a> </li>`;
+
+//     outpuStr = `
+//         <div class="form-group row" style="margin-bottom:5px">
+//             <label for="exampleInputPassword1" class="col-sm-3 col-form-label" >
+//                 <span id="delete_${listName}" style="cursor: pointer" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove"><i class="bi bi-x"></i></span>
+//                 ${listName}
+//             </label>
+//             <div class="col-sm-9 ">
+//                 <span class="dropdown-toggle" type="button" style="width:100%;border-bottom:solid 0.05rem #e9e8e8" type="button" data-bs-toggle="dropdown" id="${listName}_inputspan" selectedId=""> </span>
+//                 <ul class="dropdown-menu" id="">
+//                     ${getSelectFromDatabaseListDropdown(listName, entityID, entityName, addZeroOption, selectedId)}
+//                 </ul >
+//             </div >
+//         </div >`;
+//     return outpuStr;
+// }
+
+export function getSelectFromDatabaseListDropdown(listName, entityID, entityName, addZeroOption, selectedId) {
+    let outpuStr = ``;
+    if (addZeroOption)
+        outpuStr += `<li><a class="dropdown-item ${listName}_item" selectedId="0" selectedName=""> --- </a> </li>`;
+
+    getList(listName).map((listentity, index) => {
+        if (listentity[entityID] == selectedId)
+            outpuStr += `<li><a class="dropdown-item ${listName}_item active" selectedId="${listentity[entityID]}" selectedName="${listentity[entityName]}">${listentity[entityName]}</a></li>`;
+        else
+            outpuStr += `<li><a class="dropdown-item ${listName}_item" selectedId="${listentity[entityID]}" selectedName="${listentity[entityName]}">${listentity[entityName]}</a></li>`;
+    });
+    return outpuStr;
+}
+
+
+export function getDropdownList(listName, entityID, entityName, addZeroOption, selectedId) {
+    let outpuStr = ``;
+    // if (addZeroOption)
+    //     outpuStr += `<li><a class="dropdown-item ${listName}_item" selectedId="0" selectedName=""> --- </a> </li>`;
+
+    outpuStr = `
+        <div class="form-group row" style="margin-bottom:5px">
+            <label for="exampleInputPassword1" class="col-sm-3 col-form-label" >
+                <span id="delete_${listName}" style="cursor: pointer" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove">
+                <i class="bi bi-x"></i></span>
+                ${listName}
+            </label>
+            <div class="col-sm-9 ">
+                 
+                    ${getSelectFromDatabaseListDropdownV2(listName, entityID, entityName, addZeroOption, selectedId)}
+                
+            </div >
+        </div >`;
+    return outpuStr;
+}
+
+export function getSelectFromDatabaseListDropdownV2(listName, entityID, entityName, addZeroOption, selectedId) {
+    let outpuStr = `<ul class="dropdown-menu" id="">`;
+    let selectedItem = null
+    if (addZeroOption)
+        outpuStr += `<li><a class="dropdown-item ${listName}_item" selectedId="0" selectedName=""> --- </a> </li>`;
+
+    getList(listName).map((listentity, index) => {
+        if (listentity[entityID] == selectedId)
+            selectedItem = listentity;
+        outpuStr += `<li><a class="dropdown-item ${listName}_item " selectedId="${listentity[entityID]}" selectedName="${listentity[entityName]}">${listentity[entityName]}</a></li>`;
+    });
+    outpuStr += '</ul >'
+    if (selectedId) {
+        if (selectedItem !== null)
+            outpuStr += `<span class="dropdown-toggle" type="button" style="width:100%;border-bottom:solid 0.05rem #e9e8e8" type="button" 
+    data-bs-toggle="dropdown" id="${listName}_inputspan" selectedId="${selectedItem[entityID]}">${selectedItem[entityName]} </span>`
+        else
+            outpuStr += `<span class="dropdown-toggle" type="button" style="width:100%;border-bottom:solid 0.05rem #e9e8e8" type="button" 
+    data-bs-toggle="dropdown" id="${listName}_inputspan" selectedId=""> </span>`
+    }
+    return outpuStr;
+}
+
+
+
+
 /**
  * Return the options part of the HTML select, Filled with the list data
  * @param {*} listName 
@@ -51,19 +135,7 @@ export function getSelectFromDatabaseList(listName, entityID, entityName, addZer
     return outpuStr;
 }
 
-export function getSelectFromDatabaseListDropdown(listName, entityID, entityName, addZeroOption, selectedId) {
-    let outpuStr = ``;
-    if (addZeroOption)
-        outpuStr += `<li><a class="dropdown-item ${listName}_item" selectedId="0" selectedName=""> --- </a> </li>`;
 
-    getList(listName).map((listentity, index) => {
-        if (listentity[entityID] == selectedId)
-            outpuStr += `<li><a class="dropdown-item ${listName}_item active" selectedId="${listentity[entityID]}" selectedName="${listentity[entityName]}">${listentity[entityName]}</a></li>`;
-        else
-            outpuStr += `<li><a class="dropdown-item ${listName}_item" selectedId="${listentity[entityID]}" selectedName="${listentity[entityName]}">${listentity[entityName]}</a></li>`;
-    });
-    return outpuStr;
-}
 // export function getSelectFromDatabaseList(listName, selectID, entityID, entityName) {
 //     let outpuStr = `
 //       <div class="col" style="margin:2px">

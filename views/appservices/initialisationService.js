@@ -2,6 +2,7 @@ import { loadTranslations } from '../../shared/services/translationService.js'
 import { loadList } from '../../shared/yesheServices/yesheListsService.js'
 import { getConfigurationFromJson } from '../../shared/services/configurationService.js'
 import { setTheme } from '../../shared/services/bootstrapTheme.js'
+import { BlocTitleDisplay, StandardFieldDisplay, StandardFieldNotNullDisplay, DropdownChoice } from '../appservices/components.js'
 
 /**
  * 
@@ -17,6 +18,18 @@ export async function launchInitialisation() {
     await loadList('bdd_theme_type');
     await loadList('bdd_materiel_type');
     await loadList('bdd_exemplaire_owners');
+
+
+    customElements.define('dob-bloctitle', BlocTitleDisplay);
+    customElements.define('dob-stdfield', StandardFieldDisplay);
+    customElements.define('dob-stdnotnullfield', StandardFieldNotNullDisplay);
+    customElements.define('dob-dropdown', DropdownChoice);
+
+
+
+
+
+
 
 }
 

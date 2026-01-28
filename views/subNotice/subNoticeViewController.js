@@ -1,5 +1,7 @@
 // *** Component ressources
 import { getsubNotice } from './subNoticeService.js'
+
+import { displaynoticeMultimediaModalViewDisplay } from '../appservices/noticeMultimediaModalViewCont.js'
 // ** Shared ressoucres
 import { getArrayFromjson, addMultipleEnventListener, getEntityLinkClass, getLinkWithctrl } from '../../shared/services/commonFunctions.js'
 import { questionIcon18, subnoticeIcon } from '../../shared/assets/constants.js'
@@ -59,7 +61,8 @@ async function displaySubNotice(mainDisplay, subNotice) {
     output += `<div class="row " > `;
 
     // *** Notice titles
-    output += `<div style=""><spanclass="fs-6" style="color:#8B2331">Titles</span></div>`;
+    // output += `<div style=""><spanclass="fs-6" style="color:#8B2331">Titles</span></div>`;
+    output += `<dob-bloctitle userIcon="" userName="Titles" ></dob-bloctitle >`;
     output += `<div class="col-md-12 main" " > <span class="fw - light" >${getTranslation("NOT_MAINTITLE")}</span> : ${findTibetanChars(subNotice.noti_main_title)}`;
     output += `</div>`
     if (subNotice.noti_other_title)
@@ -68,8 +71,10 @@ async function displaySubNotice(mainDisplay, subNotice) {
     // *** Notice description
     output += `<div class="row ">`;
     output += `<div class="col">`;
-    output += `<hr style="margin-block-start:0.1rem;margin-block-end:0.3rem;margin-top:15px"/>`;
-    output += `<div style=""><spanclass="fs-6" style="color:#8B2331">General description</span></div>`;
+    // output += `<hr style="margin-block-start:0.1rem;margin-block-end:0.3rem;margin-top:15px"/>`;
+    output += `<dob-bloctitle userIcon="" userName="General description" ></dob-bloctitle >`;
+
+    //  output += `<div style=""><spanclass="fs-6" style="color:#8B2331">General description</span></div>`;
     output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_MATERIALDESCRIPTION")}</span> : ${subNotice.noti_col_mat_description === null ? '' : subNotice.noti_col_mat_description}</div>`;
     output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_ORIENTALDATE")}</span> : ${subNotice.noti_oriental_date === null ? '' : subNotice.noti_oriental_date}</div>`;
 
@@ -85,8 +90,9 @@ async function displaySubNotice(mainDisplay, subNotice) {
     // *** Persons
     output += `<div class="row row-cols-1 row-cols-xs-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 ">`;
     output += `<div class="col">`;
-    output += `<hr style="margin-block-start:0.1rem;margin-block-end:0.3rem;margin-top:15px"/>`;
-    output += `<div style=""><spanclass="fs-6 " style="color:#8B2331">Personnes</span></div>`;
+    // output += `<hr style="margin-block-start:0.1rem;margin-block-end:0.3rem;margin-top:15px"/>`;
+    output += `<dob-bloctitle userIcon="" userName="Personnes" ></dob-bloctitle >`;
+    // output += `<div style=""><spanclass="fs-6 " style="color:#8B2331">Personnes</span></div>`;
     let personsList = getArrayFromjson(subNotice.personsFunctionFor);
     personsList.map((person, index, personsList) => {
         output += `<span class="fw-light" > ${person.tffd_name}</span> :
@@ -96,8 +102,9 @@ async function displaySubNotice(mainDisplay, subNotice) {
 
     // *** Keywords
     output += `<div class="col">`;
-    output += `<hr class="visible-md-block" style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
-    output += `<div style=""><spanclass="fs-6" style="color:#8B2331">Keywords</span></div>`;
+    // output += `<hr class="visible-md-block" style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
+    // output += `<div style=""><spanclass="fs-6" style="color:#8B2331">Keywords</span></div>`;
+    output += `<dob-bloctitle userIcon="" userName="Keywords" ></dob-bloctitle >`;
     let keywordList = getArrayFromjson(subNotice.keywordsFunctionFor);
     keywordList.map((keyword, index) => {
         output += `<span class="fw-light" > ${keyword.tffc_name}</span> : 
@@ -108,23 +115,29 @@ async function displaySubNotice(mainDisplay, subNotice) {
     });
     output += `</div>`;
     output += `</div>`; // End person & keyword row
-    output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
-
+    //output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
 
     // *** Notes
     let notesList = getArrayFromjson(subNotice.notesFunctionFor);
-    output += `<div ><span class="fs-6" style="color:#8B2331">Notes</span></div>`;
+    // output += `<div ><span class="fs-6" style="color:#8B2331">Notes</span></div>`;
+    output += `<dob-bloctitle userIcon="" userName="Notes" ></dob-bloctitle >`;
     notesList.map((note, index) => {
         output += `<div style ="margin-bottom:10px"><span class="fw-light" style ="color:grey;margin-top:40px">${note.ffnnt_name} </span> :</br> ${note.ffnn_text} </br> </div>`;
     });
-    output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
+    // output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
 
     // *** Multimedia
     let multimediasList = getArrayFromjson(subNotice.multimediasFunctionFor);
-    output += `<div><span class="fs-6" style="color:#8B2331">Multimedia</span></div>`;
+    // output += `<div><span class="fs-6" style="color:#8B2331">Multimedia</span></div>`;
+    output += `<dob-bloctitle userIcon="" userName="Multimedia" ></dob-bloctitle >`;
     multimediasList.map((multimedia, index) => {
-        output += `${multimedia.mult_name}  : ${multimedia.multt_name} : ${multimedia.mult_file} </br> `;
+        output += `<div class="row">
+        <div class="col-3"><span class="multimediaElem" style="cursor:pointer" multt_id="${multimedia.multt_id}" mult_file="${multimedia.mult_file}"> - ${multimedia.mult_name} </span></div>
+          <div class="col-3"><span >${multimedia.multt_name} </span></div>
+          <div class="col-6"><span > ${multimedia.mult_desc} </span></div>
+         </div>`;
     });
+
     output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
 
 
@@ -133,7 +146,7 @@ async function displaySubNotice(mainDisplay, subNotice) {
 
     // ************** Actions
     addMultipleEnventListener(".noticeButtons", function (event) {
-        getLinkWithctrl(`${getAppPath()}/views/notice/notice.html?noticeID=` + event.currentTarget.getAttribute('searid'), event.ctrlKey);;
+        getLinkWithctrl(`${getAppPath()}/views/notice/notice.html?noticeID=` + event.currentTarget.getAttribute('searid'), event.ctrlKey);
     });
 
     addMultipleEnventListener(".personButtons", function (event) {
@@ -142,6 +155,10 @@ async function displaySubNotice(mainDisplay, subNotice) {
 
     addMultipleEnventListener(".keywordButtons", function (event) {
         getLinkWithctrl(`${getAppPath()}/views/keyword/keyword.html?keywordAliasID=` + event.currentTarget.getAttribute('searid'), event.ctrlKey);
+    });
+
+    addMultipleEnventListener(".multimediaElem", function (event) {
+        displaynoticeMultimediaModalViewDisplay("modalSection", event.currentTarget.getAttribute("multt_id"), event.currentTarget.getAttribute("mult_file"))
     });
 
 

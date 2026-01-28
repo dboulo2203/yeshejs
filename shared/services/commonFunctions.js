@@ -98,15 +98,15 @@ export function getLinkWithctrl(link, withctrl) {
  */
 export function getEntityLinkClass(buttonType, entityName, searId, withUnderline = true) {
   if (!withUnderline === false)
-    return `<span style="cursor:pointer; border-bottom: 0.1em solid #dddbdbff" class="${buttonType}" searid="${searId}" 
-  onpointerenter="this.setAttribute('style', 'cursor:pointer;color: #8B2331;border-bottom: 0.1em solid #8B2331;cursor:pointer')" 
-  onpointerleave="this.setAttribute('style', 'color: bs-body-color')">
+    return `<span class="text-danger-emphasis ${buttonType}" style="cursor:pointer"  searid="${searId}" 
+  onpointerenter="this.setAttribute('style', 'cursor:pointer;color: rgb(159, 158, 158); border-bottom: 0.1em solid  rgb(159, 158, 158)')" 
+  onpointerleave="this.setAttribute('style', 'color:text-danger-emphasis')">
         ${entityName === null ? '' : entityName}
     </span>`;
   else
-    return `<span style="cursor:pointer" class="${buttonType}" searid="${searId}" 
-  onpointerenter="this.setAttribute('style', 'cursor:pointer;color: #8B2331;border-bottom: 0.1em solid #8B2331;cursor:pointer')" 
-  onpointerleave="this.setAttribute('style', 'color: bs-body-color')">
+    return `<span class="text-danger-emphasis ${buttonType}" style="cursor:pointer"  searid="${searId}" 
+  onpointerenter="this.setAttribute('style', 'cursor:pointer;color: rgb(159, 158, 158); border-bottom: 0.1em solid  rgb(159, 158, 158)')" 
+  onpointerleave="this.setAttribute('style', 'color:text-danger-emphasis')">
         ${entityName === null ? '' : entityName}
     </span>`;
 }
@@ -120,8 +120,55 @@ export function getEntityLinkClass(buttonType, entityName, searId, withUnderline
  */
 export function getEntityLink(buttonType, entityName, withUnderline = true) {
   if (!withUnderline === false)
+    return `<span class="text-danger-emphasis" style="cursor: pointer" 
+    id="${buttonType}" onpointerenter="this.setAttribute('style', 'cursor: pointer;color: rgb(159, 158, 158); border-bottom: 0.1em solid rgb(159, 158, 158)')" 
+    onpointerleave="this.setAttribute('style', 'color: text-danger-emphasis;')">
+        ${entityName === null ? '' : entityName}
+    </span>`;
+  else
+    return `<span class="text-danger-emphasis" style="cursor: pointer" 
+    id="${buttonType}" onpointerenter="this.setAttribute(color:rgb(159, 158, 158); border-bottom: 0.1em solid rgb(159, 158, 158);cursor: pointer')"
+     onpointerleave="this.setAttribute('style', 'color: text-danger-emphasis;'))">
+        ${entityName === null ? '' : entityName}
+    </span>`;
+}
+
+
+
+/**
+ * Retunrs a link to a class of entity
+ * @param {*} buttonType 
+ * @param {*} entityName 
+ * @param {*} searId 
+ * @param {*} withUnderline allow to display an underline
+ * @returns 
+ */
+export function getEntityLinkClassV1(buttonType, entityName, searId, withUnderline = true) {
+  if (!withUnderline === false)
+    return `<span style="cursor:pointer; border-bottom: 0.1em solid #dddbdbff" class="${buttonType}" searid="${searId}" 
+  onpointerenter="this.setAttribute('style', 'cursor:pointer;color: #8B2331;border-bottom: 0.1em solid #8B2331')" 
+  onpointerleave="this.setAttribute('style', 'color: bs-body-color;border-bottom: 0.1em solid #dddbdbff')">
+        ${entityName === null ? '' : entityName}
+    </span>`;
+  else
+    return `<span style="cursor:pointer" class="${buttonType}" searid="${searId}" 
+  onpointerenter="this.setAttribute('style', 'cursor:pointer;color: #8B2331;border-bottom: 0.1em solid #8B2331')" 
+  onpointerleave="this.setAttribute('style', 'color: bs-body-color')">
+        ${entityName === null ? '' : entityName}
+    </span>`;
+}
+/**
+ * Retunrs a link to an entity
+ * @param { } buttonType 
+ * @param {*} entityName 
+ * @param {*} withUnderline  allow to display an underline
+ * @returns 
+ */
+export function getEntityLinkV1(buttonType, entityName, withUnderline = true) {
+  if (!withUnderline === false)
     return `<span style="cursor: pointer; border-bottom: 0.1em solid #dddbdbff" 
-    id="${buttonType}" onpointerenter="this.setAttribute('style', 'color: #8B2331;border-bottom: 0.1em solid #8B2331;cursor:pointer')" onpointerleave="this.setAttribute('style', 'color: bs-body-color;border-bottom: 0.1em solid #dddbdbff')">
+    id="${buttonType}" onpointerenter="this.setAttribute('style', 'color: #8B2331;border-bottom: 0.1em solid #8B2331;cursor:pointer')" 
+    onpointerleave="this.setAttribute('style', 'color: bs-body-color;border-bottom: 0.1em solid #dddbdbff')">
         ${entityName === null ? '' : entityName}
     </span>`;
   else
@@ -130,7 +177,6 @@ export function getEntityLink(buttonType, entityName, withUnderline = true) {
         ${entityName === null ? '' : entityName}
     </span>`;
 }
-
 
 export function encodeHTML(str) {
   const map = {
@@ -195,15 +241,21 @@ export function encodeHTML(str) {
 
 export function findTibetanChars(text) {
   const tibetanRegex = /[\u0F00-\u0FFF]+/g;
-
+  let output = '';
   if (typeof text !== "string") {
     throw new TypeError("Input must be a string");
   }
   const matches = text.match(tibetanRegex);
 
-  let output = text.replace(matches, "<span class='tibetanChars'>" + matches + "</span>")
+  if (Array.isArray(matches)) {
+    matches.forEach((matche) => {
+      text = text.replace(matche, "<span class='tibetanChars'>" + matche + "</span>")
+    });
+  } else {
+    text = text.replace(matches, "<span class='tibetanChars'>" + matches + "</span>")
+  }
 
-  return output || []; // Return empty array if no matches
+  return text; // Return empty array if no matches
 }
 
 

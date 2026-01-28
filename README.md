@@ -28,7 +28,6 @@
 - [abandonné dans cette version] Multimedia search : conserver les choix entre 2 interrogations
 - Test image de background,
 - Search Note : ne pas afficher si la note contient du HTML
-- Caractères tibétains reste problème si plusieurs séquences 
 
 ### TOTO tech et Bugs
 - Affichage de la note dans 'karmapa word' BUg
@@ -40,6 +39,14 @@
 
 ------------
 ## Releases notes
+### 5.0.12
+- general : affichage des images dans des modales : ajout d'une icone de fermeture de la modale
+- Multimedia (notice et sous-notice) : Bug Tendrel 10061 - 
+- Caractères tibetains :   notice, tous les titres Notes : toutes (Voir about content et about catalogue), Search, Persons (dans notice et person), sub notice (titre, titre notice pere),
+- Liens sur les notices des keywords et persons, ajouter CTRL 
+- Search : conserve l'historique des recherches pour le natural language et le database search
+- Look des liens 
+
 ### 5.0.11
 - Notice : Présentation des multimedias : nom -> type -> note
 - Person : afficher l'image des linked notices dans une modale

@@ -121,7 +121,6 @@ export async function getSimpleEntityContent(simpleEntityID, entityType, varname
                     id="concname">${eval("simpleEntity." + varname)}</span></span>
                    <div>
             </div>
-   
         </div>
    `;
 
@@ -137,10 +136,12 @@ export async function getSimpleEntityContent(simpleEntityID, entityType, varname
                 <hr style = "margin-block-start:0.1rem;margin-block-end:0.3rem;margin-top:15px" />`;
 
         if (linkedNotices.length > 5000)
-            output += ` <div class="alert alert-warning" role="alert" style="margin-bottom:20px;margin-top:10px"><span class="fs-6" style="color:#8B2331">Notices linked (${linkedNotices.length} notices), only the first 5000 are displayed</span>  </div>`;
+            // output += ` <div class="alert alert-warning" role="alert" style="margin-bottom:20px;margin-top:10px"><span class="fs-6" style="color:#8B2331">Notices linked (${linkedNotices.length} notices), only the first 5000 are displayed</span>  </div>`;
+            output += `<dob-bloctitle userIcon="" userName="Notices linked (${linkedNotices.length} notices), only the first 5000 are displayed" ></dob-bloctitle >`;
         else
-            output += ` <div style="margin-bottom:20px"><span class="fs-6" style="color:#8B2331">Notices linked (${linkedNotices.length} notices)</span>  </div>`;
+            //  output += ` <div style="margin-bottom:20px"><span class="fs-6" style="color:#8B2331">Notices linked (${linkedNotices.length} notices)</span>  </div>`;
 
+            output += `<dob-bloctitle userIcon="" userName="Notices linked (${linkedNotices.length} notices)" ></dob-bloctitle >`;
         linkedNotices.map((linkedNotice, index) => {
             // if (index > 1000)
             //     return true;
@@ -153,10 +154,10 @@ export async function getSimpleEntityContent(simpleEntityID, entityType, varname
 
                 if (linkedNotice.noti_hierarchical_level && linkedNotice.noti_hierarchical_level === '2') {
                     output += `<div class="col-9" >`;
-                    output += getEntityLinkClass("subnoticeButtons", findTibetanChars(linkedNotice.noti_main_title), linkedNotice.noti_id, false);
+                    output += getEntityLinkClass("subnoticeButtons", findTibetanChars(linkedNotice.noti_main_title), linkedNotice.noti_id, true);
                 } else {
                     output += `<div class="col-9" >`;
-                    output += getEntityLinkClass("noticeButtons", bookIcon + " " + findTibetanChars(linkedNotice.noti_main_title), linkedNotice.noti_id, false);
+                    output += getEntityLinkClass("noticeButtons", bookIcon + " " + findTibetanChars(linkedNotice.noti_main_title), linkedNotice.noti_id, true);
                 }
                 output += `</div > `
 
@@ -166,15 +167,15 @@ export async function getSimpleEntityContent(simpleEntityID, entityType, varname
 
                 if (linkedNotice.noti_hierarchical_level && linkedNotice.noti_hierarchical_level === '2') {
                     output += `<div class="col-9" > `;
-                    output += getEntityLinkClass("subnoticeButtons", subnoticeIcon + " " + findTibetanChars(linkedNotice.noti_main_title), linkedNotice.noti_id, false);
+                    output += getEntityLinkClass("subnoticeButtons", subnoticeIcon + " " + findTibetanChars(linkedNotice.noti_main_title), linkedNotice.noti_id, true);
                 } else
                     output += `<div class="col-9" >`;
-                output += getEntityLinkClass("noticeButtons", bookIcon + " " + findTibetanChars(linkedNotice.noti_main_title), linkedNotice.noti_id, false);
+                output += getEntityLinkClass("noticeButtons", bookIcon + " " + findTibetanChars(linkedNotice.noti_main_title), linkedNotice.noti_id, true);
 
                 output += `</div > `;
             }
             output += `</div > `
-            output += `<hr style = "margin-block-start:0.1rem;margin-block-end:0.3rem;margin-top:15px" /> `;;
+            output += `<hr style = "margin-block-start:0.1rem;margin-block-end:0.3rem;margin-top:15px;color: #d0cece" /> `;;
 
         }); output += ``
     } catch (error) {

@@ -2,11 +2,12 @@
 import { getNotice } from './noticeService.js'
 import { displayModaleAndFunctions } from './abstractModalViewController.js'
 import { displayimageViewDisplay } from '../appservices/displayImageModal/displayimageViewCont.js'
-import { displaynoticeMultimediaModalViewDisplay } from './noticeMultimediaModal/noticeMultimediaModalViewCont.js'
+import { displaynoticeMultimediaModalViewDisplay } from '../appservices/noticeMultimediaModalViewCont.js'
 
 // *** App services
 import { launchInitialisation } from '../appservices/initialisationService.js'
 import { headerViewDisplay } from '../appservices/headerViewCont.js'
+import { displayField, addslashes } from '../appservices/components.js'
 
 // ** Shared ressoucres
 import {
@@ -48,7 +49,7 @@ export async function displayNoticeContent(mainDisplay, noticeID) {
 
     // let output = '';
     let notice = await getNotice(noticeID, mainDisplay);
-    console.log(JSON.stringify(notice));
+    // console.log(JSON.stringify(notice));
 
     displayNotice(notice, mainDisplay);
 
@@ -79,47 +80,60 @@ function displayNotice(notice, mainDisplay) {
 
         output += `<div class="col-9 " style = "" > ${findTibetanChars(notice.noticeCatalogDescription)} `;
         output += `</div > `
-
     } else {
-
         output += `<div class="col-md-12 main" style = "" > ${findTibetanChars(notice.noticeCatalogDescription)} `;
         output += `</div > `
-
     }
-    output += `</div > <hr style="margin-block-start:0.3rem;margin-block-end:0.3rem"/>`; // end row
+    //  output += `</div > <hr style="margin-block-start:0.3rem;margin-block-end:0.3rem"/>`; // end row
 
     // *** Notice titles
-    output += `<div style=""><span class="fs-5" style="color:#8B2331">${titleIcon} ${getTranslation("NOT_TITLES")}</span></div>`;
-    output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_MAINTITLE")}</span> : ${findTibetanChars(notice.noti_main_title)}`;
+    // output += `<div style=""><span class="fs-5" style="color:#8B2331">${titleIcon} ${getTranslation("NOT_TITLES")}</span></div>`;
 
-    output += `</div>`
-    //if (notice.noti_sub_title)
-    output += `<div class="col-md-12 main"  > <span class="fw-light" >${getTranslation("NOT_SUBTITLE")}</span> : ${notice.noti_sub_title}</div>`;
+    // output += displayField(getTranslation("NOT_MAINTITLE"), findTibetanChars(notice.noti_main_title));
+    // output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_MAINTITLE")}</span> : ${findTibetanChars(notice.noti_main_title)}`;
+    // output += `</div>`
+
+    // if (notice.noti_sub_title)
+    //     output += displayField(getTranslation("NOT_SUBTITLE"), findTibetanChars(notice.noti_sub_title));
+    //output += `<div class="col-md-12 main"  > <span class="fw-light" >${getTranslation("NOT_SUBTITLE")}</span> : ${notice.noti_sub_title}</div>`
+
+    output += `
+        <dob-bloctitle userIcon="titleIcon" userName="${getTranslation("NOT_TITLES")}"></dob-bloctitle>
+            <dob-stdfield fieldName="${getTranslation("NOT_MAINTITLE")}" fieldValue="${findTibetanChars(notice.noti_main_title)}"></dob-stdfield>
+            <dob-stdnotnullfield fieldName="${getTranslation("NOT_SUBTITLE")}" fieldValue="${notice.noti_sub_title}"></dob-stdnotnullfield>
+            <dob-stdnotnullfield fieldName="${getTranslation("NOT_PARALLELTITLE")}" fieldValue = "${notice.noti_parallel_title}" ></dob-stdnotnullfield>
+            <dob-stdnotnullfield fieldName="${getTranslation("NOT_ABREVIATEDTITLE")}" fieldValue = "${notice.noti_abreviated_title}" ></dob-stdnotnullfield>
+            <dob-stdnotnullfield fieldName="${getTranslation("NOT_ORIGINALTITLE")}" fieldValue = "${notice.noti_original_title}" ></dob-stdnotnullfield>
+            <dob-stdnotnullfield fieldName="${getTranslation("NOT_MAINTRANSTITLE")}" fieldValue = "${notice.noti_main_title_translated}" ></dob-stdnotnullfield>
+            <dob-stdnotnullfield fieldName="${getTranslation("NOT_OTHERTITLE")}" fieldValue = "${notice.noti_other_title}" ></dob-stdnotnullfield>
+            `;
+
     //if (notice.noti_parallel_title)
-    output += `<div class="col-md-12 main"> <span class="fw-light" >${getTranslation("NOT_PARALLELTITLE")}</span> :  ${notice.noti_parallel_title}</div>`;
+    // output += `<div class="col-md-12 main"> <span class="fw-light" >${getTranslation("NOT_PARALLELTITLE")}</span> :  ${notice.noti_parallel_title}</div>`;
     //if (notice.noti_abreviated_title)
-    output += `<div class="col-md-12 main"> <span class="fw-light" >${getTranslation("NOT_ABREVIATEDTITLE")}</span> :  ${notice.noti_abreviated_title}</div>`;
+    //  output += `<div class="col-md-12 main"> <span class="fw-light" >${getTranslation("NOT_ABREVIATEDTITLE")}</span> :  ${notice.noti_abreviated_title}</div>`;
     //if (notice.noti_original_title)
-    output += `<div class="col-md-12 main"> <span class="fw-light" >${getTranslation("NOT_ORIGINALTITLE")}</span> :  ${notice.noti_original_title}</div>`;
-    //if (notice.noti_main_title_translated)
-    output += `<div class="col-md-12 main"> <span class="fw-light" >${getTranslation("NOT_MAINTRANSTITLE")}</span> :  ${notice.noti_main_title_translated}</div>`;
-    //if (notice.noti_other_title)
-    output += `<div class="col-md-12 main"> <span class="fw-light" >${getTranslation("NOT_OTHERTITLE")}</span> :  ${notice.noti_other_title}</div>`;
+    // output += `<div class="col-md-12 main"> <span class="fw-light" >${getTranslation("NOT_ORIGINALTITLE")}</span> :  ${notice.noti_original_title}</div>`;
+    // //if (notice.noti_main_title_translated)
+    // output += `<div class="col-md-12 main"> <span class="fw-light" >${getTranslation("NOT_MAINTRANSTITLE")}</span> :  ${notice.noti_main_title_translated}</div>`;
+    // //if (notice.noti_other_title)
+    // output += `<div class="col-md-12 main"> <span class="fw-light" >${getTranslation("NOT_OTHERTITLE")}</span> :  ${notice.noti_other_title}</div>`;
 
+    // output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
 
-    //  output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
 
     // *** Notice description
     output += `<div class="row row-cols-1 row-cols-xs-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 ">`;
     output += `<div class="col">`;
-    output += `<hr style="margin-block-start:0.1rem;margin-block-end:0.3rem;margin-top:15px"/>`;
-    output += `<div style=""><span class="fs-5" style="color:#8B2331">${descriptionIcon} ${getTranslation("NOT_DESCRIPTION")}</span></div>`;
+    //output += `<hr style="margin-block-start:0.1rem;margin-block-end:0.3rem;margin-top:15px"/>`;
+    output += `<dob-bloctitle userIcon="descriptionIcon" userName="${getTranslation("NOT_DESCRIPTION")}" ></dob-bloctitle >`;
+    // output += `<div style=""><span class="fs-5" style="color:#8B2331">${descriptionIcon} ${getTranslation("NOT_DESCRIPTION")}</span></div>`;
 
     output += `<div class="col-md-12 main" > 
         <span class="fw-light">${getTranslation("NOT_GENRE")}</span> : 
         ${getEntityLink("genreButton", notice.genrt_name)}
     </div>`;
-
+    // output += `<dob-stdfield fieldName="${getTranslation("NOT_GENRE")}" fieldValue = "${getEntityLink("genreButton", notice.genrt_name)}" ></dob-stdfield >`;
     output += `<div class="col-md-12 main" > <span class="fw-light" >${getTranslation("NOT_THEME")}</span> : 
         ${getEntityLink("themeButton", notice.them_name)}
         </div>`;
@@ -131,7 +145,8 @@ function displayNotice(notice, mainDisplay) {
     ${getEntityLink("mattButton", notice.matt_name)} 
     </div>`;
     output += `<div class="col-md-12 main" " > <span class="fw-light" ></div>`;
-    output += `<div class="col-md-12 main" " > <span class="fw-light">${getTranslation("NOT_MATERIALDESCRIPTION")}</span> ${notice.noti_col_mat_description === null ? '' : notice.noti_col_mat_description}</div>`;
+    output += displayField(getTranslation("NOT_MATERIALDESCRIPTION"), notice.noti_col_mat_description === null ? '' : notice.noti_col_mat_description);
+    // output += `<div class="col-md-12 main" " > <span class="fw-light">${getTranslation("NOT_MATERIALDESCRIPTION")}</span> ${notice.noti_col_mat_description === null ? '' : notice.noti_col_mat_description}</div>`;
     output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_MATERIALCHARACTERISTIC")}</span> : ${notice.noti_col_car_description === null ? '' : notice.noti_col_car_description}</div>`;
     output += `<div class="col-md-12 main" " > <span class="fw-light">${getTranslation("NOT_MATERIALFORMAT")}</span> : ${notice.noti_col_format === null ? '' : notice.noti_col_format}</div>`;
     output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_OTHEMATERIAL")}</span> : ${notice.noti_col_other_material === null ? '' : notice.noti_col_other_material}</div>`;
@@ -141,10 +156,12 @@ function displayNotice(notice, mainDisplay) {
     // ** output +={wsLanguage.NOT_IMAGE}}</b> : {{notice.noti_main_image}}
     output += `</div>`
 
+
     // *** Edition
     output += `<div class="col">`;
-    output += `<hr style="margin-block-start:0.1rem;margin-block-end:0.3rem;margin-top:15px"/>`;
-    output += `<div style=""><span class="fs-5" style="color:#8B2331">${publicationIcon} ${getTranslation("NOT_PUBLICATION")} </span></div>`;
+    // output += `<hr style="margin-block-start:0.1rem;margin-block-end:0.3rem;margin-top:15px"/>`;
+    // output += `<div style=""><span class="fs-5" style="color:#8B2331">${publicationIcon} ${getTranslation("NOT_PUBLICATION")} </span></div>`;
+    output += `<dob-bloctitle userIcon="publicationIcon" userName="${getTranslation("NOT_PUBLICATION")}" ></dob-bloctitle >`;
 
     output += `<div class="col-md-12 main" " > 
      <span class="fw-light"  >
@@ -153,7 +170,7 @@ function displayNotice(notice, mainDisplay) {
        ${getEntityLink("publisherButton", notice.publ_name)}
       </div>`;
 
-    output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("COLL_TITLE")}</span> : <span style="cursor: pointer; border-bottom: 0.1em solid #dddbdbff" id="collectionButton">${notice.coll_name === null || notice.coll_name === 'nd' ? '' : notice.coll_name}</span></div>`;
+    output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("COLL_TITLE")}</span> : <span style="" id="collectionButton">${notice.coll_name === null || notice.coll_name === 'nd' ? '' : notice.coll_name}</span></div>`;
     output += `<div class="col-md-12 main" " > <span class="fw-light" >${getTranslation("NOT_NUMBERINCOLLECTION")} </span> : 
     <span id="noti_num_in_col">${notice.noti_num_in_col}</span></div>`;
 
@@ -170,16 +187,19 @@ function displayNotice(notice, mainDisplay) {
     output += `</div>`
     output += `</div>`
 
+
     // *** Persons
     // Note : the , and . have been deleted but we have kept the code  
     output += `<div class="row row-cols-1 row-cols-xs-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 ">`;
     output += `<div class="col">`;
-    output += `<hr style="margin-block-start:0.1rem;margin-block-end:0.3rem;margin-top:15px"/>`;
-    output += `<div style=""><span class="fs-5 " style="color:#8B2331">${personIcon} ${getTranslation("PERS_TITLE")}</span></div>`;
+    // output += `<hr style="margin-block-start:0.1rem;margin-block-end:0.3rem;margin-top:15px"/>`;
+    // output += `<div style=""><span class="fs-5 " style="color:#8B2331">${personIcon} ${getTranslation("PERS_TITLE")}</span></div>`;
+    output += `<dob-bloctitle userIcon="personIcon" userName="${getTranslation("PERS_TITLE")}" ></dob-bloctitle >`;
+
     let personsList = getArrayFromjson(notice.personsFunctionFor);
     personsList.map((person, index, personsList) => {
         output += `<span class="fw-light" > ${person.tffd_name}</span> : 
-             ${getEntityLinkClass("personButtons", findTibetanChars(person.coal_name), person.chaa_id)}</br>`;
+             ${getEntityLinkClass("personButtons", findTibetanChars(person.coal_name), person.chaa_id, true)}</br>`;
 
     });
     output += `</div>`; // End persons col
@@ -187,22 +207,26 @@ function displayNotice(notice, mainDisplay) {
     // *** Keywords
     // Note : the , and . have been deleted but we have kept the code
     output += `<div class="col">`;
-    output += `<hr class="visible-md-block" style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
-    output += `<div style=""><span class="fs-5" style="color:#8B2331">${keyIcon} ${getTranslation("KEY_TITLE")}</span></div>`;
+    // output += `<hr class="visible-md-block" style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
+    // output += `<div style=""><span class="fs-5" style="color:#8B2331">${keyIcon} ${getTranslation("KEY_TITLE")}</span></div>`;
+    output += `<dob-bloctitle userIcon="keyIcon" userName="${getTranslation("KEY_TITLE")}" ></dob-bloctitle >`;
+
     let keywordList = getArrayFromjson(notice.keywordsFunctionFor);
     keywordList.map((keyword, index) => {
         output += `
             <span class="fw-light" > ${keyword.tffc_name}</span> : 
-                ${getEntityLinkClass("keywordButtons", keyword.coal_name, keyword.conc_id)}</br>
+                ${getEntityLinkClass("keywordButtons", keyword.coal_name, keyword.conc_id, true)}</br>
            `;
     });
     output += `</div>`; // End keyword col
     output += `</div>`;
     output += `</div>`; // End person & keyword row
-    output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
+    // output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
 
     // *** Languages
-    output += `<div style=""><span class="fs-5" style="color:#8B2331">${languageIcon} ${getTranslation("NOT_LANGAUGESTITLE")}</span></div>`;
+    // output += `<div style=""><span class="fs-5" style="color:#8B2331">${languageIcon} ${getTranslation("NOT_LANGAUGESTITLE")}</span></div>`;
+    output += `<dob-bloctitle userIcon="languageIcon" userName="${getTranslation("NOT_LANGAUGESTITLE")}" ></dob-bloctitle >`;
+
     let languagesList = getArrayFromjson(notice.languagesFunctionFor);
     languagesList.map((language, index) => {
         output += `<span class="fw-light" > ${language.ffnlt_name}</span> : 
@@ -210,42 +234,60 @@ function displayNotice(notice, mainDisplay) {
            `;
     });
     output += `</div>`; // End persons col
-    output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
+    //  output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
+
 
     // *** Notes
     let notesList = getArrayFromjson(notice.notesFunctionFor);
-    output += `<div ><span class="fs-5" style="color:#8B2331">${noteIcon} ${getTranslation("NOT_NOTESTITLE")}</span></div>`;
+    // output += `<div ><span class="fs-5" style="color:#8B2331">${noteIcon} ${getTranslation("NOT_NOTESTITLE")}</span></div>`;
+    output += `<dob-bloctitle userIcon="noteIcon" userName="${getTranslation("NOT_NOTESTITLE")}" ></dob-bloctitle >`;
+
     notesList.map((note, index) => {
         output += `<div style ="margin-bottom:10px"><span class="fw-light" style ="margin-top:40px">${note.ffnnt_name} </span> :</br> ${findTibetanChars(note.ffnn_text)} </br> </div>`;
     });
-    output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
+    // output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
+
 
     // *** Sub Notices
     let subNoticesFunctionFor = getArrayFromjson(notice.subNoticesFunctionFor);
-    output += `<div><span class="fs-5" style="color:#8B2331">${subnoticeIcon} ${getTranslation("NOT_SUBRECORDSTITLE")}</span></div>`;
+    //  output += `<div><span class="fs-5" style="color:#8B2331">${subnoticeIcon} ${getTranslation("NOT_SUBRECORDSTITLE")}</span></div>`;
+    output += `<dob-bloctitle userIcon="subnoticeIcon" userName="${getTranslation("NOT_SUBRECORDSTITLE")}" ></dob-bloctitle >`;
+
     subNoticesFunctionFor.map((subNoticeFunctionFor, index) => {
-        output += `<span class="subNoticeElem" style="cursor:pointer" subNoticeID="${subNoticeFunctionFor.noti_id}"
-        subNoticeObject='${JSON.stringify(subNoticeFunctionFor)}'>   - ${subNoticeFunctionFor.noti_main_title}  (${subNoticeFunctionFor.sdoc_order})
+        output += ` - <span class="subNoticeElem" style="cursor:pointer; border-bottom: 0.1em solid #dddbdb" subNoticeID="${subNoticeFunctionFor.noti_id}"
+                       onpointerenter="this.setAttribute('style', 'cursor:pointer;color: #8B2331;border-bottom: 0.1em solid #8B2331')" 
+                onpointerleave="this.setAttribute('style', 'color: bs-body-color; border-bottom: 0.1em solid #dddbdbff')"
+        >   ${findTibetanChars(subNoticeFunctionFor.noti_main_title)}  (${subNoticeFunctionFor.sdoc_order})
          </span></br> `;
     });
-    output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
+
 
     // *** Multimedia
     let multimediasList = getArrayFromjson(notice.multimediasFunctionFor);
-    output += `<div><span class="fs-5" style="color:#8B2331">${multimediaIcon} ${getTranslation("NOT_MULTIMEDIASTITLE")}</span></div>`;
+    // output += `<div><span class="fs-5" style="color:#8B2331">${multimediaIcon} ${getTranslation("NOT_MULTIMEDIASTITLE")}</span></div>`;
+    output += `<dob-bloctitle userIcon="multimediaIcon" userName="${getTranslation("NOT_MULTIMEDIASTITLE")}" ></dob-bloctitle >`;
+
     multimediasList.map((multimedia, index) => {
-        output += `<div class="row">
-        <div class="col-3"><span class="multimediaElem" style="cursor:pointer" multObject='${JSON.stringify(multimedia)}'> - ${multimedia.mult_name} </span></div>
-          <div class="col-3"><span >${multimedia.multt_name} </span></div>
-          <div class="col-6"><span > ${multimedia.mult_desc} </span></div>
+        output += `
+        <div class="row">
+            <div class="col-3">
+                 - <span class="multimediaElem" style="cursor:pointer; border-bottom: 0.1em solid #dddbdbff"  multt_id="${multimedia.multt_id}" mult_file="${multimedia.mult_file}"
+                onpointerenter="this.setAttribute('style', 'cursor:pointer;color: #8B2331;border-bottom: 0.1em solid #8B2331')" 
+                onpointerleave="this.setAttribute('style', 'color: bs-body-color; border-bottom: 0.1em solid #dddbdbff')"> ${multimedia.mult_name} </span>
+            </div>
+            <div class="col-3">
+                <span >${multimedia.multt_name} </span>
+            </div>
+            <div class="col-6">
+                <span > ${findTibetanChars(multimedia.mult_desc)} </span>
+            </div>
          </div>`;
     });
-    output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
+    // output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
 
     // *** Copies
     let exemplairesList = getArrayFromjson(notice.exemplairesFunctionFor);
-    output += `<div ><span class="fs-5" style="color:#8B2331">${copiesIcon} ${getTranslation("NOT_COPIESTITLE")}</span></div>`;
-
+    output += `<dob-bloctitle userIcon="copiesIcon" userName="${getTranslation("NOT_COPIESTITLE")}" ></dob-bloctitle >`;
     // sort copies array
     exemplairesList.sort(function (a, b) {
         return a.exow_name.localeCompare(b.exow_name);
@@ -260,7 +302,7 @@ function displayNotice(notice, mainDisplay) {
         output += ` -  ${exemplaire.exem_cote}  </br> `;
         output += ``;
     });
-    output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
+    //output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
     output += `</br></br>`;
 
     // *** Display string
@@ -319,7 +361,7 @@ function displayNotice(notice, mainDisplay) {
     });
 
     addMultipleEnventListener(".multimediaElem", function (event) {
-        displaynoticeMultimediaModalViewDisplay("modalSection", JSON.parse(event.currentTarget.attributes['multObject'].nodeValue))
+        displaynoticeMultimediaModalViewDisplay("modalSection", event.currentTarget.getAttribute("multt_id"), event.currentTarget.getAttribute("mult_file"))
     });
 
     addMultipleEnventListener(".subNoticeElem", function (event) {

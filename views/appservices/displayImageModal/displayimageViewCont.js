@@ -12,6 +12,7 @@ const editModaleString = `
                 <div class="modal-header">
                     <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
                     <h4 class="modal-title" style="color:#8B2331"></h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="row modal-body" id="modalbodyLOgin">
                     <div id="modalmessage"></div>
