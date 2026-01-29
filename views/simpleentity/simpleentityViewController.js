@@ -152,10 +152,10 @@ export async function getSimpleEntityContent(simpleEntityID, entityType, varname
 
                 if (linkedNotice.noti_hierarchical_level && linkedNotice.noti_hierarchical_level === '2') {
                     output += `<div class="col-9" >`;
-                    output += getEntityLinkClass("subnoticeButtons", findTibetanChars(linkedNotice.noti_main_title), linkedNotice.noti_id, true);
+                    output += getEntityLinkClass("subnoticeButtons", findTibetanChars(linkedNotice.noti_main_title), linkedNotice.noti_id, false);
                 } else {
                     output += `<div class="col-9" >`;
-                    output += getEntityLinkClass("noticeButtons", bookIcon + " " + findTibetanChars(linkedNotice.noti_main_title), linkedNotice.noti_id, true);
+                    output += getEntityLinkClass("noticeButtons", bookIcon + " " + findTibetanChars(linkedNotice.noti_main_title), linkedNotice.noti_id, false);
                 }
                 output += `</div > `
 
@@ -165,12 +165,14 @@ export async function getSimpleEntityContent(simpleEntityID, entityType, varname
 
                 if (linkedNotice.noti_hierarchical_level && linkedNotice.noti_hierarchical_level === '2') {
                     output += `<div class="col-9" > `;
-                    output += getEntityLinkClass("subnoticeButtons", subnoticeIcon + " " + findTibetanChars(linkedNotice.noti_main_title), linkedNotice.noti_id, true);
-                } else
+                    output += getEntityLinkClass("subnoticeButtons", subnoticeIcon + " " + findTibetanChars(linkedNotice.noti_main_title), linkedNotice.noti_id, false);
+                    output += `</div > `;
+                } else {
                     output += `<div class="col-9" >`;
-                output += getEntityLinkClass("noticeButtons", bookIcon + " " + findTibetanChars(linkedNotice.noti_main_title), linkedNotice.noti_id, true);
+                    output += getEntityLinkClass("noticeButtons", bookIcon + " " + findTibetanChars(linkedNotice.noti_main_title), linkedNotice.noti_id, false);
 
-                output += `</div > `;
+                    output += `</div > `;
+                }
             }
             output += `</div > `
             output += `<hr style = "margin-block-start:0.1rem;margin-block-end:0.3rem;margin-top:15px;color: #d0cece" /> `;;

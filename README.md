@@ -43,6 +43,8 @@
 ------------
 ## Releases notes
 ### 5.0.12
+- Notice : Modification de la préeentation des listes de multimedias, sous notice et exemplaires
+- Liens des notices linked uniformisés, colorés.
 - activation du login
 - Liens dans les notes colorés en bordeaux et soulignés
 - affichage des multimédias (voir tendrel 02)

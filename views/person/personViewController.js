@@ -108,10 +108,6 @@ async function displayPerson(mainDisplay, person, personAliases, linkedNotices) 
         `;
 
     // *** Display Aliases
-    // personScreen += `< hr style = "margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px" /> `;
-    // personScreen += `
-    //     <div class="row justify-content-start" >
-    //         <div style=""> <span class="fs-5" style="color:#8B2331"> ${getTranslation("PERS_ALIASES")}</span></div >`;
     personScreen += `<dob-bloctitle userIcon="" userName="${getTranslation("PERS_ALIASES")}" ></dob-bloctitle >`;
     personAliases.map((personAliase, index) => {
         personScreen += `<div class="col-12" >`;
@@ -151,8 +147,6 @@ async function displayPerson(mainDisplay, person, personAliases, linkedNotices) 
     addMultipleEnventListener(".imgsearch", function (event) {
         displayimageViewDisplay("modalSection", event.currentTarget.getAttribute('src'), event.ctrlKey)
     });
-
-
 }
 /**
  * Returns the list of the notices linked with the person
@@ -161,7 +155,6 @@ async function displayPerson(mainDisplay, person, personAliases, linkedNotices) 
  */
 async function getLinkedNoticesHtml(linkedNotices) {
     let outputln = '';
-    // outputln += `<div style = "margin-bottom:20px" > <span class="fs-5" style="color:#8B2331">${getTranslation("PERS_LINKED")} (${linkedNotices.length} notices)</span>  </div > `;
     outputln += `<dob-bloctitle userIcon="" userName="${getTranslation("PERS_LINKED")}  (${linkedNotices.length} notices)" ></dob-bloctitle >`;
 
     linkedNotices.map((linkedNotice, index) => {
@@ -176,24 +169,26 @@ async function getLinkedNoticesHtml(linkedNotices) {
                 outputln += `<div class="col-9" >`
                 outputln += getEntityLinkClass("subnoticeButtons", subnoticeIcon + " " + findTibetanChars(linkedNotice.noti_main_title), linkedNotice.noti_id, false);
                 outputln += `</div > `;
-                // outputln += `<div class="col-9" > <span style="cursor: pointer" class="subnoticeButtons" searid="${linkedNotice.noti_id}" > ${subnoticeIcon} ${linkedNotice.noti_main_title} </span >`;
             } else {
                 outputln += `<div class="col-9" >`
                 outputln += getEntityLinkClass("noticeButtons", bookIcon + " " + findTibetanChars(linkedNotice.noti_main_title), linkedNotice.noti_id, false);
-                // outputln += `<div class="col-9" > <span style="cursor: pointer" class="noticeButtons" searid="${linkedNotice.noti_id}" >${bookIcon} ${linkedNotice.noti_main_title} </span > `;
                 outputln += `</div > `
             }
         } else {
-            if (linkedNotice.noti_hierarchical_level && linkedNotice.noti_hierarchical_level === 2)
-                outputln += getEntityLinkClass("subnoticeButtons", subnoticeIcon + " " + findTibetanChars(linkedNotice.noti_main_title), linkedNotice.noti_id, false);
-            //outputln += `<div class="col-12" > <span style="cursor: pointer" class="subnoticeButtons" searid="${linkedNotice.noti_id}" > ${subnoticeIcon} ${linkedNotice.noti_main_title} </span >`;
-            else
-                outputln += getEntityLinkClass("noticeButtons", bookIcon + " " + findTibetanChars(linkedNotice.noti_main_title), linkedNotice.noti_id, false);
-            //outputln += `<div class="col-12" > <span style="cursor: pointer" class="noticeButtons" searid="${linkedNotice.noti_id}" >${bookIcon} ${linkedNotice.noti_main_title} </span >`;
+            outputln += ` <div class="col-3" align = "center" > `;
             outputln += `</div > `;
+
+            if (linkedNotice.noti_hierarchical_level && linkedNotice.noti_hierarchical_level === 2) {
+                outputln += `<div class="col-9" >`;
+                outputln += getEntityLinkClass("subnoticeButtons", subnoticeIcon + " " + findTibetanChars(linkedNotice.noti_main_title), linkedNotice.noti_id, false);
+                outputln += `</div > `;
+            } else {
+                outputln += `<div class="col-9" >`;
+                outputln += getEntityLinkClass("noticeButtons", bookIcon + " " + findTibetanChars(linkedNotice.noti_main_title), linkedNotice.noti_id, false);
+                outputln += `</div > `;
+            }
         }
-        outputln += `</div >
-                    `
+        outputln += `</div >               `
         outputln += `<hr style = "margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px;color: #dddbdbff" />`;
 
     });

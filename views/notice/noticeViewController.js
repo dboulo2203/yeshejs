@@ -253,26 +253,32 @@ function displayNotice(notice, mainDisplay) {
     //  output += `<div><span class="fs-5" style="color:#8B2331">${subnoticeIcon} ${getTranslation("NOT_SUBRECORDSTITLE")}</span></div>`;
     output += `<dob-bloctitle userIcon="subnoticeIcon" userName="${getTranslation("NOT_SUBRECORDSTITLE")}" ></dob-bloctitle >`;
 
+    output += `<ul class="list-group">`
     subNoticesFunctionFor.map((subNoticeFunctionFor, index) => {
-        output += ` - <span class="subNoticeElem" style="cursor:pointer; border-bottom: 0.1em solid #dddbdb" subNoticeID="${subNoticeFunctionFor.noti_id}"
-                       onpointerenter="this.setAttribute('style', 'cursor:pointer;color: #8B2331;border-bottom: 0.1em solid #8B2331')" 
-                onpointerleave="this.setAttribute('style', 'color: bs-body-color; border-bottom: 0.1em solid #dddbdbff')"
+        output += `<li class="list-group-item">`;
+        output += ` <span class="text-danger-emphasis subNoticeElem" style="cursor:pointer" subNoticeID="${subNoticeFunctionFor.noti_id}"
+                       onpointerenter="this.setAttribute('style', 'cursor:pointer; border-bottom: 0.1em solid  rgb(159, 158, 158)')" 
+                onpointerleave="this.setAttribute('style', 'color:text-danger-emphasis')"
         >   ${findTibetanChars(subNoticeFunctionFor.noti_main_title)}  (${subNoticeFunctionFor.sdoc_order})
-         </span></br> `;
+         </span>`;
+        output += `</li>`;
     });
+    output += `</ul>`
+
 
     // *** Multimedia
     let multimediasList = getArrayFromjson(notice.multimediasFunctionFor);
     // output += `<div><span class="fs-5" style="color:#8B2331">${multimediaIcon} ${getTranslation("NOT_MULTIMEDIASTITLE")}</span></div>`;
     output += `<dob-bloctitle userIcon="multimediaIcon" userName="${getTranslation("NOT_MULTIMEDIASTITLE")}" ></dob-bloctitle >`;
-
+    output += `<ul class="list-group">`
     multimediasList.map((multimedia, index) => {
+        output += `<li class="list-group-item">`;
         output += `
         <div class="row">
             <div class="col-3">
-                 - <span class="multimediaElem" style="cursor:pointer; border-bottom: 0.1em solid #dddbdbff"  multt_id="${multimedia.multt_id}" mult_file="${multimedia.mult_file}"
-                onpointerenter="this.setAttribute('style', 'cursor:pointer;color: #8B2331;border-bottom: 0.1em solid #8B2331')" 
-                onpointerleave="this.setAttribute('style', 'color: bs-body-color; border-bottom: 0.1em solid #dddbdbff')"> ${multimedia.mult_name} </span>
+                 - <span class="text-danger-emphasis multimediaElem" style="cursor:pointer"  multt_id="${multimedia.multt_id}" mult_file="${multimedia.mult_file}"
+                onpointerenter="this.setAttribute('style', 'cursor:pointer; border-bottom: 0.1em solid  rgb(159, 158, 158)')" 
+                onpointerleave="this.setAttribute('style', 'color:text-danger-emphasis')"> ${multimedia.mult_name} </span>
             </div>
             <div class="col-3">
                 <span >${multimedia.multt_name} </span>
@@ -281,7 +287,9 @@ function displayNotice(notice, mainDisplay) {
                 <span > ${findTibetanChars(multimedia.mult_desc)} </span>
             </div>
          </div>`;
+        output += `</li>`;
     });
+    output += `</ul>`
     // output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
 
     // *** Copies
@@ -293,16 +301,23 @@ function displayNotice(notice, mainDisplay) {
     });
 
     let currentLIbrary = "";
+    output += `<ul class="list-group">`
     exemplairesList.map((exemplaire, index) => {
-        if (currentLIbrary !== exemplaire.exow_name) {
-            output += `<span class="fw-light" style="border-bottom: 0.1em solid #dddbdbff;color:grey"> ${exemplaire.exow_name} </span> </br>`;
-            currentLIbrary = exemplaire.exow_name;
-        }
-        output += ` -  ${exemplaire.exem_cote}  </br> `;
-        output += ``;
+        output += `<li class="list-group-item">`;
+        output += `<div class="row">
+            <div class="col-5">`;
+        output += `<span class="fw-light" style="border-bottom: 0.1em solid #dddbdbff;color:grey"> ${exemplaire.exow_name} </span> </br>`;
+        currentLIbrary = exemplaire.exow_name;
+        // }
+        output += `</div>`;
+        output += ` <div class="col-6">`;
+        output += `  ${exemplaire.exem_cote}  </br> `;
+        output += `</div>`;
+        output += `</li>`;
     });
+    output += `</ul>`
     //output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
-    output += `</br></br>`;
+    output += ``;
 
     // *** Display string
     document.querySelector("#" + mainDisplay).innerHTML = output;

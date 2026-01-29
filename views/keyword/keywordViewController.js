@@ -160,24 +160,26 @@ async function getLinkedNoticesHtml(linkedNotices) {
                 outputln += `<div class="col-9" >`
                 outputln += getEntityLinkClass("subnoticeButtons", subnoticeIcon + " " + findTibetanChars(linkedNotice.noti_main_title), linkedNotice.noti_id, true);
                 outputln += `</div > `;
-                // outputln += `<div class="col-9" > <span style="cursor: pointer" class="subnoticeButtons" searid="${linkedNotice.noti_id}" > ${subnoticeIcon} ${linkedNotice.noti_main_title} </span >`;
             } else {
                 outputln += `<div class="col-9" >`
                 outputln += getEntityLinkClass("noticeButtons", bookIcon + " " + findTibetanChars(linkedNotice.noti_main_title), linkedNotice.noti_id, true);
-                // outputln += `<div class="col-9" > <span style="cursor: pointer" class="noticeButtons" searid="${linkedNotice.noti_id}" >${bookIcon} ${linkedNotice.noti_main_title} </span > `;
                 outputln += `</div > `
             }
         } else {
-            if (linkedNotice.noti_hierarchical_level && linkedNotice.noti_hierarchical_level === 2)
-                outputln += getEntityLinkClass("subnoticeButtons", subnoticeIcon + " " + findTibetanChars(linkedNotice.noti_main_title), linkedNotice.noti_id, true);
-            //outputln += `<div class="col-12" > <span style="cursor: pointer" class="subnoticeButtons" searid="${linkedNotice.noti_id}" > ${subnoticeIcon} ${linkedNotice.noti_main_title} </span >`;
-            else
-                outputln += getEntityLinkClass("noticeButtons", bookIcon + " " + findTibetanChars(linkedNotice.noti_main_title), linkedNotice.noti_id, true);
-            //outputln += `<div class="col-12" > <span style="cursor: pointer" class="noticeButtons" searid="${linkedNotice.noti_id}" >${bookIcon} ${linkedNotice.noti_main_title} </span >`;
+            outputln += ` <div class="col-3" align = "center" > `;
             outputln += `</div > `;
+
+            if (linkedNotice.noti_hierarchical_level && linkedNotice.noti_hierarchical_level === 2) {
+                outputln += `<div class="col-9" >`
+                outputln += getEntityLinkClass("subnoticeButtons", subnoticeIcon + " " + findTibetanChars(linkedNotice.noti_main_title), linkedNotice.noti_id, true);
+                outputln += `</div > `
+            } else {
+                outputln += `<div class="col-9" >`
+                outputln += getEntityLinkClass("noticeButtons", bookIcon + " " + findTibetanChars(linkedNotice.noti_main_title), linkedNotice.noti_id, true);
+                outputln += `</div > `;
+            }
         }
-        outputln += `</div >
-                    `
+        outputln += `</div >            `
         outputln += `<hr style = "margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px;color: #dddbdbff" />`;
 
     });
