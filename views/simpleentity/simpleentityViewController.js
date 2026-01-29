@@ -2,8 +2,8 @@
 import { getSimpleEntity, getSimpleEntitylinkedNotices } from './simpleEntityService.js'
 
 import { displayimageViewDisplay } from '../../shared/bootstrapServices/displayimageViewCont.js'
-import { launchInitialisation } from '../../shared/appservices/initialisationService.js';
-import { headerViewDisplay } from '../../shared/appservices/headerViewCont.js'
+import { launchInitialisation } from '../../shared/yesheAppservices/initialisationService.js';
+import { headerViewDisplay } from '../../shared/yesheAppservices/headerViewCont.js'
 
 // *** Shared ressources
 import { getAppPath, getLinkWithctrl, getEntityLinkClass } from '../../shared/services/commonFunctions.js'
@@ -11,8 +11,6 @@ import { bookIcon, personIcon, keyIcon, printerIcon, publisherIcon, questionIcon
 import { getTranslation } from '../../shared/services/translationService.js'
 import { getConfigurationValue } from '../../shared/services/configurationService.js'
 import { addMultipleEnventListener, findTibetanChars } from '../../shared/services/commonFunctions.js'
-
-
 
 export async function startsimpleEntityController() {
 

@@ -1,8 +1,8 @@
 // *** shared services
 import { getAppPath } from '../../shared/services/commonFunctions.js'
-import { launchInitialisation } from '../../shared/appservices/initialisationService.js'
-import { headerViewDisplay } from '../../shared/appservices/headerViewCont.js'
-import { footerViewDisplay } from '../../shared/appservices//footerViewCont.js'
+import { launchInitialisation } from '../../shared/yesheAppservices/initialisationService.js'
+import { headerViewDisplay } from '../../shared/yesheAppservices/headerViewCont.js'
+import { footerViewDisplay } from '../../shared/yesheAppservices//footerViewCont.js'
 import { simpleMarkdown, loadFileFetch } from '../../shared/services/markdownService.js'
 // *** Menu string
 const mainStringPage = ` 

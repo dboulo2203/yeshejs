@@ -1,8 +1,8 @@
 // *** Component ressources
 
 
-import { headerViewDisplay } from '../../shared/appservices/headerViewCont.js'
-import { launchInitialisation } from '../../shared/appservices/initialisationService.js';
+import { headerViewDisplay } from '../../shared/yesheAppservices/headerViewCont.js'
+import { launchInitialisation } from '../../shared/yesheAppservices/initialisationService.js';
 import { displayimageViewDisplay } from '../../shared/bootstrapServices/displayimageViewCont.js'
 
 // *** Shared ressources

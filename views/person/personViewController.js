@@ -3,9 +3,9 @@ import { getPerson, getPersonAliases, getlinkedNotices, getPersonFromAliasID } f
 import { personEditModalDisplay } from './editModal/personEditModalViewController.js'
 import { personNewModalDisplay } from './editModal/personNewModalViewController.js'
 
-import { headerViewDisplay } from '../../shared/appservices/headerViewCont.js'
+import { headerViewDisplay } from '../../shared/yesheAppservices/headerViewCont.js'
 import { displayimageViewDisplay } from '../../shared/bootstrapServices/displayimageViewCont.js'
-import { launchInitialisation } from '../../shared/appservices/initialisationService.js'
+import { launchInitialisation } from '../../shared/yesheAppservices/initialisationService.js'
 
 // *** Shared ressources
 import { getTranslation } from '../../shared/services/translationService.js'

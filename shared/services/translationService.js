@@ -14,7 +14,7 @@ export async function loadTranslations() {
     const datafr = await responsefr.json();
     if (responsefr.ok) {
         sessionStorage.setItem("frTranslation", JSON.stringify(datafr));
-        console.log("LoadTranslations fr  ok ");
+        //  console.log("LoadTranslations fr  ok ");
     } else {
         console.log(`loadTranslations fr Error : ${JSON.stringify(responsefr)}`);
         throw new Error("loadTranslations fr Error message : " + responsefr.status + " " + responsefr.statusText);
@@ -27,16 +27,11 @@ export async function loadTranslations() {
     if (responsefr.ok) {
         // *** Get the data and save in the sessionStorage
         sessionStorage.setItem("enTranslation", JSON.stringify(dataen));
-        console.log("LoadTranslations en  ok ");
+        //  console.log("LoadTranslations en  ok ");
     } else {
         console.log(`LoadTranslations en Error : ${JSON.stringify(responsefr)}`);
         throw new Error("LoadTranslations en Error message : " + responsefr.status + " " + responsefr.statusText);
     }
-
-    // } catch (error) {
-    //  console.log('There was an error', error);
-
-    // }
 }
 
 /**

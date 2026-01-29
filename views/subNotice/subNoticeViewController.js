@@ -8,8 +8,8 @@ import { getArrayFromjson, addMultipleEnventListener, getEntityLinkClass, getLin
 import { questionIcon18, subnoticeIcon } from '../../shared/assets/constants.js'
 import { getAppPath, findTibetanChars } from '../../shared/services/commonFunctions.js'
 import { getTranslation } from '../../shared/services/translationService.js'
-import { launchInitialisation } from '../../shared/appservices/initialisationService.js';
-import { headerViewDisplay } from '../../shared/appservices/headerViewCont.js'
+import { launchInitialisation } from '../../shared/yesheAppservices/initialisationService.js';
+import { headerViewDisplay } from '../../shared/yesheAppservices/headerViewCont.js'
 
 /**
  * Start script 

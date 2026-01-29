@@ -4,9 +4,10 @@ import { getNotice } from './noticeService.js'
 import { displayModaleAndFunctions } from './abstractModalViewController.js'
 import { displayimageViewDisplay } from '../../shared/bootstrapServices/displayimageViewCont.js'
 import { displayMultimediaModalViewDisplay } from '../../shared/bootstrapServices/multimediaModalViewCont.js'
-import { launchInitialisation } from '../../shared/appservices/initialisationService.js'
-import { headerViewDisplay } from '../../shared/appservices/headerViewCont.js'
+import { launchInitialisation } from '../../shared/yesheAppservices/initialisationService.js'
+import { headerViewDisplay } from '../../shared/yesheAppservices/headerViewCont.js'
 import { displayField, addslashes } from '../../shared/bootstrapServices/components.js'
+import { getCurrentUSerRightLevel } from '../../shared/yesheServices/yesheLoginService.js'
 
 // ** Shared ressoucres
 import {
@@ -66,7 +67,7 @@ function displayNotice(notice, mainDisplay) {
         <div class="d-flex" style="margin-top:60px">
              <div class="p-2 flex-grow-1"><span class="fs-5" style="color:#8B2331">${bookIcon} ${getTranslation("NOT_TITLE")} : ${findTibetanChars(notice.noti_main_title)}</span></div>
             <div class="p-2"><span id="extractButton" style="cursor: pointer" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="notice summary">   ${abstractIcon} </span></div>
-            <div class="p-2"><span id="toDKLLibraryButton" style="cursor: pointer" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="To old Yeshe">   ${toDKLLibraryIcon}</span></div>
+            <div class="p-2"  ${getCurrentUSerRightLevel(20)} ><span id="toDKLLibraryButton" style="cursor: pointer" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="To old Yeshe">   ${toDKLLibraryIcon}</span></div>
         </div>        
         <hr />`;
 

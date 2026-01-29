@@ -43,6 +43,8 @@
 ------------
 ## Releases notes
 ### 5.0.12
+- activation du login
+- Liens dans les notes colorés en bordeaux et soulignés
 - affichage des multimédias (voir tendrel 02)
 - Modifier les liens : un lien est de couleur bordeaux, lorsque la souris passe dessus il se modifie
 - Notice : CTRL fonction pour les liens de person et keyword

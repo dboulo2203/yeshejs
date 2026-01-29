@@ -2,9 +2,9 @@
 import { getSearch } from './searchService.js';
 
 import { displayimageViewDisplay } from '../../shared/bootstrapServices/displayimageViewCont.js'
-import { headerViewDisplay } from '../../shared/appservices/headerViewCont.js'
-import { launchInitialisation } from '../../shared/appservices/initialisationService.js'
-import { searchViewDisplay } from '../../shared/appservices/searchViewCont.js'
+import { headerViewDisplay } from '../../shared/yesheAppservices/headerViewCont.js'
+import { launchInitialisation } from '../../shared/yesheAppservices/initialisationService.js'
+import { searchViewDisplay } from '../../shared/yesheAppservices/searchViewCont.js'
 
 import { getLinkWithctrl, getAppPath, findTibetanChars, initBootstrapTooltips } from '../../shared/services/commonFunctions.js'
 import { getConfigurationValue } from '../../shared/services/configurationService.js'

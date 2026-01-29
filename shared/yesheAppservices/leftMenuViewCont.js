@@ -1,7 +1,7 @@
 
 import { getAppPath } from '../../shared/services/commonFunctions.js'
 import { loginIcon, logoutIcon, themeIcon, bookIcon, personIcon, printerIcon, publisherIcon, keyIcon, customersIcon, pencilsquareIcon, lendIcon } from '../../shared/assets/constants.js'
-import { toogleTheme } from '../../shared/services/bootstrapTheme.js'
+import { toogleTheme } from '../bootstrapServices/bootstrapTheme.js'
 import { loginViewDisplay } from './loginViewCont.js'
 import { isCurrentUSerLogged, getCurrentUSerName } from '../../shared/yesheServices/yesheLoginService.js'
 import { logout } from '../../shared/yesheServices/yesheLoginService.js'

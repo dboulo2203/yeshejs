@@ -1,8 +1,8 @@
 
-import { launchInitialisation } from '../../shared/appservices/initialisationService.js'
-import { headerViewDisplay } from '../../shared/appservices/headerViewCont.js'
-import { searchViewDisplay } from '../../shared/appservices/searchViewCont.js'
-import { footerViewDisplay } from '../../shared/appservices//footerViewCont.js'
+import { launchInitialisation } from '../../shared/yesheAppservices/initialisationService.js'
+import { headerViewDisplay } from '../../shared/yesheAppservices/headerViewCont.js'
+import { searchViewDisplay } from '../../shared/yesheAppservices/searchViewCont.js'
+import { footerViewDisplay } from '../../shared/yesheAppservices//footerViewCont.js'
 
 // *** shared services
 import { getAppPath } from '../../shared/services/commonFunctions.js'
