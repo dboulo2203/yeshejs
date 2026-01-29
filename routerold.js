@@ -1,3 +1,8 @@
+/**
+ * This router is used for compatibility with the previous version of Yeshe
+ * If the url contains #, the router change the url in a YesheV5 shape
+ * This function works on ly for notice, person, keywords
+ */
 export function routerOld() {
     try {
         // *** Router function for the old links to notices and persons

@@ -1,19 +1,20 @@
 // *** Component ressources
-import {
-    getKeyword, getKeywordAliases, getKeywordlinkedNotices,
-    getKeywordFromAliasID
-} from '../../shared/yesheServices/yesheKeywordService.js'
 
-import { headerViewDisplay } from '../appservices/headerViewCont.js'
-import { launchInitialisation } from '../appservices/initialisationService.js';
-import { displayimageViewDisplay } from '../appservices/displayImageModal/displayimageViewCont.js'
+
+import { headerViewDisplay } from '../../shared/appservices/headerViewCont.js'
+import { launchInitialisation } from '../../shared/appservices/initialisationService.js';
+import { displayimageViewDisplay } from '../../shared/bootstrapServices/displayimageViewCont.js'
 
 // *** Shared ressources
 import { getAppPath, getArrayFromjson, addMultipleEnventListener, getLinkWithctrl, getEntityLinkClass, findTibetanChars } from '../../shared/services/commonFunctions.js'
 import { keyIcon, bookIcon, pencilsquare, plussquare, subnoticeIcon } from '../../shared/assets/constants.js';
 import { getTranslation } from '../../shared/services/translationService.js'
 import { getConfigurationValue } from '../../shared/services/configurationService.js'
-import { getCurrentUSerRightLevel } from '../../shared/services/loginService.js'
+import { getCurrentUSerRightLevel } from '../../shared/yesheServices/yesheLoginService.js'
+import {
+    getKeyword, getKeywordAliases, getKeywordlinkedNotices,
+    getKeywordFromAliasID
+} from '../../shared/yesheServices/yesheKeywordService.js'
 
 /**
  * Start script 

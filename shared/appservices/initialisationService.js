@@ -2,7 +2,7 @@ import { loadTranslations } from '../../shared/services/translationService.js'
 import { loadList } from '../../shared/yesheServices/yesheListsService.js'
 import { getConfigurationFromJson } from '../../shared/services/configurationService.js'
 import { setTheme } from '../../shared/services/bootstrapTheme.js'
-import { BlocTitleDisplay, StandardFieldDisplay, StandardFieldNotNullDisplay, DropdownChoice } from '../appservices/components.js'
+import { BlocTitleDisplay, StandardFieldDisplay, StandardFieldNotNullDisplay, DropdownChoice } from '../bootstrapServices/components.js'
 
 /**
  * 

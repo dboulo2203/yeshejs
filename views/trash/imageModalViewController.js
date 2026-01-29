@@ -33,7 +33,7 @@ const imgModaleString = `
  * 
  * @param {*} htlmPartId 
  */
-export async function personEditModalDisplay(htlmPartId, person) {
+export async function personEditModalDisplaytest(htlmPartId, person) {
 
     // *** Variable that keeps the modal object
     let editModal = null;

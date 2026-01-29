@@ -1,10 +1,10 @@
 // *** Component ressources
 import { getSearch } from './searchService.js';
-import { displayimageViewDisplay } from '../appservices/displayImageModal/displayimageViewCont.js'
 
-import { headerViewDisplay } from '../appservices/headerViewCont.js'
-import { launchInitialisation } from '../appservices/initialisationService.js'
-import { searchViewDisplay } from '../appservices/searchViewCont.js'
+import { displayimageViewDisplay } from '../../shared/bootstrapServices/displayimageViewCont.js'
+import { headerViewDisplay } from '../../shared/appservices/headerViewCont.js'
+import { launchInitialisation } from '../../shared/appservices/initialisationService.js'
+import { searchViewDisplay } from '../../shared/appservices/searchViewCont.js'
 
 import { getLinkWithctrl, getAppPath, findTibetanChars, initBootstrapTooltips } from '../../shared/services/commonFunctions.js'
 import { getConfigurationValue } from '../../shared/services/configurationService.js'
@@ -298,7 +298,7 @@ async function displaySearchResults(htlmPartId, searchString, multiCriteriaSearc
     });
 
     addMultipleEnventListener(".subbookButtons", function (event) {
-        getLinkWithctrl(`${getAppPath()}/views/subNotice/subNotice.html?subNoticeID=` + event.currentTarget.getAttribute('searid'), event.ctrlKey)
+        getLinkWithctrl(`${getAppPath()}/views/subnotice/subnotice.html?subnoticeid=` + event.currentTarget.getAttribute('searid'), event.ctrlKey)
     });
 
     addMultipleEnventListener(".personButtons", function (event) {

@@ -3,16 +3,17 @@ import { getPerson, getPersonAliases, getlinkedNotices, getPersonFromAliasID } f
 import { personEditModalDisplay } from './editModal/personEditModalViewController.js'
 import { personNewModalDisplay } from './editModal/personNewModalViewController.js'
 
-import { headerViewDisplay } from '../appservices/headerViewCont.js'
-import { displayimageViewDisplay } from '../appservices/displayImageModal/displayimageViewCont.js'
+import { headerViewDisplay } from '../../shared/appservices/headerViewCont.js'
+import { displayimageViewDisplay } from '../../shared/bootstrapServices/displayimageViewCont.js'
+import { launchInitialisation } from '../../shared/appservices/initialisationService.js'
 
 // *** Shared ressources
 import { getTranslation } from '../../shared/services/translationService.js'
 import { getArrayFromjson, findTibetanChars, getAppPath, addMultipleEnventListener, getLinkWithctrl, getEntityLinkClass } from '../../shared/services/commonFunctions.js'
 import { pencilsquare, plussquare, personIcon24, bookIcon, subnoticeIcon } from '../../shared/assets/constants.js'
 import { getConfigurationValue } from '../../shared/services/configurationService.js'
-import { getCurrentUSerRightLevel } from '../../shared/services/loginService.js'
-import { launchInitialisation } from '../appservices/initialisationService.js'
+import { getCurrentUSerRightLevel } from '../../shared/yesheServices/yesheLoginService.js'
+
 /**
  * Start script 
  */
@@ -144,7 +145,7 @@ async function displayPerson(mainDisplay, person, personAliases, linkedNotices) 
     });
 
     addMultipleEnventListener(".subnoticeButtons", function (event) {
-        getLinkWithctrl(`${getAppPath()}/views/subnotice/subnotice.html?subNoticeID=` + event.currentTarget.getAttribute('searid'), event.ctrlKey);
+        getLinkWithctrl(`${getAppPath()}/views/subnotice/subnotice.html?subnoticeid=` + event.currentTarget.getAttribute('searid'), event.ctrlKey);
     });
 
     addMultipleEnventListener(".imgsearch", function (event) {

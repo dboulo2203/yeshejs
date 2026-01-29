@@ -1,5 +1,5 @@
 //import { wsUrlformel } from '../../assets/constants.js';
-import { getConfigurationValue } from './configurationService.js';
+import { getConfigurationValue } from '../services/configurationService.js';
 
 /**
  * Load a person from the database, 

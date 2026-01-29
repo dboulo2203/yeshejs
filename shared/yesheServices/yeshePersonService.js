@@ -48,9 +48,8 @@ export async function getPersonFromAliasID(personAliasId, callback) {
         console.log(`getPersonFromAliasID Error : ${JSON.stringify(responsefr)}`);
         throw new Error("getPersonFromAliasID Error message : " + responsefr.status + " " + responsefr.statusText);
     }
-
-
 }
+
 /**
  * Returns the person in the sessionStorage
  * @returns person

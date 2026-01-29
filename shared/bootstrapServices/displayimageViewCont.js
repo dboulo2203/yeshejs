@@ -62,17 +62,17 @@ export function displayimageViewDisplay(htlmPartId, imagePathCurrent) {
 
 }
 
-async function logUser(event) {
+// async function logUser(event) {
 
-    console.log("Save clicked");
-    let userEmail = document.querySelector("#userEmailInput").value;
-    let userPassword = document.querySelector("#userPasswordInput").value;
+//     console.log("Save clicked");
+//     let userEmail = document.querySelector("#userEmailInput").value;
+//     let userPassword = document.querySelector("#userPasswordInput").value;
 
-    // try {
-    let retour = await getLogin(userEmail, userPassword)
+//     // try {
+//     let retour = await getLogin(userEmail, userPassword)
 
-    if (!retour)
-        document.querySelector("#modalmessage").innerHTML = `<div class="alert alert-danger" style = "margin-top:30px" role = "alert" >Nom, password invalides</div> `;
-    else
-        document.querySelector("#modalmessage").innerHTML = `<div class="alert alert-success" style = "margin-top:30px" role = "alert" >Bienvenue ${retour.user_pseudo}</div> `;
-}
+//     if (!retour)
+//         document.querySelector("#modalmessage").innerHTML = `<div class="alert alert-danger" style = "margin-top:30px" role = "alert" >Nom, password invalides</div> `;
+//     else
+//         document.querySelector("#modalmessage").innerHTML = `<div class="alert alert-success" style = "margin-top:30px" role = "alert" >Bienvenue ${retour.user_pseudo}</div> `;
+// }

@@ -70,11 +70,8 @@ export function addMultipleEnventListener(elementClass, functionOfEvent) {
   const cbox = document.querySelectorAll(elementClass);
   for (let i = 0; i < cbox.length; i++) {
     cbox[i].addEventListener("click", functionOfEvent);
-
-
   }
 }
-
 
 /**
  * Re route the page demending on
@@ -189,56 +186,11 @@ export function encodeHTML(str) {
   return str.replace(/[&<>"']/g, function (m) { return map[m]; });
 }
 
-// export function getTibetanPart() {
-
-//   function isTibetanChar(charToAnalyse) {
-//     if (charToAnalyse.charCodeAt(0) >= 3840 && charToAnalyse.charCodeAt(0) <= 4095)
-//       return true;
-//     else
-//       return false;
-//   }
-
-
-
-//   return function (item) {
-//     // console.log('test makeUppercase');
-//     var startAt = -1;
-//     var endsAt = -1;
-//     var outString = "";
-//     if (typeof item !== 'undefined' && item !== null) {
-
-//       // *** go through the string
-//       for (var i = 0; i < item.length; ++i) {
-
-//         if (isTibetanChar(item[i])) {
-//           // *** Start of the tibetan sentence
-//           if (startAt === -1) {
-//             startAt = i;
-//             while (i < item.length && (isTibetanChar(item[i]) || item.charCodeAt(i) == 32)) {
-//               // var charat2 = item.charCodeAt(i);
-//               // var charat3 = item[i];
-//               ++i;
-
-//             }
-//           }
-//           // *** End of the tibetan sentence
-//           endsAt = i;
-//           outString += "<span class='tibetanchar'>" + item.substring(startAt, endsAt) + "</span>"
-//           startAt = -1;
-//           --i;
-//         } else {
-//           // *** Add current character to the output string
-//           outString += item[i];
-//         }
-//       }
-//       // console.log('Caractère tibetain starts at :' + startAt.toString() + ' - ' + endsAt.toString());
-//       //  console.log('outstring = :' + outString);
-//       // var endString = item.substring(0, startAt - 1) + "<span class='tibetanchar'>" + item.substring(startAt, endsAt) + "</span>" + item.substring(endsAt, item.length);
-//       return outString;
-//     }
-//   }
-// }
-
+/**
+ * Find tibetan characters in a string and enclose the string in a <span>
+ * @param {} text 
+ * @returns 
+ */
 export function findTibetanChars(text) {
   const tibetanRegex = /[\u0F00-\u0FFF]+/g;
   let output = '';
@@ -254,12 +206,12 @@ export function findTibetanChars(text) {
   } else {
     text = text.replace(matches, "<span class='tibetanChars'>" + matches + "</span>")
   }
-
   return text; // Return empty array if no matches
 }
 
-
-
+/**
+ * 
+ */
 export function initBootstrapTooltips() {
   var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
   var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {

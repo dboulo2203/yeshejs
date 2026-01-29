@@ -1,8 +1,8 @@
 // *** shared services
 import { getAppPath } from '../../shared/services/commonFunctions.js'
-import { launchInitialisation } from '../appservices/initialisationService.js'
-import { headerViewDisplay } from '../appservices/headerViewCont.js'
-import { footerViewDisplay } from '../appservices//footerViewCont.js'
+import { launchInitialisation } from '../../shared/appservices/initialisationService.js'
+import { headerViewDisplay } from '../../shared/appservices/headerViewCont.js'
+import { footerViewDisplay } from '../../shared/appservices//footerViewCont.js'
 import { simpleMarkdown, loadFileFetch } from '../../shared/services/markdownService.js'
 // *** Menu string
 const mainStringPage = ` 

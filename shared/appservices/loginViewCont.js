@@ -1,6 +1,5 @@
 
-// import { getLogin } from '../../shared/services/loginService.js'
-import { getLogin } from '../../shared/services/loginService.js'
+import { getLogin } from '../../shared/yesheServices/yesheLoginService.js'
 import { loginIcon, logoutIcon } from '../../shared/assets/constants.js'
 import { getAppPath } from '../../shared/services/commonFunctions.js'
 const loginContainer = `<div id="modalPlace"></div>`;

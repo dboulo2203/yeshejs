@@ -1,6 +1,9 @@
 // *** Component ressources
 import { getSimpleEntity, getSimpleEntitylinkedNotices } from './simpleEntityService.js'
-import { displayimageViewDisplay } from '../appservices/displayImageModal/displayimageViewCont.js'
+
+import { displayimageViewDisplay } from '../../shared/bootstrapServices/displayimageViewCont.js'
+import { launchInitialisation } from '../../shared/appservices/initialisationService.js';
+import { headerViewDisplay } from '../../shared/appservices/headerViewCont.js'
 
 // *** Shared ressources
 import { getAppPath, getLinkWithctrl, getEntityLinkClass } from '../../shared/services/commonFunctions.js'
@@ -8,14 +11,12 @@ import { bookIcon, personIcon, keyIcon, printerIcon, publisherIcon, questionIcon
 import { getTranslation } from '../../shared/services/translationService.js'
 import { getConfigurationValue } from '../../shared/services/configurationService.js'
 import { addMultipleEnventListener, findTibetanChars } from '../../shared/services/commonFunctions.js'
-import { launchInitialisation } from '../appservices/initialisationService.js';
-import { headerViewDisplay } from '../appservices/headerViewCont.js'
+
 
 
 export async function startsimpleEntityController() {
 
     try {
-
         // *** Initialisations
         await launchInitialisation();
         headerViewDisplay("#menuSection");
@@ -25,7 +26,6 @@ export async function startsimpleEntityController() {
             await displaysimpleEntityContent('mainActiveSection', searchParams.get('simpleEntityID'), searchParams.get('simpleEntitytype'));
         else
             throw new Error("Erreur, pas de notice ID");
-
 
     } catch (error) {
         document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style = "margin-top:30px" role = "alert" > ${error}</div > `;
@@ -87,7 +87,7 @@ export async function displaysimpleEntityContent(htlmPartId, simpleEntityID, sim
         getLinkWithctrl(`${getAppPath()}/views/notice/notice.html?noticeID=` + event.currentTarget.getAttribute('searid'), event.ctrlKey);;;
     });
     addMultipleEnventListener(".subnoticeButtons", function (event) {
-        getLinkWithctrl(`${getAppPath()}/views/subNotice/subNotice.html?subNoticeID=` + event.currentTarget.getAttribute('searid'), event.ctrlKey);;;
+        getLinkWithctrl(`${getAppPath()}/views/subnotice/subnotice.html?subnoticeid=` + event.currentTarget.getAttribute('searid'), event.ctrlKey);;;
     });
 
     addMultipleEnventListener(".imgsearch", function (event) {

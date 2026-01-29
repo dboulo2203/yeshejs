@@ -1,13 +1,12 @@
 // *** Component ressources
 import { getNotice } from './noticeService.js'
-import { displayModaleAndFunctions } from './abstractModalViewController.js'
-import { displayimageViewDisplay } from '../appservices/displayImageModal/displayimageViewCont.js'
-import { displaynoticeMultimediaModalViewDisplay } from '../appservices/noticeMultimediaModalViewCont.js'
 
-// *** App services
-import { launchInitialisation } from '../appservices/initialisationService.js'
-import { headerViewDisplay } from '../appservices/headerViewCont.js'
-import { displayField, addslashes } from '../appservices/components.js'
+import { displayModaleAndFunctions } from './abstractModalViewController.js'
+import { displayimageViewDisplay } from '../../shared/bootstrapServices/displayimageViewCont.js'
+import { displayMultimediaModalViewDisplay } from '../../shared/bootstrapServices/multimediaModalViewCont.js'
+import { launchInitialisation } from '../../shared/appservices/initialisationService.js'
+import { headerViewDisplay } from '../../shared/appservices/headerViewCont.js'
+import { displayField, addslashes } from '../../shared/bootstrapServices/components.js'
 
 // ** Shared ressoucres
 import {
@@ -261,7 +260,6 @@ function displayNotice(notice, mainDisplay) {
          </span></br> `;
     });
 
-
     // *** Multimedia
     let multimediasList = getArrayFromjson(notice.multimediasFunctionFor);
     // output += `<div><span class="fs-5" style="color:#8B2331">${multimediaIcon} ${getTranslation("NOT_MULTIMEDIASTITLE")}</span></div>`;
@@ -361,11 +359,11 @@ function displayNotice(notice, mainDisplay) {
     });
 
     addMultipleEnventListener(".multimediaElem", function (event) {
-        displaynoticeMultimediaModalViewDisplay("modalSection", event.currentTarget.getAttribute("multt_id"), event.currentTarget.getAttribute("mult_file"))
+        displayMultimediaModalViewDisplay("modalSection", event.currentTarget.getAttribute("multt_id"), event.currentTarget.getAttribute("mult_file"))
     });
 
     addMultipleEnventListener(".subNoticeElem", function (event) {
-        getLinkWithctrl(`${getAppPath()}/views/subnotice/subnotice.html?subNoticeID=` + event.currentTarget.getAttribute('subNoticeID'), event.ctrlKey);;
+        getLinkWithctrl(`${getAppPath()}/views/subnotice/subnotice.html?subnoticeid=` + event.currentTarget.getAttribute('subNoticeID'), event.ctrlKey);;
     });
 
 

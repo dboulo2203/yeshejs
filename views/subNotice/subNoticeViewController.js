@@ -1,19 +1,20 @@
 // *** Component ressources
-import { getsubNotice } from './subNoticeService.js'
+import { getsubNotice } from './subnoticeService.js'
 
-import { displaynoticeMultimediaModalViewDisplay } from '../appservices/noticeMultimediaModalViewCont.js'
+import { displayMultimediaModalViewDisplay } from '../../shared/bootstrapServices/multimediaModalViewCont.js'
 // ** Shared ressoucres
-import { getArrayFromjson, addMultipleEnventListener, getEntityLinkClass, getLinkWithctrl } from '../../shared/services/commonFunctions.js'
+import { getArrayFromjson, addMultipleEnventListener, getEntityLinkClass, getLinkWithctrl }
+    from '../../shared/services/commonFunctions.js'
 import { questionIcon18, subnoticeIcon } from '../../shared/assets/constants.js'
 import { getAppPath, findTibetanChars } from '../../shared/services/commonFunctions.js'
 import { getTranslation } from '../../shared/services/translationService.js'
-import { launchInitialisation } from '../appservices/initialisationService.js';
-import { headerViewDisplay } from '../appservices/headerViewCont.js'
+import { launchInitialisation } from '../../shared/appservices/initialisationService.js';
+import { headerViewDisplay } from '../../shared/appservices/headerViewCont.js'
 
 /**
  * Start script 
  */
-export async function startsubNoticeController() {
+export async function startsubnoticeController() {
 
     try {
         // *** Initialisations
@@ -21,8 +22,8 @@ export async function startsubNoticeController() {
         headerViewDisplay("#menuSection");
 
         const searchParams = new URLSearchParams(window.location.search);
-        if (searchParams.has('subNoticeID') && searchParams.get('subNoticeID').length > 0)
-            await displaySubNoticeContent('mainActiveSection', searchParams.get('subNoticeID'));
+        if (searchParams.has('subnoticeid') && searchParams.get('subnoticeid').length > 0)
+            await displaySubNoticeContent('mainActiveSection', searchParams.get('subnoticeid'));
         else
             throw new Error("Erreur, pas de sub notice ID");
 
@@ -158,7 +159,7 @@ async function displaySubNotice(mainDisplay, subNotice) {
     });
 
     addMultipleEnventListener(".multimediaElem", function (event) {
-        displaynoticeMultimediaModalViewDisplay("modalSection", event.currentTarget.getAttribute("multt_id"), event.currentTarget.getAttribute("mult_file"))
+        displayMultimediaModalViewDisplay("modalSection", event.currentTarget.getAttribute("multt_id"), event.currentTarget.getAttribute("mult_file"))
     });
 
 

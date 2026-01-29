@@ -113,7 +113,7 @@ export async function searchViewDisplay(htlmPartId) {
                                 <div class="col-sm-9 ">
                                     <span class="dropdown-toggle" type="button" style="width:100%;border-bottom:solid 0.05rem #e9e8e8" type="button" data-bs-toggle="dropdown" id="inputOwner_span" selectedId=""> </span>
                                     <ul class="dropdown-menu" id="bdd_exemplaire_ownersdd">
-                                        ${getSelectFromDatabaseListDropdown("bdd_exemplaire_owners", "exow_id", "exow_name", true)}                                   
+                                        ${getSelectFromDatabaseListDropdown("bdd_exemplaire_owners", "exow_id", "exow_name", false)}                                   
                                      </ul>                             
                                 </div>                            
                             </div>
@@ -122,14 +122,31 @@ export async function searchViewDisplay(htlmPartId) {
                         <div class="col-md-6">
                            
                         
-                            
-   <dob-dropdown id="bdd_genre_type_id" listlabel="GenreA" listname="bdd_genre_type" getfunction="getList('bdd_genre_type')" listitemid="genrt_id" listitemname="genrt_name"
+          <!--                  
+   <dob-dropdown id="bdd_genre_type_id" listlabel="Genre" listname="bdd_genre_type" getfunction="getList('bdd_genre_type')" listitemid="genrt_id" listitemname="genrt_name"
         listselecteditemid="5">
     </dob-dropdown>
 
+                           
+   <dob-dropdown id="bdd_theme_type_id" listlabel="Theme" listname="bdd_theme_type" getfunction="getList('bdd_theme_type')" listitemid="them_id" listitemname="them_name"
+        listselecteditemid="">
+    </dob-dropdown>
+-->
+                          <div class="form-group row" style="margin-bottom:5px">
+                                <label for="exampleInputEmail1" class="col-sm-3 col-form-label">
+                                    <span id="deleteGenreSelection" style="cursor: pointer" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove Genre selection"> ${deleteIcon}</span>
+                                    Genre
+                                </label>
+                                <div class="col-sm-9 ">
+                                    <span class="dropdown-toggle" type="button" style="width:100%;border-bottom:solid 0.05rem #e9e8e8" type="button" data-bs-toggle="dropdown" id="inputGenre_span" selectedId=""> </span>
+                                    <ul class="dropdown-menu" id="">
+                                        ${getSelectFromDatabaseListDropdown("bdd_genre_type", "genrt_id", "genrt_name", false)}
+                                    </ul>                             
+                                </div>                            
+                            </div> 
 
 
-                            <div class="form-group row" style="margin-bottom:5px">
+                             <div class="form-group row" style="margin-bottom:5px">
                                 <label for="exampleInputEmail1" class="col-sm-3 col-form-label">
                                     <span id="deleteThemeSelection" style="cursor: pointer" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove Theme selection"> ${deleteIcon}</span>
                                     Theme
@@ -137,10 +154,10 @@ export async function searchViewDisplay(htlmPartId) {
                                 <div class="col-sm-9 ">
                                     <span class="dropdown-toggle" type="button" style="width:100%;border-bottom:solid 0.05rem #e9e8e8" type="button" data-bs-toggle="dropdown" id="inputTheme_span" selectedId=""> </span>
                                     <ul class="dropdown-menu" id="">
-                                        ${getSelectFromDatabaseListDropdown("bdd_theme_type", "them_id", "them_name", true)}
+                                        ${getSelectFromDatabaseListDropdown("bdd_theme_type", "them_id", "them_name", false)}
                                     </ul>                             
                                 </div>                            
-                            </div>
+                            </div> 
 
                             <div class="form-group row" style="margin-bottom:5px">
                                 <label for="exampleInputPassword1" class="col-sm-3 col-form-label" >
@@ -150,7 +167,7 @@ export async function searchViewDisplay(htlmPartId) {
                                 <div class="col-sm-9 ">
                                     <span class="dropdown-toggle" type="button" style="width:100%;border-bottom:solid 0.05rem #e9e8e8" type="button" data-bs-toggle="dropdown" id="inputMateriel_span" selectedId=""> </span>
                                     <ul class="dropdown-menu" id="">
-                                        ${getSelectFromDatabaseListDropdown("bdd_materiel_type", "matt_id", "matt_name", true)}
+                                        ${getSelectFromDatabaseListDropdown("bdd_materiel_type", "matt_id", "matt_name", false)}
                                     </ul>                             
                                 </div>                            
                             </div>
@@ -162,7 +179,7 @@ export async function searchViewDisplay(htlmPartId) {
                                 <div class="col-sm-9 ">
                                     <span class="dropdown-toggle" type="button" style="width:100%;border-bottom:solid 0.05rem #e9e8e8" type="button" data-bs-toggle="dropdown" id="inputLanguage_span" selectedId=""> </span>
                                     <ul class="dropdown-menu" id="">
-                                        ${getSelectFromDatabaseListDropdown("bdd_language", "lang_id", "lang_name", true)}
+                                        ${getSelectFromDatabaseListDropdown("bdd_language", "lang_id", "lang_name", false)}
                                     </ul>                             
                                 </div>                            
                             </div>
@@ -184,46 +201,18 @@ export async function searchViewDisplay(htlmPartId) {
                         </div>
                     </div>
             </form>
-            <div class="form-floating">
-  <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-    <option selected>Open this select menu</option>
-    <option value="1">One</option>
-    <option value="2">Two</option>
-    <option value="3">Three</option>
-  </select>
-  <label for="floatingSelect">Works with selects</label>
-</div>
+
          </div>
         </div>
     </div>
  `;
 
-    // <div class="form-group row" style="margin-bottom:5px">
-    //     <label for="exampleInputEmail1" class="col-sm-3 col-form-label">
-    //         <span id="deleteGenreSelection" style="cursor: pointer" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove Genre selection"> ${deleteIcon}</span>
-    //         Genre
-    //     </label>
-
-    //     <div class="col-sm-9 ">
-    //         <span class="dropdown-toggle" type="button" style="width:100%;border-bottom:solid 0.05rem #e9e8e8" type="button" data-bs-toggle="dropdown" id="inputGenre_span" selectedId=""> </span>
-    //         <ul class="dropdown-menu" id="">
-    //             ${getSelectFromDatabaseListDropdown("bdd_genre_type", "genrt_id", "genrt_name", false, "3")}
-    //         </ul>
-    //     </div>
-    // </div> 
     // *** Display the search area
     document.querySelector(htlmPartId).innerHTML = searchBarString;
 
     // *** Get the search params to display in the input part
     const searchParams = new URLSearchParams(window.location.search);
-    // if (searchParams.has('multiCritSearchStr'))
-    //     document.querySelector("#searchInputString").value = searchParams.get('multiCritSearchStr');
 
-
-    // let exow_dropdown = new bootstrap.Dropdown(document.querySelector("#bdd_exemplaire_ownersdd"))
-    // exow_dropdown.clearMenus()
-
-    // searchStr
     if (searchParams.has('searchStr')) {
         document.querySelector("#searchInputString").value = searchParams.get('searchStr');
     }
@@ -243,11 +232,6 @@ export async function searchViewDisplay(htlmPartId) {
 
     // *** Actions Natural language search or datbase search
     document.querySelector("#searchBtn").onclick = async function () {
-        // if (!document.querySelector("#searchInputString").value.length > 0) {
-        // document.querySelector("#messagebox").innerHTML = `<div class="alert alert-danger" style = "margin-top:30px" role = "alert" > Veuillez saisir un critère de recherche</div > `;
-        // return;
-        //  throw new Error("Veuillez saisir un critère de recherche1")
-        // }
         let searchString = document.querySelector("#searchInputString").value;
         window.location.href = `${getAppPath()}/views/search/search.html?searchStr=` + searchString;
     };
@@ -304,7 +288,7 @@ export async function searchViewDisplay(htlmPartId) {
                     getLinkWithctrl(`${getAppPath()}/views/notice/notice.html?noticeID=` + sear_id)
                     break;
                 case 6:
-                    getLinkWithctrl(`${getAppPath()}/views/subNotice/subNotice.html?subNoticeID=` + sear_id)
+                    getLinkWithctrl(`${getAppPath()}/views/subnotice/subnotice.html?subnoticeid=` + sear_id)
                     break;
                 case 10:
                     getLinkWithctrl(`${getAppPath()}/views/person/person.html?personID=` + sear_id)
@@ -352,12 +336,16 @@ export async function searchViewDisplay(htlmPartId) {
         if (document.querySelector("#inputOwner_span").attributes['selectedId'].nodeValue > 0)
             multictri += '|owne:' + document.querySelector("#inputOwner_span").attributes['selectedId'].nodeValue;
 
-        if (document.querySelector("#bdd_genre_type_id").selectedID > 0)
-            // if (document.querySelector("#bdd_genre_type_inputspan").attributes['selectedId'].nodeValue > 0)
-            multictri += '|genr:' + document.querySelector("#bdd_genre_type_id").selectedID;
+        // if (document.querySelector("#bdd_genre_type_id").selectedID > 0)
+        // if (document.querySelector("#bdd_genre_type_inputspan").attributes['selectedId'].nodeValue > 0)
+        if (document.querySelector("#inputGenre_span").attributes['selectedId'].nodeValue > 0)
+            multictri += '|genr:' + document.querySelector("#inputGenre_span").attributes['selectedId'].nodeValue;;
 
+        //if (document.querySelector("#bdd_theme_type_id").selectedID > 0)
+        //  multictri += '|them:' + document.querySelector("#bdd_theme_type_id").selectedID;
         if (document.querySelector("#inputTheme_span").attributes['selectedId'].nodeValue > 0)
             multictri += '|them:' + document.querySelector("#inputTheme_span").attributes['selectedId'].nodeValue;
+
 
         if (document.querySelector("#inputMateriel_span").attributes['selectedId'].nodeValue > 0)
             multictri += '|matt:' + document.querySelector("#inputMateriel_span").attributes['selectedId'].nodeValue;
@@ -387,14 +375,14 @@ export async function searchViewDisplay(htlmPartId) {
     }
 
     addMultipleEnventListener(".bdd_genre_type_item", function (event) {
-        document.querySelector("#bdd_genre_type_inputspan").innerHTML = event.target.attributes['selectedName'].nodeValue;
-        document.querySelector("#bdd_genre_type_inputspan").setAttribute("selectedId", event.target.attributes['selectedId'].nodeValue);
+        document.querySelector("#inputGenre_span").innerHTML = event.target.attributes['selectedName'].nodeValue;
+        document.querySelector("#inputGenre_span").setAttribute("selectedId", event.target.attributes['selectedId'].nodeValue);
     })
 
-    // document.querySelector("#deleteGenreSelection").onclick = function () {
-    //     document.querySelector("#inputGenre_span").innerHTML = "";
-    //     document.querySelector("#inputGenre_span").setAttribute("selectedId", "")
-    // }
+    document.querySelector("#deleteGenreSelection").onclick = function () {
+        document.querySelector("#inputGenre_span").innerHTML = "";
+        document.querySelector("#inputGenre_span").setAttribute("selectedId", "")
+    }
 
     addMultipleEnventListener(".bdd_theme_type_item", function (event) {
         document.querySelector("#inputTheme_span").innerHTML = event.target.attributes['selectedName'].nodeValue;

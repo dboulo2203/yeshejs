@@ -92,7 +92,6 @@ export class StandardFieldNotNullDisplay extends HTMLElement {
 </div> */
 
 export class DropdownChoice extends HTMLElement {
-    static selecteditemid
     constructor() {
 
         super();
@@ -192,19 +191,19 @@ export class DropdownChoice extends HTMLElement {
         // ** Event Handler click on the list
         // Use arrow function to preserve `this`
         addMultipleEnventListener(".bdd_genre_type_item", (event) => {
-            document.querySelector("#bdd_genre_type_inputspan").innerHTML = event.target.attributes['selectedName'].nodeValue;
-            document.querySelector("#bdd_genre_type_inputspan").setAttribute("selectedId", event.target.attributes['selectedId'].nodeValue);
+            //  document.querySelector("#bdd_genre_type_inputspan").innerHTML = event.target.attributes['selectedName'].nodeValue;
+            //  document.querySelector("#bdd_genre_type_inputspan").setAttribute("selectedId", event.target.attributes['selectedId'].nodeValue);
 
             //  ❌ If you use a normal function, `this` will be undefined or point to the button
             this.handleClickChangeChoice(event.target.attributes['selectedId'].nodeValue, event.target.attributes['selectedName'].nodeValue);
         })
-        addMultipleEnventListener(`.delete_${listName}`, (event) => {
-            document.querySelector("#bdd_genre_type_inputspan").innerHTML = "";
-            document.querySelector("#bdd_genre_type_inputspan").setAttribute("selectedId", "");
 
+        document.querySelector(`#delete_${listName}`).addEventListener('click', (event) => {
             //  ❌ If you use a normal function, `this` will be undefined or point to the button
             this.handleClickRemove();
-        })
+        });
+        //    document.querySelector("#toDKLLibraryButton").onclick = function () {
+        //     };
     }
 
     getDropdownContent(listName, entityID, entityName, addZeroOption, selectedId, getfunction) {
@@ -233,6 +232,10 @@ export class DropdownChoice extends HTMLElement {
             else
                 outpuStr += `<span class="dropdown-toggle" type="button" style="width:100%;border-bottom:solid 0.05rem #e9e8e8" type="button" 
     data-bs-toggle="dropdown" id="${listName}_inputspan" selectedId=""> </span>`
+        } else {
+            outpuStr += `<span class="dropdown-toggle" type="button" style="width:100%;border-bottom:solid 0.05rem #e9e8e8" type="button" 
+    data-bs-toggle="dropdown" id="${listName}_inputspan" selectedId=""> </span>`
+
         }
         return outpuStr;
     }

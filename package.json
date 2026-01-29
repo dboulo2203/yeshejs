@@ -1,7 +1,5 @@
 {
-    "name": "eshopjs",
-    "version": "0.0.1",
-    "scripts": {
-        "test": "mocha"
-    }
+    "name": "yeshejs",
+    "version": "5.1",
+    "scripts": {}
 }

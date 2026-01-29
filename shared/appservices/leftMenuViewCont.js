@@ -3,8 +3,8 @@ import { getAppPath } from '../../shared/services/commonFunctions.js'
 import { loginIcon, logoutIcon, themeIcon, bookIcon, personIcon, printerIcon, publisherIcon, keyIcon, customersIcon, pencilsquareIcon, lendIcon } from '../../shared/assets/constants.js'
 import { toogleTheme } from '../../shared/services/bootstrapTheme.js'
 import { loginViewDisplay } from './loginViewCont.js'
-import { isCurrentUSerLogged, getCurrentUSerName } from '../../shared/services/loginService.js'
-import { logout } from '../../shared/services/loginService.js'
+import { isCurrentUSerLogged, getCurrentUSerName } from '../../shared/yesheServices/yesheLoginService.js'
+import { logout } from '../../shared/yesheServices/yesheLoginService.js'
 //***
 // catalog
 //  -> categories
@@ -27,7 +27,7 @@ const leftmenuString = `
  
             <div style="margin-bottom:2px;cursor:pointer"  ><span " id="btnSwitch" >${themeIcon} Theme</span></div>        
             <hr/>
-             ${isCurrentUSerLogged() ? `<div id="newNoticeButton" style="margin-bottom:2px"> ${bookIcon} Notice</div>` : ``}
+            <!--  ${isCurrentUSerLogged() ? `<div id="newNoticeButton" style="margin-bottom:2px"> ${bookIcon} Notice</div>` : ``}
              ${isCurrentUSerLogged() ? `<div id="newPersonButton" style="margin-bottom:2px"> ${personIcon} Person</div>  ` : ``}          
              ${isCurrentUSerLogged() ? `<div id="newKeywordButton" style="margin-bottom:2px"> ${keyIcon} Keyword</div>` : ``}
              ${isCurrentUSerLogged() ? `<div id="newPublisherButton" style="margin-bottom:2px"> ${publisherIcon} Publisher</div>` : ``}
@@ -36,6 +36,7 @@ const leftmenuString = `
              ${isCurrentUSerLogged() ? `<div id="newPrinterButton"> ${customersIcon} Utilisateurs</div>` : ``}
              ${isCurrentUSerLogged() ? `<div id="newPrinterButton"> ${lendIcon} Prêts</div>` : ``}
             ${isCurrentUSerLogged() ? `<hr/>` : ``}
+            -->
             <div id="documentation" style="cursor:pointer"><span style="cursor:pointer">${pencilsquareIcon}Documentation</span></div>
 
         </div>
@@ -52,10 +53,10 @@ export function leftMenuViewDisplay(htlmPartId) {
     // *** Display left menu
     document.querySelector("#" + htlmPartId).innerHTML = leftmenuString;
 
-    if (isCurrentUSerLogged())
-        document.querySelector("#newPersonButton").onclick = function () {
-            window.location.href = `${getAppPath()}/views/person/person.html`;
-        };
+    // if (isCurrentUSerLogged())
+    //     document.querySelector("#newPersonButton").onclick = function () {
+    //         window.location.href = `${getAppPath()}/views/person/person.html`;
+    //     };
 
     document.querySelector("#documentation").onclick = function () {
         window.location.href = `${getAppPath()}/views/docu/docu.html`;

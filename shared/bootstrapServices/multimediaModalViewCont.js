@@ -28,7 +28,7 @@ const editModaleString = `
 </div>`;
 
 // TODO : Manage callback
-export function displaynoticeMultimediaModalViewDisplay(htlmPartId, multt_id, mult_file) {
+export function displayMultimediaModalViewDisplay(htlmPartId, multt_id, mult_file) {
 
     // *** Variable that keeps the modal object
     // let multimedia = JSON.parse(JSONmultimedia)

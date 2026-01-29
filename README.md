@@ -26,20 +26,30 @@
 ------------------------------------------------------------
 ## TODO V 5.1
 - [abandonné dans cette version] Multimedia search : conserver les choix entre 2 interrogations
-- Test image de background,
-- Search Note : ne pas afficher si la note contient du HTML
+- [abandonné dans cette version]  Test image de background,
+- [A décider] Affichage de la note dans 'karmapa word' BUg, Search Note : ne pas afficher si la note contient du HTML
+- Lien dans les notes sont de même couleur que les autres liens
+
+### Demandes des acteurs du projet
+-Search : lorsqu'une personne saisit une reccherchee comportant des caracctères tibétains, on y ajoute bdd: devant la reccherche
+- CTRL pour ouvrir un nouvel onglet ne fonctione pas sur MAC
+- Les fenêtres prédictive et multicritéria se refeerment lorsque l'une d'elle est ouverte
+- Un paramètre (configurable par l'utilisateur) permet de demander de scotcheer la barre de reccherchee en haut d'écran 
+- Rendre la photo visible dans Whatssapp lorsqu'on colle le lien d'une notice
 
 ### TOTO tech et Bugs
-- Affichage de la note dans 'karmapa word' BUg
-- Tester la validité des chaines HTML saisies/affichées
-
-- Sécuriser la recherche database en vérifiant les mots clés utilisés
 - Tester Bootstrap troncate dans la page de search
-- Rendre la photo visible dans Whatssapp lorsqu'on colle le lien d'une notice
 
 ------------
 ## Releases notes
 ### 5.0.12
+- affichage des multimédias (voir tendrel 02)
+- Modifier les liens : un lien est de couleur bordeaux, lorsque la souris passe dessus il se modifie
+- Notice : CTRL fonction pour les liens de person et keyword
+- General : l'affichage des ccaractères tibétains n'est pas correct dans certaines situations (bouble séquences etc)
+- Search : garde mémoire de la recherche pour la recherche nautral language et databse, pas pour le multicritère
+- Les fenêtres modales peuvent see fermer par une croix en haut de fenêtre.
+
 - general : affichage des images dans des modales : ajout d'une icone de fermeture de la modale
 - Multimedia (notice et sous-notice) : Bug Tendrel 10061 - 
 - Caractères tibetains :   notice, tous les titres Notes : toutes (Voir about content et about catalogue), Search, Persons (dans notice et person), sub notice (titre, titre notice pere),

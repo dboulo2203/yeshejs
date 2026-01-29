@@ -1,32 +1,4 @@
 import { getConfigurationValue } from '../services/configurationService.js';
-// /**
-//  * Load a person from the database, 
-//  * the person is saved in the sessionStorage
-//  * @param { } personId 
-//  * @param {*} callback 
-//  * @returns notice in JSON 
-//  */
-// export async function getPerson(personId) {
-
-//     // console.log("getPerson Service start");
-
-//     var wsUrl = getConfigurationValue("wsUrlformel") + `person/${personId}`;
-//     let responsefr = await fetch(wsUrl);
-//     if (responsefr.ok) {
-//         // *** Get the data and save in the sessionStorage
-//         const data = await responsefr.json();
-//         sessionStorage.setItem("person", JSON.stringify(data.content));
-
-//         // console.log("getPerson  await ok ");
-//         return (data.content);
-
-//     } else {
-//         console.log(`getPerson Error : ${JSON.stringify(responsefr)}`);
-//         throw new Error("getPerson Error message : " + responsefr.status + " " + responsefr.statusText);
-//     }
-// }
-
-
 
 /**
  * 
