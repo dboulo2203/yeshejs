@@ -28,10 +28,12 @@
 - [abandonné dans cette version] Multimedia search : conserver les choix entre 2 interrogations
 - [abandonné dans cette version]  Test image de background,
 - [A décider] Affichage de la note dans 'karmapa word' BUg, Search Note : ne pas afficher si la note contient du HTML
-- Lien dans les notes sont de même couleur que les autres liens
+- [A Decider] : la recherche en caractères tibétains : trouver solution compatible avec la logique de yeshe
+- [A décider] : présentation des listes sous notices, multimédias et exemplaires
+- [todo] : taille des images dans les notices linked person et keyword
 
 ### Demandes des acteurs du projet
--Search : lorsqu'une personne saisit une reccherchee comportant des caracctères tibétains, on y ajoute bdd: devant la reccherche
+- Search : lorsqu'une personne saisit une reccherchee comportant des caracctères tibétains, on y ajoute bdd: devant la reccherche
 - CTRL pour ouvrir un nouvel onglet ne fonctione pas sur MAC
 - Les fenêtres prédictive et multicritéria se refeerment lorsque l'une d'elle est ouverte
 - Un paramètre (configurable par l'utilisateur) permet de demander de scotcheer la barre de reccherchee en haut d'écran 
@@ -42,7 +44,14 @@
 
 ------------
 ## Releases notes
+### 5.0.13
+- Search : si caractères tibétains, la recherche ajoute bdd: devant
+- Search : si le texte comprend des liens, on affiche la totalité du texte, sinon on limite à 500caractères
+- Notice : supprime les cadres bootstra pour les exemplaires, sous-notices et multimedias
+
 ### 5.0.12
+- [Bug fixed] Keyword : lien vers nous-notice ne fonctionne pas
+- [Bug fixed] sous-notice : caractère tibétains de la note sont petits.
 - Notice : Modification de la préeentation des listes de multimedias, sous notice et exemplaires
 - Liens des notices linked uniformisés, colorés.
 - activation du login

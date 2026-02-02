@@ -7,13 +7,15 @@ import { displayMultimediaModalViewDisplay } from '../../shared/bootstrapService
 import { launchInitialisation } from '../../shared/yesheAppservices/initialisationService.js'
 import { headerViewDisplay } from '../../shared/yesheAppservices/headerViewCont.js'
 import { displayField, addslashes } from '../../shared/bootstrapServices/components.js'
+import { footerViewDisplay } from '../../shared/yesheAppservices/footerViewCont.js'
 import { getCurrentUSerRightLevel } from '../../shared/yesheServices/yesheLoginService.js'
 
 // ** Shared ressoucres
 import {
     getArrayFromjson, addMultipleEnventListener, getEntityLinkClass, getLinkWithctrl,
-    findTibetanChars, getEntityLink, getAppPath, initBootstrapTooltips
+    findTibetanChars, getEntityLink, getAppPath
 } from '../../shared/services/commonFunctions.js'
+import { initBootstrapTooltips } from '../../shared/bootstrapServices/bootstrapCommon.js'
 import { languageIcon, noteIcon, abstractIcon, toDKLLibraryIcon, subnoticeIcon, bookIcon, personIcon, keyIcon, copiesIcon, multimediaIcon, descriptionIcon, publicationIcon, titleIcon } from '../../shared/assets/constants.js'
 import { getConfigurationValue } from '../../shared/services/configurationService.js'
 import { getTranslation } from '../../shared/services/translationService.js'
@@ -35,6 +37,7 @@ export async function startNoticeController() {
         else
             throw new Error("Erreur, pas de notice ID");
 
+        footerViewDisplay("#footerSection");
     } catch (error) {
         document.querySelector("#messageSection").innerHTML = `<div class="alert alert-danger" style = "margin-top:60px" role = "alert" > ${error}</div > `;
     }
@@ -253,26 +256,26 @@ function displayNotice(notice, mainDisplay) {
     //  output += `<div><span class="fs-5" style="color:#8B2331">${subnoticeIcon} ${getTranslation("NOT_SUBRECORDSTITLE")}</span></div>`;
     output += `<dob-bloctitle userIcon="subnoticeIcon" userName="${getTranslation("NOT_SUBRECORDSTITLE")}" ></dob-bloctitle >`;
 
-    output += `<ul class="list-group">`
+    //   output += `<ul class="list-group">`
     subNoticesFunctionFor.map((subNoticeFunctionFor, index) => {
-        output += `<li class="list-group-item">`;
-        output += ` <span class="text-danger-emphasis subNoticeElem" style="cursor:pointer" subNoticeID="${subNoticeFunctionFor.noti_id}"
+        //     output += `<li class="list-group-item">`;
+        output += ` - <span class="text-danger-emphasis subNoticeElem" style="cursor:pointer; margin-bottom:15px" subNoticeID="${subNoticeFunctionFor.noti_id}"
                        onpointerenter="this.setAttribute('style', 'cursor:pointer; border-bottom: 0.1em solid  rgb(159, 158, 158)')" 
                 onpointerleave="this.setAttribute('style', 'color:text-danger-emphasis')"
-        >   ${findTibetanChars(subNoticeFunctionFor.noti_main_title)}  (${subNoticeFunctionFor.sdoc_order})
+        >   ${findTibetanChars(subNoticeFunctionFor.noti_main_title)}  (${subNoticeFunctionFor.sdoc_order}) <br/>
          </span>`;
-        output += `</li>`;
+        //   output += `</li>`;
     });
-    output += `</ul>`
+    // output += `</ul>`
 
 
     // *** Multimedia
     let multimediasList = getArrayFromjson(notice.multimediasFunctionFor);
     // output += `<div><span class="fs-5" style="color:#8B2331">${multimediaIcon} ${getTranslation("NOT_MULTIMEDIASTITLE")}</span></div>`;
     output += `<dob-bloctitle userIcon="multimediaIcon" userName="${getTranslation("NOT_MULTIMEDIASTITLE")}" ></dob-bloctitle >`;
-    output += `<ul class="list-group">`
+    //   output += `<ul class="list-group">`
     multimediasList.map((multimedia, index) => {
-        output += `<li class="list-group-item">`;
+        //     output += `<li class="list-group-item">`;
         output += `
         <div class="row">
             <div class="col-3">
@@ -287,9 +290,9 @@ function displayNotice(notice, mainDisplay) {
                 <span > ${findTibetanChars(multimedia.mult_desc)} </span>
             </div>
          </div>`;
-        output += `</li>`;
+        //   output += `</li>`;
     });
-    output += `</ul>`
+    //    output += `</ul>`
     // output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
 
     // *** Copies
@@ -301,23 +304,29 @@ function displayNotice(notice, mainDisplay) {
     });
 
     let currentLIbrary = "";
-    output += `<ul class="list-group">`
+    // output += `<ul class="list-group">`
     exemplairesList.map((exemplaire, index) => {
-        output += `<li class="list-group-item">`;
-        output += `<div class="row">
-            <div class="col-5">`;
-        output += `<span class="fw-light" style="border-bottom: 0.1em solid #dddbdbff;color:grey"> ${exemplaire.exow_name} </span> </br>`;
-        currentLIbrary = exemplaire.exow_name;
-        // }
-        output += `</div>`;
-        output += ` <div class="col-6">`;
-        output += `  ${exemplaire.exem_cote}  </br> `;
-        output += `</div>`;
-        output += `</li>`;
+        if (currentLIbrary !== exemplaire.exow_name) {
+            //      output += `<li class="list-group-item">`;
+            output += `<div class="row">
+            <div class="col-12">`;
+            output += `<span class="fw-light" style="border-bottom: 0.1em solid #dddbdbff;color:grey"> ${exemplaire.exow_name} </span> </br>`;
+            currentLIbrary = exemplaire.exow_name;
+        }
+        output += ` -  ${exemplaire.exem_cote}  </br> `;
+        // output += ``;
+        // output += `</div>`;
+        // output += ` <div class="col-6">`;
+        // output += `  ${exemplaire.exem_cote}  </br> `;
+        if (currentLIbrary !== exemplaire.exow_name) {
+            output += `</div>`;
+            output += `</div>`;
+            //   output += `</li>`;
+        }
     });
     output += `</ul>`
     //output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
-    output += ``;
+    output += `</br></br>`;
 
     // *** Display string
     document.querySelector("#" + mainDisplay).innerHTML = output;

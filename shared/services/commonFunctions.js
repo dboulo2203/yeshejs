@@ -186,6 +186,8 @@ export function encodeHTML(str) {
   return str.replace(/[&<>"']/g, function (m) { return map[m]; });
 }
 
+
+
 /**
  * Find tibetan characters in a string and enclose the string in a <span>
  * @param {} text 
@@ -210,12 +212,23 @@ export function findTibetanChars(text) {
 }
 
 /**
- * 
+ * Check if a string contains HTML, if not cut the string, if true return the same string 
+ * @param {
+ * } inputString 
+ * @returns 
  */
-export function initBootstrapTooltips() {
-  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-    return new bootstrap.Tooltip(tooltipTriggerEl)
-  })
-}
+export function checkHTMLandcut(inputString) {
+  const htmlRegex = /\w+=".+?"/gm
 
+  const matches = inputString.match(htmlRegex);
+
+  if (Array.isArray(matches)) {
+    return inputString
+  } else {
+    let outstring = inputString.substr(0, 500);
+    let outstring2 = outstring.substring(0, outstring.lastIndexOf(" "))
+    return outstring2 + "...";
+
+  }
+
+}

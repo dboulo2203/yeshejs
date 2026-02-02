@@ -123,7 +123,8 @@ async function displaySubNotice(mainDisplay, subNotice) {
     // output += `<div ><span class="fs-6" style="color:#8B2331">Notes</span></div>`;
     output += `<dob-bloctitle userIcon="" userName="Notes" ></dob-bloctitle >`;
     notesList.map((note, index) => {
-        output += `<div style ="margin-bottom:10px"><span class="fw-light" style ="color:grey;margin-top:40px">${note.ffnnt_name} </span> :</br> ${note.ffnn_text} </br> </div>`;
+        output += `<div style ="margin-bottom:10px"><span class="fw-light" style ="color:grey;margin-top:40px">${note.ffnnt_name} </span> :</br>
+         ${findTibetanChars(note.ffnn_text)} </br> </div>`;
     });
     // output += `<hr style="margin-block-start:0.3rem;margin-block-end:0.3rem;margin-top:15px"/>`;
 

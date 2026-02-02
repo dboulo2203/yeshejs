@@ -1,3 +1,5 @@
+// import { getConfigurationValue } from "../services/configurationService.js";
+
 /**
  * Display the footer part of the application
  * @param {*} htlmPartId 
@@ -8,7 +10,7 @@ export function footerViewDisplay(htlmPartId) {
     <div id="footerPart" style="margin-top:40px">
         <hr style="color:grey"></hr>
         <div class="d-flex justify-content-center" style="">
-            <small>Powered by Dhagpo Kagyu Librairies - Yeshe App - v 5.0.12  - 29/01/2026</small>
+            Powered by Dhagpo Kagyu Librairies - Yeshe App - v 5.0.13  - 31/01/2026
         </div>
         <hr style="color:grey"></hr>
     </div>
@@ -17,6 +19,6 @@ export function footerViewDisplay(htlmPartId) {
     // *** Display the navbar
     document.querySelector(htlmPartId).innerHTML = footerString;
 
-
+    // <!-- <small>${getConfigurationValue("version")}</small> -->
 
 }

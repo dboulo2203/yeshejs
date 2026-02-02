@@ -6,7 +6,8 @@ import { headerViewDisplay } from '../../shared/yesheAppservices/headerViewCont.
 import { launchInitialisation } from '../../shared/yesheAppservices/initialisationService.js'
 import { searchViewDisplay } from '../../shared/yesheAppservices/searchViewCont.js'
 
-import { getLinkWithctrl, getAppPath, findTibetanChars, initBootstrapTooltips } from '../../shared/services/commonFunctions.js'
+import { getLinkWithctrl, getAppPath, findTibetanChars, checkHTMLandcut } from '../../shared/services/commonFunctions.js'
+import { initBootstrapTooltips } from '../../shared/bootstrapServices/bootstrapCommon.js'
 import { getConfigurationValue } from '../../shared/services/configurationService.js'
 import {
     bookIcon, personIcon, keyIcon, printerIcon, publisherIcon, questionIcon, mattIcon, subnoticeIcon,
@@ -85,6 +86,8 @@ async function displaySearchResults(htlmPartId, searchString, multiCriteriaSearc
     if (multiCriteriaSearch === true) {
         searchLines = await getSearch(searchString, "5");
     } else {
+
+
         // *** Get data from API
         if (searchString.indexOf(":") > 0 && (searchString.indexOf(":") === 3 || searchString.indexOf(":") === 4)) {
             searchLines = await getSearch(searchString, "1");
@@ -168,7 +171,7 @@ async function displaySearchResults(htlmPartId, searchString, multiCriteriaSearc
                             </span> -  
                             <span class="bookButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${findTibetanChars(searchLine.sear_label)}</b></span>
                          </br >
-                            ${searchLine.sear_moreinfo && searchLine.sear_moreinfo.length > 0 ? findTibetanChars(searchLine.sear_moreinfo) : ''}
+                            ${searchLine.sear_moreinfo && searchLine.sear_moreinfo.length > 0 ? findTibetanChars(checkHTMLandcut(searchLine.sear_moreinfo)) : ''}
                             </div > `;
                     break
                 case 4: // bibliographic record found by bibliographic record note
@@ -177,7 +180,7 @@ async function displaySearchResults(htlmPartId, searchString, multiCriteriaSearc
                             </span> -  
                             <span class="bookButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${findTibetanChars(searchLine.sear_label)}</b></span>
                          </br >
-                            ${searchLine.sear_text && searchLine.sear_text.length > 0 ? findTibetanChars(searchLine.sear_text) : ''}
+                            ${searchLine.sear_text && searchLine.sear_text.length > 0 ? findTibetanChars(checkHTMLandcut(searchLine.sear_text)) : ''}
                             </div > `;
                     break
                 case 5: // bibliographic record found by bibliographic record title
@@ -195,7 +198,7 @@ async function displaySearchResults(htlmPartId, searchString, multiCriteriaSearc
                             </span> -  
                             <span class="subbookButtons" searid="${searchLine.sear_id}" style="color:#8B2331;cursor: pointer"><b>${findTibetanChars(searchLine.sear_label)}</b></span>
                         </br >
-                            ${searchLine.sear_moreinfo && searchLine.sear_moreinfo.length > 0 ? findTibetanChars(searchLine.sear_moreinfo) : ''}
+                            ${searchLine.sear_moreinfo && searchLine.sear_moreinfo.length > 0 ? findTibetanChars(checkHTMLandcut(searchLine.sear_moreinfo)) : ''}
                             </div > `;
                     break
                 case 7: // Book // bibliographic sub-record found by id

@@ -131,6 +131,11 @@ async function displayKeyword(mainDisplay, keyword, keywordAliases, keywordlinke
         getLinkWithctrl(`${getAppPath()}/views/notice/notice.html?noticeID=` + event.currentTarget.getAttribute('searid'), event.ctrlKey);
     });
 
+    addMultipleEnventListener(".subnoticeButtons", function (event) {
+        getLinkWithctrl(`${getAppPath()}/views/subnotice/subnotice.html?subnoticeid=` + event.currentTarget.getAttribute('searid'), event.ctrlKey);
+    });
+
+
 
     addMultipleEnventListener(".imgsearch", function (event) {
         displayimageViewDisplay("modalSection", event.currentTarget.getAttribute('src'), event.ctrlKey)
@@ -154,7 +159,7 @@ async function getLinkedNoticesHtml(linkedNotices) {
 
         if (linkedNotice.noti_main_image && linkedNotice.noti_main_image.length > 0) {
             outputln += ` <div class="col-3" align = "center" > `;
-            outputln += ` <img src = '${getConfigurationValue("imagePath")}/img/books/${linkedNotice.noti_main_image}' class="imgsearch" style="cursor:pointer" width = "80px" /> `;
+            outputln += ` <img src = '${getConfigurationValue("imagePath")}/img/books/${linkedNotice.noti_main_image}' class="imgsearch" style="cursor:pointer" width = "100px" /> `;
             outputln += `</div > `;
             if (linkedNotice.noti_hierarchical_level && linkedNotice.noti_hierarchical_level === 2) {
                 outputln += `<div class="col-9" >`

@@ -22,8 +22,7 @@ const editModaleString = `
                      </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="myBtnCancel">Close</button>
-                 </div>
+                  </div>
             </div>
         </div>
     </div>
@@ -46,11 +45,11 @@ export function displayimageViewDisplay(htlmPartId, imagePathCurrent) {
         TempDiv.innerHTML = output;
         document.querySelector("#modalmessage").appendChild(TempDiv);
 
-        // *** Actions
-        document.querySelector("#myBtnCancel").onclick = function () {
-            console.log("annule clicked");
-            editModal.hide();
-        };
+        // // *** Actions
+        // document.querySelector("#myBtnCancel").onclick = function () {
+        //     console.log("annule clicked");
+        //     editModal.hide();
+        // };
 
 
     } catch (error) {

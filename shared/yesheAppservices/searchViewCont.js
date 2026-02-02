@@ -1,5 +1,6 @@
 // *** Shared ressources
-import { getAppPath, getLinkWithctrl, initBootstrapTooltips, addMultipleEnventListener, findTibetanChars } from '../../shared/services/commonFunctions.js'
+import { getAppPath, getLinkWithctrl, addMultipleEnventListener, findTibetanChars } from '../../shared/services/commonFunctions.js'
+import { initBootstrapTooltips } from '../bootstrapServices/bootstrapCommon.js'
 import { getSelectFromDatabaseList, getSelectFromDatabaseListDropdown, getDropdownList } from '../../shared/yesheServices/yesheListsService.js'
 import { predictiveIcon, searchIcon, multicritIcon, deleteIcon } from '../../shared/assets/constants.js';
 import { getSearch } from '../../views/search/searchService.js'
@@ -226,6 +227,17 @@ export async function searchViewDisplay(htlmPartId) {
     document.querySelector("#searchInputString").addEventListener("keypress", function (event) {
         let searchString = document.querySelector("#searchInputString").value;
         if (event.keyCode === 13) {
+            const tibetanRegex = /[\u0F00-\u0FFF]+/g;
+            let output = '';
+            if (typeof searchString !== "string") {
+                throw new TypeError("Input must be a string");
+            }
+            const matches = searchString.match(tibetanRegex);
+
+            if (Array.isArray(matches)) {
+                if (matches[0] == searchString)
+                    searchString = "bdd:" + searchString;
+            }
             window.location.href = `${getAppPath()}/views/search/search.html?searchStr=` + searchString;
         }
     });
@@ -233,6 +245,18 @@ export async function searchViewDisplay(htlmPartId) {
     // *** Actions Natural language search or datbase search
     document.querySelector("#searchBtn").onclick = async function () {
         let searchString = document.querySelector("#searchInputString").value;
+        // ** test tibetans characters
+        const tibetanRegex = /[\u0F00-\u0FFF]+/g;
+        let output = '';
+        if (typeof searchString !== "string") {
+            throw new TypeError("Input must be a string");
+        }
+        const matches = searchString.match(tibetanRegex);
+
+        if (Array.isArray(matches)) {
+            if (matches[0] == searchString)
+                searchString = "bdd:" + searchString;
+        }
         window.location.href = `${getAppPath()}/views/search/search.html?searchStr=` + searchString;
     };
 
